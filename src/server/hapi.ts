@@ -13,7 +13,17 @@ server.route({
 	method: 'GET',
 	path: '/',
 	handler: (request, reply) => {
-		return reply.file(`${__dirname}/index.html`);
+		return reply.file(`${__dirname}/client/application.html`);
+	}
+});
+
+server.route({
+	method: 'GET',
+	path: '/scr/{file*}',
+	handler: {
+		directory: {
+			path: `${__dirname}/client`
+		}
 	}
 });
 
