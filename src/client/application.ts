@@ -1,4 +1,4 @@
-import * as angular from 'angular';
+require('./application.html');
 
 const now = new Date();
 
