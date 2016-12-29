@@ -2,9 +2,12 @@
   "name": "opvo-demo",
   "version": "1.0.0",
   "description": "OPVO demo application",
-  "main": "index.js",
   "scripts": {
-    "server": "node dist/server.js"
+    "clear": "find dist -delete 2>/dev/null || true",
+    "create": "mkdir -p dist/server/migrations",
+    "copy": "cp -R src/server/migrations/ dist/server",
+    "build": "npm run clear && npm run create && npm run copy && webpack",
+    "start": "node dist/server/application.js"
   },
   "repository": {
     "type": "git",
@@ -21,11 +24,13 @@
     "@types/hapi": "^13.0.37",
     "angular": "^1.6.1",
     "hapi": "^16.0.2",
-    "inert": "^4.0.4"
+    "inert": "^4.0.4",
+    "sqlite": "^2.2.4"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "file-loader": "^0.9.0",
-    "typescript": "^2.1.4"
+    "typescript": "^2.1.4",
+    "webpack": "^1.14.0"
   }
 }

@@ -1,4 +1,5 @@
 var fs = require('fs');
+var webpack = require('webpack');
 
 var nodeModules = { };
 
@@ -29,7 +30,13 @@ var clientConfig = {
 			{ test: /\.ts$/, loader: 'awesome-typescript-loader?configFileName=./src/client/tsconfig.json' },
 			{ test: /\.html$/, loader: 'file-loader?name=./[name].[ext]' }
 		]
-	}
+	},
+
+	plugins: [
+		new webpack.optimize.CommonsChunkPlugin({
+			name: ['application', 'vendor']
+		})
+	]
 };
 
 var serverConfig = {
@@ -38,10 +45,10 @@ var serverConfig = {
 		__dirname: false
 	},
 
-	entry: './src/server/hapi.ts',
+	entry: './src/server/application.ts',
 	output: {
-		path: __dirname + '/dist',
-		filename: 'server.js'
+		path: __dirname + '/dist/server',
+		filename: 'application.js'
 	},
 
 	resolve: {
