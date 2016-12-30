@@ -28,7 +28,7 @@ var clientConfig = {
 	module: {
 		loaders: [
 			{ test: /\.ts$/, loader: 'awesome-typescript-loader?configFileName=./src/client/tsconfig.json' },
-			{ test: /\.html$/, loader: 'file-loader?name=./[name].[ext]' }
+			{ test: /\.pug$/, loaders: ['file-loader?name=[name].html', 'pug-html-loader?exports=false'] }
 		]
 	},
 

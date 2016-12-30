@@ -1,4 +1,4 @@
-import './application.html';
+import './application.pug';
 
 import * as angular from 'angular';
 
