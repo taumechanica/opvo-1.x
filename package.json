@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "OPVO demo application",
   "scripts": {
-    "clear": "find dist -delete 2>/dev/null || true",
+    "clear": "find dist -type f ! -name '*.sqlite' -delete 2>/dev/null || true",
     "create": "mkdir -p dist/server/migrations",
     "copy": "cp -R src/server/migrations/ dist/server",
     "build": "npm run clear && npm run create && npm run copy && webpack",

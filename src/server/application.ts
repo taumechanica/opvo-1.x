@@ -54,7 +54,8 @@ const start = (db: any) => {
 };
 
 sqlite.open(`${__dirname}/opvo.sqlite`)
-	.then(db => db.migrate({
+	.then(db => (<(options: any) => Promise<any>>db.migrate)({
+		force: 'last',
 		migrationsPath: `${__dirname}/migrations`
 	}))
 	.then(db => start(db))
