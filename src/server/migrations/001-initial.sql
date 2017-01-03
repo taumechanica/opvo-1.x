@@ -1,30 +1,26 @@
 -- Up
 
-CREATE TABLE developer(
-	id INTEGER NOT NULL,
-	name TEXT NOT NULL,
-	ceiling_amount REAL NOT NULL,
-	PRIMARY KEY (id)
+CREATE TABLE Developer (
+	Id INTEGER NOT NULL,
+	Name TEXT NOT NULL,
+	CeilingAmount REAL NOT NULL,
+	PRIMARY KEY (Id)
 );
 
-INSERT INTO developer(name, ceiling_amount) VALUES('Developer #1', 25.0);
-INSERT INTO developer(name, ceiling_amount) VALUES('Developer #2', 50.0);
-INSERT INTO developer(name, ceiling_amount) VALUES('Developer #3', 25.0);
-
-CREATE TABLE contract(
-	id INTEGER NOT NULL,
-	developer_id INTEGER NOT NULL,
-	amount REAL NOT NULL,
-	start_date INTEGER NOT NULL,
-	deadline INTEGER NOT NULL,
-	acceptance_date INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY (developer_id)
-		REFERENCES developer (id)
+CREATE TABLE Contract (
+	Id INTEGER NOT NULL,
+	DeveloperId INTEGER NOT NULL,
+	Amount REAL NOT NULL,
+	StartDate INTEGER NOT NULL,
+	Deadline INTEGER NOT NULL,
+	AcceptanceDate INTEGER,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (DeveloperId)
+		REFERENCES Developer (Id)
 );
 
 
 -- Down
 
-DROP TABLE developer;
-DROP TABLE contract;
+DROP TABLE Developer;
+DROP TABLE Contract;

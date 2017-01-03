@@ -1,8 +1,17 @@
 doctype html
-html
+html(ng-app)
 	head
 		meta(charset="utf-8")
 		title Hi there!
 		script(src="/scr/vendor.js")
 		script(src="/scr/application.js")
 	body
+		p 1 + 2 = {{ 1 + 2 }}
+		input(
+			type="text"
+			ng-model="name"
+			placeholder="Enter smth."
+		)
+		h1(ng-if="name")
+			| Hi there,&nbsp;
+			span {{ name }}
