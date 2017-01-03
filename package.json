@@ -22,6 +22,7 @@
   "dependencies": {
     "@types/angular": "^1.5.22",
     "@types/hapi": "^13.0.37",
+    "@types/joi": "^10.0.0",
     "angular": "^1.6.1",
     "hapi": "^16.0.2",
     "inert": "^4.0.4",
@@ -30,6 +31,8 @@
   "devDependencies": {
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "file-loader": "^0.9.0",
+    "pug": "^2.0.0-beta6",
+    "pug-html-loader": "^1.0.10",
     "typescript": "^2.1.4",
     "webpack": "^1.14.0"
   }

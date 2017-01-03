@@ -1,12 +1,26 @@
 -- Up
 
-CREATE TABLE something(smth TEXT NOT NULL);
+CREATE TABLE Developer (
+	Id INTEGER NOT NULL,
+	Name TEXT NOT NULL,
+	CeilingAmount REAL NOT NULL,
+	PRIMARY KEY (Id)
+);
 
-INSERT INTO something(smth) VALUES('Smth. #1');
-INSERT INTO something(smth) VALUES('Smth. #2');
-INSERT INTO something(smth) VALUES('Smth. #3');
+CREATE TABLE Contract (
+	Id INTEGER NOT NULL,
+	DeveloperId INTEGER NOT NULL,
+	Amount REAL NOT NULL,
+	StartDate INTEGER NOT NULL,
+	Deadline INTEGER NOT NULL,
+	AcceptanceDate INTEGER,
+	PRIMARY KEY (Id),
+	FOREIGN KEY (DeveloperId)
+		REFERENCES Developer (Id)
+);
 
 
 -- Down
 
-DROP TABLE something;
+DROP TABLE Developer;
+DROP TABLE Contract;
