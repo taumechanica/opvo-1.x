@@ -32,6 +32,16 @@ const start = (db: any) => {
 
 	server.route({
 		method: 'GET',
+		path: '/tpl/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
 		path: '/rest/developers',
 		handler: (request, reply) => db
 			.all('SELECT * FROM Developer')
