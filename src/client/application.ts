@@ -1,4 +1,5 @@
 import './application.pug';
+import './assets/styles/default.less';
 
 import * as angular from 'angular';
 

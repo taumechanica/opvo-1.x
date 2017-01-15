@@ -22,6 +22,16 @@ const start = (db: any) => {
 
 	server.route({
 		method: 'GET',
+		path: '/css/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
 		path: '/scr/{file*}',
 		handler: {
 			directory: {
