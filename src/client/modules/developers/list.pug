@@ -1,0 +1,9 @@
+.developers
+	.list
+		.header Исполнители
+		.body
+			table
+				tr(ng-repeat="dev in ctrl.developers track by dev.Id")
+					td {{ dev.Id }}
+					td {{ dev.Name }}
+					td {{ dev.CeilingAmount }}

@@ -1,3 +1,24 @@
+@import './colors.less';
+
+*, *:before, *:after {
+	box-sizing: border-box;
+}
+
 html {
 	overflow-y: scroll;
+}
+
+body {
+	background-color: @grey-400;
+	font-family: Arial;
+	font-size: 14px;
+	font-weight: 400;
+	margin: 0;
+	padding: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
 }
