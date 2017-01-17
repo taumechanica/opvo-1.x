@@ -3,7 +3,18 @@
 		.header Исполнители
 		.body
 			table
+				tr
+					th #
+					th Название
+					th Предельная сумма ответственности, млн. руб.
+					th
 				tr(ng-repeat="dev in ctrl.developers track by dev.Id")
-					td {{ dev.Id }}
-					td {{ dev.Name }}
-					td {{ dev.CeilingAmount }}
+					td.id {{ dev.Id }}
+					td.name {{ dev.Name }}
+					td.amount {{ dev.CeilingAmount }}
+					td.func
+				tr
+					th #
+					th Название
+					th Предельная сумма ответственности, млн. руб.
+					th

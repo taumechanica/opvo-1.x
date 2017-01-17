@@ -1,7 +1,7 @@
 import * as ng from 'angular';
 
 import './application.pug';
-import './assets/styles/default.less';
+import './assets/styles/application.less';
 
 import './modules/developers/config';
 
