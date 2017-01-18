@@ -39,6 +39,9 @@ const clientConfig = {
 			] },
 			{ test: /\.less$/, loader: ExtractTextPlugin.extract(
 				'style-loader', 'css-loader!postcss-loader!less-loader'
+			) },
+			{ test: /\.css$/, loader: ExtractTextPlugin.extract(
+				'style-loader', 'css-loader'
 			) }
 		]
 	},
@@ -47,7 +50,7 @@ const clientConfig = {
 		new webpack.optimize.CommonsChunkPlugin({
 			name: ['application', 'vendor']
 		}),
-		new ExtractTextPlugin('application.css', { allChunks: false })
+		new ExtractTextPlugin('[name].css', { allChunks: false })
 	]
 };
 

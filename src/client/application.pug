@@ -5,6 +5,7 @@ html(ng-app="opvo" ng-strict-di)
 		title OPVO demo
 		script(src="/scr/vendor.js")
 		script(src="/scr/application.js")
+		link(rel="stylesheet" href="/css/vendor.css")
 		link(rel="stylesheet" href="/css/application.css")
-	body
-		.content(ui-view)
+	body(layout="row" layout-padding)
+		div(flex ui-view)

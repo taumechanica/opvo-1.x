@@ -6,6 +6,7 @@ import './assets/styles/application.less';
 import './modules/developers/config';
 
 ng.module('opvo', [
+	'ngMaterial',
 	'ui.router',
 	'opvo.developers'
 ]);
