@@ -32,6 +32,16 @@ const start = (db: any) => {
 
 	server.route({
 		method: 'GET',
+		path: '/img/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client/assets`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
 		path: '/scr/{file*}',
 		handler: {
 			directory: {
@@ -45,7 +55,7 @@ const start = (db: any) => {
 		path: '/tpl/{file*}',
 		handler: {
 			directory: {
-				path: `${__dirname}/../client`
+				path: `${__dirname}/../client/modules`
 			}
 		}
 	});

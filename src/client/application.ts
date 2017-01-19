@@ -5,8 +5,19 @@ import './assets/styles/application.less';
 
 import './modules/developers/config';
 
-ng.module('opvo', [
-	'ngMaterial',
-	'ui.router',
-	'opvo.developers'
-]);
+const getSvgSpriteUrl = (id: string) => {
+	require(`./assets/images/svg-sprite-${id}.svg`);
+	return `/img/svg-sprite-${id}.svg`;
+};
+
+ng
+	.module('opvo', [
+		'ngMaterial',
+		'ui.router',
+		'opvo.developers'
+	])
+	.config(($mdIconProvider: ng.material.IIconProvider) => {
+		'ngInject';
+
+		$mdIconProvider.iconSet('content', getSvgSpriteUrl('content'));
+	});
