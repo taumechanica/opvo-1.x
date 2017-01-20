@@ -22,21 +22,22 @@
   },
   "homepage": "https://github.com/taumechanica/opvo-demo#readme",
   "dependencies": {
+    "hapi": "^16.0.2",
+    "inert": "^4.0.4",
+    "sqlite": "^2.2.4"
+  },
+  "devDependencies": {
     "@types/angular": "^1.5.22",
     "@types/angular-material": "^1.1.44",
     "@types/angular-ui-router": "^1.1.36",
     "@types/hapi": "^13.0.37",
+    "@types/inert": "^4.0.0",
     "@types/joi": "^10.0.0",
     "angular": "^1.6.1",
     "angular-animate": "^1.6.1",
     "angular-aria": "^1.6.1",
     "angular-material": "^1.1.1",
     "angular-ui-router": "^0.3.2",
-    "hapi": "^16.0.2",
-    "inert": "^4.0.4",
-    "sqlite": "^2.2.4"
-  },
-  "devDependencies": {
     "autoprefixer": "^6.6.1",
     "awesome-typescript-loader": "^3.0.0-beta.17",
     "css-loader": "^0.26.1",

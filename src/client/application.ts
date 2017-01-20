@@ -20,4 +20,5 @@ ng
 		'ngInject';
 
 		$mdIconProvider.iconSet('content', getSvgSpriteUrl('content'));
+		$mdIconProvider.iconSet('navigation', getSvgSpriteUrl('navigation'));
 	});

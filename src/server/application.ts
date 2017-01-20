@@ -1,4 +1,5 @@
 import * as hapi from 'hapi';
+import * as inert from 'inert';
 import * as joi from 'joi';
 import * as sqlite from 'sqlite';
 
@@ -10,7 +11,7 @@ const start = (db: any) => {
 		port: 9000
 	});
 
-	server.register(require('inert'));
+	server.register(inert);
 
 	server.route({
 		method: 'GET',
