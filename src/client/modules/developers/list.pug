@@ -1,15 +1,15 @@
 .developers
 	.list(md-whiteframe="1")
-		.header Исполнители
+		.header {{:: 'DEVELOPERS_LIST' | translate }}
 		md-button.md-raised.md-primary(ng-click="ctrl.openAddDialog($event)")
 			md-icon(md-svg-icon="content:ic_add_24px")
-			| Добавить запись
+			span {{:: 'DEVELOPERS_ADD' | translate }}
 		.body
 			table
 				tr
 					th #
-					th Название
-					th Предельная сумма ответственности, млн. руб.
+					th {{:: 'DEVELOPERS_NAME' | translate }}
+					th {{:: 'DEVELOPERS_AMOUNT' | translate }}
 					th
 				tr(ng-repeat="dev in ctrl.developers track by dev.Id")
 					td.id {{ dev.Id }}
@@ -18,6 +18,6 @@
 					td.func
 				tr
 					th #
-					th Название
-					th Предельная сумма ответственности, млн. руб.
+					th {{:: 'DEVELOPERS_NAME' | translate }}
+					th {{:: 'DEVELOPERS_AMOUNT' | translate }}
 					th

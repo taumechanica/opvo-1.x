@@ -5,6 +5,8 @@ import { Template } from '../Template';
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
 
+import { EditDeveloperController } from './edit.ctrl';
+
 export class DevelopersController {
 	public developers: Developer[];
 
@@ -23,12 +25,8 @@ export class DevelopersController {
 		this.$mdDialog.show({
 			templateUrl: Template.getUrl('developers/edit'),
 			targetEvent: event,
-			controller: DevelopersController,
+			controller: EditDeveloperController,
 			controllerAs: 'ctrl'
 		});
-	}
-
-	public cancelDialog() {
-		this.$mdDialog.cancel();
 	}
 }

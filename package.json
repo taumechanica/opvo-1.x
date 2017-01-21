@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/angular": "^1.5.22",
     "@types/angular-material": "^1.1.44",
+    "@types/angular-translate": "^2.4.34",
     "@types/angular-ui-router": "^1.1.36",
     "@types/hapi": "^13.0.37",
     "@types/inert": "^4.0.0",
@@ -37,6 +38,9 @@
     "angular-animate": "^1.6.1",
     "angular-aria": "^1.6.1",
     "angular-material": "^1.1.1",
+    "angular-messages": "^1.6.1",
+    "angular-sanitize": "^1.6.1",
+    "angular-translate": "^2.13.1",
     "angular-ui-router": "^0.3.2",
     "autoprefixer": "^6.6.1",
     "awesome-typescript-loader": "^3.0.0-beta.17",
