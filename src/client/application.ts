@@ -3,6 +3,7 @@ import * as ng from 'angular';
 import './application.pug';
 import './assets/styles/application.less';
 
+import './modules/common/config';
 import './modules/developers/config';
 
 const getSvgSpriteUrl = (id: string) => {
@@ -17,6 +18,7 @@ ng
 		'ngSanitize',
 		'pascalprecht.translate',
 		'ui.router',
+		'opvo.common',
 		'opvo.developers'
 	])
 	.config(($mdIconProvider: ng.material.IIconProvider) => {

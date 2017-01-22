@@ -8,6 +8,8 @@ import { DevelopersService } from '../../data/DevelopersService';
 import { EditDeveloperController } from './edit.ctrl';
 
 export class DevelopersController {
+	public loading: boolean;
+
 	public developers: Developer[];
 
 	constructor(
@@ -16,9 +18,12 @@ export class DevelopersController {
 	) {
 		'ngInject';
 
-		this.developersService.getAll().then(response => {
-			this.developers = response.data;
-		});
+		this.loading = true;
+		this.developersService.getAll()
+			.then(response => {
+				this.developers = response.data;
+			})
+			.finally(() => this.loading = false);
 	}
 
 	public openAddDialog(event: MouseEvent) {
