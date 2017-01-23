@@ -12,11 +12,7 @@ export function LoadingDirectiveFactory() {
 			diameter: '@?'
 		},
 
-		link: (
-			scope: ng.IScope,
-			element: JQuery,
-			attributes: ng.IAttributes
-		) => {
+		link: (scope: ng.IScope, element: JQuery) => {
 			element.addClass('hidden');
 			element.parent().addClass('relative');
 

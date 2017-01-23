@@ -31,6 +31,8 @@ ng
 		'ngInject';
 
 		$translateProvider.translations('en', {
+			COULD_NOT_SAVE: 'Could not save record',
+
 			DEVELOPERS_LIST: 'Developers',
 			DEVELOPERS_ADD: 'Add record',
 			DEVELOPERS_NEW: 'New record',
@@ -48,6 +50,8 @@ ng
 		});
 
 		$translateProvider.translations('ru', {
+			COULD_NOT_SAVE: 'Не удалось сохранить запись',
+
 			DEVELOPERS_LIST: 'Исполнители',
 			DEVELOPERS_ADD: 'Добавить запись',
 			DEVELOPERS_NEW: 'Новая запись',

@@ -20,8 +20,8 @@
 							name="name"
 							ng-model="ctrl.developerModel.Name"
 							md-autofocus="true"
-							md-maxlength="100"
-							minlength="3"
+							md-maxlength="128"
+							minlength="4"
 							required
 						)
 						div(ng-messages="ctrl.developerForm.name.$error")
@@ -40,6 +40,8 @@
 						div(ng-messages="ctrl.developerForm.amount.$error")
 							div(ng-message="pattern") {{:: 'DEVELOPERS_AMOUNT_PATTERN' | translate }}
 							div(ng-message="required") {{:: 'DEVELOPERS_AMOUNT_REQUIRED' | translate }}
+					.error(ng-messages="ctrl.error")
+						div(ng-message="remote") {{:: 'COULD_NOT_SAVE' | translate }}
 				md-dialog-actions
 					md-button(ng-click="ctrl.save()")
 						md-icon(md-svg-icon="content:ic_save_24px")

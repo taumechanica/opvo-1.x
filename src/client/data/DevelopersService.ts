@@ -10,6 +10,6 @@ export class DevelopersService {
 	}
 
 	public create(developer: Developer) {
-		return this.$http.post<string>('/rest/developersq', developer);
+		return this.$http.post<string>('/rest/developers', developer);
 	}
 }

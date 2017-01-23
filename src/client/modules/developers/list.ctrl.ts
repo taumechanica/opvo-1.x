@@ -19,7 +19,8 @@ export class DevelopersController {
 		'ngInject';
 
 		this.loading = true;
-		this.developersService.getAll()
+		this.developersService
+			.getAll()
 			.then(response => {
 				this.developers = response.data;
 			})
