@@ -14,12 +14,18 @@
 						th {{:: 'DEVELOPERS_AMOUNT' | translate }}
 						th
 					tr(ng-repeat="dev in ctrl.developers track by dev.Id")
-						td.id {{ dev.Id }}
-						td.name {{ dev.Name }}
-						td.amount {{ dev.CeilingAmount }}
+						td.id {{:: dev.Id }}
+						td.name {{:: dev.Name }}
+						td.amount {{:: dev.CeilingAmount }}
 						td.func
-					tr
-						th #
-						th {{:: 'DEVELOPERS_NAME' | translate }}
-						th {{:: 'DEVELOPERS_AMOUNT' | translate }}
-						th
+							div
+								md-button.md-icon-button(
+									ng-click="ctrl.openEditDialog($event, dev)"
+									title="{{:: 'EDIT' | translate }}"
+								)
+									md-icon(md-svg-icon="content:ic_create_24px")
+								md-button.md-icon-button(
+									ng-click="ctrl.deleteRecord(dev)"
+									title="{{:: 'DELETE' | translate }}"
+								)
+									md-icon(md-svg-icon="action:ic_delete_forever_24px")

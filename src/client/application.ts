@@ -24,6 +24,7 @@ ng
 	.config(($mdIconProvider: ng.material.IIconProvider) => {
 		'ngInject';
 
+		$mdIconProvider.iconSet('action', getSvgSpriteUrl('action'));
 		$mdIconProvider.iconSet('content', getSvgSpriteUrl('content'));
 		$mdIconProvider.iconSet('navigation', getSvgSpriteUrl('navigation'));
 	})
@@ -46,7 +47,9 @@ ng
 
 			CANCEL: 'Cancel',
 			CLOSE: 'Close',
-			SAVE: 'Save'
+			SAVE: 'Save',
+			EDIT: 'Edit',
+			DELETE: 'Delete'
 		});
 
 		$translateProvider.translations('ru', {
@@ -65,7 +68,9 @@ ng
 
 			CANCEL: 'Отмена',
 			CLOSE: 'Закрыть',
-			SAVE: 'Сохранить'
+			SAVE: 'Сохранить',
+			EDIT: 'Редактировать',
+			DELETE: 'Удалить'
 		});
 
 		$translateProvider.preferredLanguage('ru');

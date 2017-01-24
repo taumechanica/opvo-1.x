@@ -10,7 +10,6 @@ export class EditDeveloperController {
 	public developerForm: ng.IFormController;
 	public developerModel: Developer;
 
-
 	constructor(
 		private $mdDialog: ng.material.IDialogService,
 		private developersService: DevelopersService
@@ -29,8 +28,10 @@ export class EditDeveloperController {
 		this.developersService
 			.create(this.developerModel)
 			.then(response => this.$mdDialog.hide())
-			.catch(reason => this.error.remote = true)
-			.finally(() => this.loading = false);
+			.catch(reason => {
+				this.error.remote = true;
+				this.loading = false;
+			});
 	}
 
 	public cancel() {

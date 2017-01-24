@@ -35,4 +35,12 @@ export class DevelopersController {
 			controllerAs: 'ctrl'
 		});
 	}
+
+	public openEditDialog(event: MouseEvent, developer: Developer) {
+		console.log(developer);
+	}
+
+	public deleteRecord(developer: Developer) {
+		console.log(developer);
+	}
 }
