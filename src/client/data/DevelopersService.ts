@@ -12,4 +12,12 @@ export class DevelopersService {
 	public create(developer: Developer) {
 		return this.$http.post<string>('/rest/developers', developer);
 	}
+
+	public update(developer: Developer) {
+		return this.$http.put<string>(`/rest/developers/${developer.Id}`, developer);
+	}
+
+	public delete(developer: Developer) {
+		return this.$http.delete<string>(`/rest/developers/${developer.Id}`);
+	}
 }

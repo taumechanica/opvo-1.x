@@ -1,11 +1,11 @@
 .developers
 	.edit
 		loading(when="ctrl.loading" diameter="25")
-		md-dialog(aria-label="{{:: 'DEVELOPERS_NEW' | translate }}")
+		md-dialog(aria-label="{{:: ctrl.title }}")
 			form(name="ctrl.developerForm")
 				md-toolbar
 					.md-toolbar-tools
-						h2 {{:: 'DEVELOPERS_NEW' | translate }}
+						h2 {{:: ctrl.title }}
 						span(flex)
 						md-button.md-icon-button(
 							ng-click="ctrl.cancel()"

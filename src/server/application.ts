@@ -8,7 +8,7 @@ const start = (db: any) => {
 
 	server.connection({
 		host: 'localhost',
-		port: 9000
+		port: 8000
 	});
 
 	server.register(inert);
@@ -146,6 +146,7 @@ const start = (db: any) => {
 					DeveloperId: joi.number().integer().min(1)
 				},
 				payload: {
+					Id: joi.number().required().integer().min(1),
 					Name: joi.string().required().min(4).max(128),
 					CeilingAmount: joi.number().required().min(0)
 				}
