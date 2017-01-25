@@ -1,17 +1,11 @@
 doctype html
-html(ng-app)
+html(ng-app="opvo" ng-cloak ng-strict-di)
 	head
 		meta(charset="utf-8")
-		title Hi there!
+		title OPVO Demo
 		script(src="/scr/vendor.js")
 		script(src="/scr/application.js")
-	body
-		p 1 + 2 = {{ 1 + 2 }}
-		input(
-			type="text"
-			ng-model="name"
-			placeholder="Enter smth."
-		)
-		h1(ng-if="name")
-			| Hi there,&nbsp;
-			span {{ name }}
+		link(rel="stylesheet" href="/css/vendor.css")
+		link(rel="stylesheet" href="/css/application.css")
+	body(layout="row" layout-padding)
+		div(flex ui-view)

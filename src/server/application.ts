@@ -1,4 +1,5 @@
 import * as hapi from 'hapi';
+import * as inert from 'inert';
 import * as joi from 'joi';
 import * as sqlite from 'sqlite';
 
@@ -7,10 +8,10 @@ const start = (db: any) => {
 
 	server.connection({
 		host: 'localhost',
-		port: 9000
+		port: 8000
 	});
 
-	server.register(require('inert'));
+	server.register(inert);
 
 	server.route({
 		method: 'GET',
@@ -22,10 +23,40 @@ const start = (db: any) => {
 
 	server.route({
 		method: 'GET',
+		path: '/css/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/img/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client/assets`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
 		path: '/scr/{file*}',
 		handler: {
 			directory: {
 				path: `${__dirname}/../client`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/tpl/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client/modules`
 			}
 		}
 	});
@@ -83,7 +114,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Developer')
 				.then((changes: any) => {
-					return reply('').code(changes.Count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {
@@ -106,7 +137,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Developer')
 				.then((changes: any) => {
-					return reply('').code(changes.Count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {
@@ -115,6 +146,7 @@ const start = (db: any) => {
 					DeveloperId: joi.number().integer().min(1)
 				},
 				payload: {
+					Id: joi.number().required().integer().min(1),
 					Name: joi.string().required().min(4).max(128),
 					CeilingAmount: joi.number().required().min(0)
 				}
@@ -195,7 +227,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Contract')
 				.then((changes: any) => {
-					return reply('').code(changes.count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {
@@ -220,7 +252,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Contract')
 				.then((changes: any) => {
-					return reply('').code(changes.count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {

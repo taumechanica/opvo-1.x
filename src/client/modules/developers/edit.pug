@@ -1,0 +1,51 @@
+.developers
+	.edit
+		loading(when="ctrl.loading" diameter="25")
+		md-dialog(aria-label="{{:: ctrl.title }}")
+			form(name="ctrl.developerForm")
+				md-toolbar
+					.md-toolbar-tools
+						h2 {{:: ctrl.title }}
+						span(flex)
+						md-button.md-icon-button(
+							ng-click="ctrl.cancel()"
+							aria-label="{{:: 'CLOSE' | translate }}"
+						)
+							md-icon(md-svg-icon="navigation:ic_close_24px")
+				md-dialog-content.md-dialog-content
+					md-input-container.md-block
+						label {{:: 'DEVELOPERS_NAME' | translate }}
+						input(
+							type="text"
+							name="name"
+							ng-model="ctrl.developerModel.Name"
+							md-autofocus="true"
+							md-maxlength="128"
+							minlength="4"
+							required
+						)
+						div(ng-messages="ctrl.developerForm.name.$error")
+							div(ng-message="md-maxlength") {{:: 'DEVELOPERS_NAME_TOO_LONG' | translate }}
+							div(ng-message="minlength") {{:: 'DEVELOPERS_NAME_TOO_SHORT' | translate }}
+							div(ng-message="required") {{:: 'DEVELOPERS_NAME_REQUIRED' | translate }}
+					md-input-container.md-block
+						label {{:: 'DEVELOPERS_AMOUNT' | translate }}
+						input(
+							type="text"
+							name="amount"
+							ng-model="ctrl.developerModel.CeilingAmount"
+							ng-pattern="/^[1-9][0-9]?$/"
+							required
+						)
+						div(ng-messages="ctrl.developerForm.amount.$error")
+							div(ng-message="pattern") {{:: 'DEVELOPERS_AMOUNT_PATTERN' | translate }}
+							div(ng-message="required") {{:: 'DEVELOPERS_AMOUNT_REQUIRED' | translate }}
+					.error(ng-messages="ctrl.error")
+						div(ng-message="remote") {{:: 'COULD_NOT_SAVE' | translate }}
+				md-dialog-actions
+					md-button(ng-click="ctrl.save()")
+						md-icon(md-svg-icon="content:ic_save_24px")
+						span {{:: 'SAVE' | translate }}
+					md-button(ng-click="ctrl.cancel()")
+						md-icon(md-svg-icon="content:ic_clear_24px")
+						span {{:: 'CANCEL' | translate }}

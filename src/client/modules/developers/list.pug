@@ -1,0 +1,31 @@
+.developers
+	.list(md-whiteframe="1")
+		.header {{:: 'DEVELOPERS_LIST' | translate }}
+		.content
+			loading(when="ctrl.loading")
+			md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
+				md-icon(md-svg-icon="content:ic_add_24px")
+				span {{:: 'ADD_RECORD' | translate }}
+			.body
+				table
+					tr
+						th.id #
+						th {{:: 'DEVELOPERS_NAME' | translate }}
+						th.amount {{:: 'DEVELOPERS_AMOUNT' | translate }}
+						th.func
+					tr(ng-repeat="dev in ctrl.developers track by dev.Id")
+						td.id {{:: dev.Id }}
+						td {{ dev.Name }}
+						td.amount {{ dev.CeilingAmount }}
+						td.func
+							div
+								md-button.md-icon-button(
+									ng-click="ctrl.openEditDialog($event, dev)"
+									title="{{:: 'EDIT' | translate }}"
+								)
+									md-icon(md-svg-icon="content:ic_create_24px")
+								md-button.md-icon-button(
+									ng-click="ctrl.openDeleteDialog($event, dev)"
+									title="{{:: 'DELETE' | translate }}"
+								)
+									md-icon(md-svg-icon="action:ic_delete_forever_24px")

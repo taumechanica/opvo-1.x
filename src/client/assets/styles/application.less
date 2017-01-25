@@ -1,0 +1,51 @@
+@import './palette.less';
+
+body {
+	background-color: @blue-grey-100;
+	font-family: Arial;
+	font-size: 14px;
+	overflow-x: hidden;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+}
+
+loading {
+	background-color: @overlay;
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 1;
+
+	> div {
+		height: 100%;
+	}
+}
+
+.md-button {
+	line-height: normal;
+	text-transform: none;
+
+	span {
+		padding-left: 5px;
+	}
+}
+
+.error {
+	color: @red-A700;
+	text-align: center;
+}
+
+.relative {
+	position: relative;
+}
+
+.hidden {
+	display: none;
+}
