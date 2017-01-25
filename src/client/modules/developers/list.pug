@@ -9,14 +9,14 @@
 			.body
 				table
 					tr
-						th #
+						th.id #
 						th {{:: 'DEVELOPERS_NAME' | translate }}
-						th {{:: 'DEVELOPERS_AMOUNT' | translate }}
-						th
+						th.amount {{:: 'DEVELOPERS_AMOUNT' | translate }}
+						th.func
 					tr(ng-repeat="dev in ctrl.developers track by dev.Id")
 						td.id {{:: dev.Id }}
-						td.name {{:: dev.Name }}
-						td.amount {{:: dev.CeilingAmount }}
+						td {{ dev.Name }}
+						td.amount {{ dev.CeilingAmount }}
 						td.func
 							div
 								md-button.md-icon-button(

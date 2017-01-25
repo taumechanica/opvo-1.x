@@ -114,7 +114,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Developer')
 				.then((changes: any) => {
-					return reply('').code(changes.Count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {
@@ -137,7 +137,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Developer')
 				.then((changes: any) => {
-					return reply('').code(changes.Count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {
@@ -227,7 +227,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Contract')
 				.then((changes: any) => {
-					return reply('').code(changes.count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {
@@ -252,7 +252,7 @@ const start = (db: any) => {
 			.then(() => db
 				.get('SELECT changes() AS Count FROM Contract')
 				.then((changes: any) => {
-					return reply('').code(changes.count ? 204 : 404);
+					return reply('').code(!changes || changes.Count ? 204 : 404);
 				})
 			),
 		config: {

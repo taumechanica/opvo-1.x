@@ -19,13 +19,7 @@ export class DevelopersController {
 	) {
 		'ngInject';
 
-		this.loading = true;
-		this.developersService
-			.getAll()
-			.then(response => {
-				this.developers = response.data;
-			})
-			.finally(() => this.loading = false);
+		this.loadData();
 	}
 
 	public openEditDialog(event: MouseEvent, developer: Developer) {
@@ -35,7 +29,9 @@ export class DevelopersController {
 			controller: EditDeveloperController,
 			controllerAs: 'ctrl',
 			locals: { developer }
-		});
+		})
+		.then(() => this.loadData())
+		.catch(() => { });
 	}
 
 	public openDeleteDialog(event: MouseEvent, developer: Developer) {
@@ -45,6 +41,16 @@ export class DevelopersController {
 			controller: DeleteDeveloperController,
 			controllerAs: 'ctrl',
 			locals: { developer }
-		});
+		})
+		.then(() => this.loadData())
+		.catch(() => { });
+	}
+
+	private loadData() {
+		this.loading = true;
+		this.developersService
+			.getAll()
+			.then(response => this.developers = response.data)
+			.finally(() => this.loading = false);
 	}
 }
