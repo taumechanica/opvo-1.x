@@ -1,3 +1,5 @@
+import '../../assets/styles/common.less';
+
 import * as ng from 'angular';
 
 import { LoadingDirectiveFactory } from './loading.dir';

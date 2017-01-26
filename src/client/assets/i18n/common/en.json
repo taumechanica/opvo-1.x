@@ -1,0 +1,15 @@
+{
+	"ADD_RECORD": "Add record",
+	"NEW_RECORD": "New record",
+	"EDIT_RECORD": "Edit record",
+	"DELETE_RECORD": "Delete record",
+	"COULD_NOT_SAVE": "Could not save record",
+	"COULD_NOT_DELETE": "Could not delete record",
+	"CONFIRM_DELETE": "Would you like to delete the record #{{ id }}?",
+	"CANCEL": "Cancel",
+	"CLOSE": "Close",
+	"SAVE": "Save",
+	"EDIT": "Edit",
+	"DELETE": "Delete",
+	"YES": "Yes"
+}

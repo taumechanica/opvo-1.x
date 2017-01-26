@@ -1,5 +1,3 @@
-import '../../assets/styles/developers.less';
-
 import { Template } from '../Template';
 
 import { Developer } from '../../domain/Developer';

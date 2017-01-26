@@ -1,3 +1,5 @@
+import '../../assets/styles/developers.less';
+
 import * as ng from 'angular';
 
 import { Template } from '../Template';
