@@ -30,9 +30,9 @@ ng
 	.config(($translateProvider: ng.translate.ITranslateProvider) => {
 		'ngInject';
 
-		$translateProvider.translations('en', { });
-		$translateProvider.translations('ru', { });
-
+		$translateProvider.useLoader('$translatePartialLoader', {
+			urlTemplate: '/i18n/{part}/{lang}.json'
+		});
 		$translateProvider.preferredLanguage('ru');
 		$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
 	});

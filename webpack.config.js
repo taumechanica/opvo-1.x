@@ -1,5 +1,7 @@
 const fs = require('fs');
 const webpack = require('webpack');
+
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const nodeModules = { };
@@ -29,7 +31,7 @@ const clientConfig = {
 	module: {
 		loaders: [
 			{ test: /\.ts$/, loader: 'awesome-typescript-loader?configFileName=./src/client/tsconfig.json' },
-			{ test: /\.svg$/, loader: 'file-loader?name=assets/[name].svg' },
+			{ test: /\.svg$/, loader: 'file-loader?name=images/[name].svg' },
 			{ test: /src\/client\/application\.pug$/, loaders: [
 				'file-loader?name=[name].html',
 				'pug-html-loader?exports=false'
@@ -51,6 +53,10 @@ const clientConfig = {
 		new webpack.optimize.CommonsChunkPlugin({
 			name: ['application', 'vendor']
 		}),
+		new CopyWebpackPlugin([{
+			from: './src/client/assets/i18n',
+			to: 'i18n'
+		}]),
 		new ExtractTextPlugin('[name].css', { allChunks: false })
 	]
 };
