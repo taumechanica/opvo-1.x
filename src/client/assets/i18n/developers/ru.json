@@ -1,0 +1,11 @@
+{
+	"DEVELOPERS_LIST": "Исполнители",
+	"DEVELOPERS_NAME": "Название",
+	"DEVELOPERS_AMOUNT": "Предельная сумма ответственности, млн. руб.",
+	"DEVELOPERS_NAME_TOO_LONG": "Название слишком длинное",
+	"DEVELOPERS_NAME_TOO_SHORT": "Название слишком короткое",
+	"DEVELOPERS_NAME_REQUIRED": "Введите название",
+	"DEVELOPERS_AMOUNT_PATTERN": "Введите число от 1 до 99",
+	"DEVELOPERS_AMOUNT_REQUIRED": "Введите сумму",
+	"DEVELOPERS_DELETE_NOTE": "Вся информация о договорах также будет удалена"
+}

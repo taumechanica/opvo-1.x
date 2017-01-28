@@ -33,10 +33,20 @@ const start = (db: any) => {
 
 	server.route({
 		method: 'GET',
+		path: '/i18n/{file*}',
+		handler: {
+			directory: {
+				path: `${__dirname}/../client/i18n`
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
 		path: '/img/{file*}',
 		handler: {
 			directory: {
-				path: `${__dirname}/../client/assets`
+				path: `${__dirname}/../client/images`
 			}
 		}
 	});

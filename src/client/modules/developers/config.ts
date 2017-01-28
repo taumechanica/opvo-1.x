@@ -1,3 +1,5 @@
+import '../../assets/styles/developers.less';
+
 import * as ng from 'angular';
 
 import { Template } from '../Template';
@@ -9,6 +11,11 @@ ng
 	.module('opvo.developers', [])
 	.controller('developersController', DevelopersController)
 	.service('developersService', DevelopersService)
+	.config(($translatePartialLoaderProvider: ng.translate.ITranslatePartialLoaderProvider) => {
+		'ngInject';
+
+		$translatePartialLoaderProvider.addPart('developers');
+	})
 	.config((
 		$stateProvider: ng.ui.IStateProvider,
 		$urlRouterProvider: ng.ui.IUrlRouterProvider
