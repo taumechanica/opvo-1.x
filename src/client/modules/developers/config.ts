@@ -24,7 +24,7 @@ ng
 
 		$urlRouterProvider.otherwise('/');
 
-		$stateProvider.state('root', {
+		$stateProvider.state('developers', {
 			url: '/',
 			templateUrl: Template.getUrl('developers/list'),
 			controller: 'developersController',

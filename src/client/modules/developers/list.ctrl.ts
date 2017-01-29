@@ -12,6 +12,7 @@ export class DevelopersController {
 	public developers: Developer[];
 
 	constructor(
+		private $state: ng.ui.IStateService,
 		private $mdDialog: ng.material.IDialogService,
 		private developersService: DevelopersService
 	) {
@@ -20,7 +21,13 @@ export class DevelopersController {
 		this.loadData();
 	}
 
+	public openContracts(event: MouseEvent, developer: Developer) {
+		this.$state.go('contracts', { developer });
+	}
+
 	public openEditDialog(event: MouseEvent, developer: Developer) {
+		event.stopPropagation();
+
 		this.$mdDialog.show({
 			templateUrl: Template.getUrl('developers/edit'),
 			targetEvent: event,
@@ -33,6 +40,8 @@ export class DevelopersController {
 	}
 
 	public openDeleteDialog(event: MouseEvent, developer: Developer) {
+		event.stopPropagation();
+
 		this.$mdDialog.show({
 			templateUrl: Template.getUrl('developers/delete'),
 			targetEvent: event,

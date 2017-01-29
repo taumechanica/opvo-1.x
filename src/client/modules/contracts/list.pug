@@ -1,0 +1,7 @@
+.contracts
+	.list(md-whiteframe="1")
+		.header
+			a(ui-sref="developers") {{:: 'DEVELOPERS_LIST' | translate }}
+			| &nbsp;♦ {{:: ctrl.developer.Name }}
+		.content
+			loading(when="ctrl.loading")

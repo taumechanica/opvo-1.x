@@ -13,7 +13,10 @@
 						th {{:: 'DEVELOPERS_NAME' | translate }}
 						th.amount {{:: 'DEVELOPERS_AMOUNT' | translate }}
 						th.func
-					tr(ng-repeat="dev in ctrl.developers track by dev.Id")
+					tr(
+						ng-repeat="dev in ctrl.developers track by dev.Id"
+						ng-click="ctrl.openContracts($event, dev)"
+					)
 						td.id {{:: dev.Id }}
 						td {{ dev.Name }}
 						td.amount {{ dev.CeilingAmount }}
