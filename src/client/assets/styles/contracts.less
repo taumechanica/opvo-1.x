@@ -15,5 +15,59 @@
 		.content {
 			min-height: 200px;
 		}
+
+		.body {
+			padding: 10px;
+
+			th, td {
+				border: 1px solid @grey-200;
+				padding: 4px;
+			}
+
+			tbody tr:not(:last-child):hover td {
+				background-color: @grey-200;
+				cursor: pointer;
+
+				> div {
+					visibility: visible;
+				}
+			}
+
+			th.id {
+				width: 100px;
+			}
+
+			th.amount, th.date {
+				width: 300px;
+			}
+
+			th.func {
+				width: 120px;
+			}
+
+			td.id, td.month,
+			td.amount, td.date {
+				text-align: center;
+			}
+
+			td.func > div {
+				margin: 0 auto;
+				visibility: hidden;
+				width: 104px;
+			}
+
+			td.month {
+				font-weight: bold;
+				line-height: 40px;
+			}
+
+			td.not-exceeds {
+				background-color: @green-200;
+			}
+
+			td.exceeds {
+				background-color: @red-200;
+			}
+		}
 	}
 }

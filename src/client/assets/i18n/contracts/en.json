@@ -1,2 +1,7 @@
 {
+	"CONTRACT_AMOUNT": "Cost of work, million rubles",
+	"CONTRACT_DATES": "Contract dates",
+	"CONTRACT_ACCEPTANCE_DATE": "Acceptance date",
+	"CONTRACT_START_DATE": "Start date",
+	"CONTRACT_DEADLINE": "Deadline"
 }

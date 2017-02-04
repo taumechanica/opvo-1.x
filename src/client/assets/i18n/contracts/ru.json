@@ -1,2 +1,7 @@
 {
+	"CONTRACT_AMOUNT": "Стоимость работ, млн. руб.",
+	"CONTRACT_DATES": "Сроки исполнения",
+	"CONTRACT_ACCEPTANCE_DATE": "Дата подписания акта приемки",
+	"CONTRACT_START_DATE": "Дата начала",
+	"CONTRACT_DEADLINE": "Дата исполнения"
 }
