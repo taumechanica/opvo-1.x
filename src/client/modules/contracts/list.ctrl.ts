@@ -1,7 +1,11 @@
+import { Template } from '../Template';
+
 import { Contract } from '../../domain/Contract';
 import { Developer } from '../../domain/Developer';
 
 import { ContractsService } from '../../data/ContractsService';
+
+import { DeleteContractController } from './delete.ctrl';
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -19,6 +23,7 @@ export class ContractsController {
 
 	public developer: Developer;
 	public year: number;
+	public hasData: boolean;
 
 	public contractsByMonth: {
 		month: string;
@@ -51,6 +56,17 @@ export class ContractsController {
 
 	public openDeleteDialog(event: MouseEvent, contract: Contract) {
 		event.stopPropagation();
+
+		const { developer } = this;
+		this.$mdDialog.show({
+			templateUrl: Template.getUrl('contracts/delete'),
+			targetEvent: event,
+			controller: DeleteContractController,
+			controllerAs: 'ctrl',
+			locals: { developer, contract }
+		})
+		.then(() => this.loadData())
+		.catch(() => { });
 	}
 
 	private loadData() {
@@ -58,6 +74,7 @@ export class ContractsController {
 		this.contractsService
 			.getAllByYear(this.developer, this.year)
 			.then(response => {
+				this.hasData = response.data.length > 0;
 				this.contractsByMonth = MONTHS.map(month => (
 					{ month, contracts: [], sum: 0.0, exceeds: false }
 				));

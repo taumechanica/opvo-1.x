@@ -47,5 +47,8 @@
 							td.amount(ng-class="{ \
 								'not-exceeds': !batch.exceeds, \
 								'exceeds': batch.exceeds \
-							}") {{:: batch.sum }}
+							}") {{ batch.sum }}
 							td(colspan="4")
+					tbody(ng-if="!ctrl.hasData")
+						tr
+							td.no-data(colspan="6") {{:: 'NO_RECORDS' | translate }}

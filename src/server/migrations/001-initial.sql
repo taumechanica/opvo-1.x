@@ -17,6 +17,7 @@ CREATE TABLE Contract (
 	PRIMARY KEY (Id),
 	FOREIGN KEY (DeveloperId)
 		REFERENCES Developer (Id)
+		ON DELETE CASCADE
 );
 
 
