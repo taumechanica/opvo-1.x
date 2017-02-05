@@ -166,15 +166,21 @@ const start = (db: any) => {
 
 	server.route({
 		method: 'GET',
-		path: '/rest/developers/{DeveloperId}/contracts',
+		path: '/rest/developers/{DeveloperId}/contracts-{Year}',
 		handler: (request, reply) => Promise.all([
 			db.get('SELECT * FROM Developer WHERE Id = ?', request.params['DeveloperId']),
-			db.all('SELECT * FROM Contract WHERE DeveloperId = ?', request.params['DeveloperId'])
+			db.all(
+				'SELECT * FROM Contract WHERE DeveloperId = ? AND StartDate BETWEEN ? AND ? ORDER BY StartDate',
+				request.params['DeveloperId'],
+				new Date(parseInt(request.params['Year']), 0, 1, 12, 0, 0, 0),
+				new Date(parseInt(request.params['Year']), 11, 31, 12, 0, 0, 0)
+			)
 		]).then(results => results[0] ? reply(results[1]) : reply('').code(404)),
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1)
+					DeveloperId: joi.number().integer().min(1),
+					Year: joi.number().integer().min(2010).max(2030)
 				}
 			}
 		}
@@ -272,6 +278,8 @@ const start = (db: any) => {
 					ContractId: joi.number().integer().min(1)
 				},
 				payload: {
+					Id: joi.number().required().integer().min(1),
+					DeveloperId: joi.number().required().integer().min(1),
 					Amount: joi.number().required().min(0),
 					StartDate: joi.number().required().integer().min(0),
 					Deadline: joi.number().required().integer().min(0),

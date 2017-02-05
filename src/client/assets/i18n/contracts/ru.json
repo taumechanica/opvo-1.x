@@ -1,0 +1,11 @@
+{
+	"CONTRACT_AMOUNT": "Стоимость работ, млн. руб.",
+	"CONTRACT_DATES": "Сроки исполнения",
+	"CONTRACT_ACCEPTANCE_DATE": "Дата подписания акта приемки",
+	"CONTRACT_START_DATE": "Дата начала",
+	"CONTRACT_DEADLINE": "Дата исполнения",
+	"CONTRACT_AMOUNT_PATTERN": "Введите число от 1.00 до 99.99",
+	"CONTRACT_AMOUNT_REQUIRED": "Введите сумму",
+	"CONTRACT_START_DATE_REQUIRED": "Укажите дату начала",
+	"CONTRACT_DEADLINE_REQUIRED": "Укажите дату исполнения"
+}

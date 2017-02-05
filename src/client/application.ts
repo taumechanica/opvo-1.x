@@ -3,6 +3,7 @@ import * as ng from 'angular';
 import './application.pug';
 
 import './modules/common/config';
+import './modules/contracts/config';
 import './modules/developers/config';
 
 const getSvgSpriteUrl = (id: string) => {
@@ -18,6 +19,7 @@ ng
 		'pascalprecht.translate',
 		'ui.router',
 		'opvo.common',
+		'opvo.contracts',
 		'opvo.developers'
 	])
 	.config(($mdIconProvider: ng.material.IIconProvider) => {

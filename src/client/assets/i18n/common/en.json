@@ -1,4 +1,5 @@
 {
+	"NO_RECORDS": "No records",
 	"ADD_RECORD": "Add record",
 	"NEW_RECORD": "New record",
 	"EDIT_RECORD": "Edit record",
@@ -6,10 +7,23 @@
 	"COULD_NOT_SAVE": "Could not save record",
 	"COULD_NOT_DELETE": "Could not delete record",
 	"CONFIRM_DELETE": "Would you like to delete the record #{{ id }}?",
+	"DATE_FORMAT_ERROR": "Format: DD.MM.YYYY",
 	"CANCEL": "Cancel",
 	"CLOSE": "Close",
 	"SAVE": "Save",
 	"EDIT": "Edit",
 	"DELETE": "Delete",
-	"YES": "Yes"
+	"YES": "Yes",
+	"JAN": "January",
+	"FEB": "February",
+	"MAR": "March",
+	"APR": "April",
+	"MAY": "May",
+	"JUN": "June",
+	"JUL": "July",
+	"AUG": "August",
+	"SEP": "September",
+	"OCT": "October",
+	"NOV": "November",
+	"DEC": "December"
 }

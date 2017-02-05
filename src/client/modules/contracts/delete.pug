@@ -13,7 +13,6 @@
 						md-icon(md-svg-icon="navigation:ic_close_24px")
 			md-dialog-content.md-dialog-content
 				h2 {{ 'CONFIRM_DELETE' | translate : ctrl.translateData }}
-				p {{ 'DEVELOPERS_DELETE_NOTE' | translate }}
 				.error(ng-messages="ctrl.error")
 					div(ng-message="remote") {{ 'COULD_NOT_DELETE' | translate }}
 			md-dialog-actions
