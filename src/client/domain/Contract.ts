@@ -2,7 +2,7 @@ export interface Contract {
 	Id: number;
 	DeveloperId: number;
 	Amount: number;
-	StartDate: number;
-	Deadline: number;
-	AcceptanceDate?: number;
+	StartDate: Date;
+	Deadline: Date;
+	AcceptanceDate?: Date;
 }

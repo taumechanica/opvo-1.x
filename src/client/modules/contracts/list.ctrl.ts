@@ -5,6 +5,7 @@ import { Developer } from '../../domain/Developer';
 
 import { ContractsService } from '../../data/ContractsService';
 
+import { EditContractController } from './edit.ctrl';
 import { DeleteContractController } from './delete.ctrl';
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -52,6 +53,17 @@ export class ContractsController {
 
 	public openEditDialog(event: MouseEvent, contract: Contract) {
 		event.stopPropagation();
+
+		const { developer } = this;
+		this.$mdDialog.show({
+			templateUrl: Template.getUrl('contracts/edit'),
+			targetEvent: event,
+			controller: EditContractController,
+			controllerAs: 'ctrl',
+			locals: { developer, contract }
+		})
+		.then(() => this.loadData())
+		.catch(() => { });
 	}
 
 	public openDeleteDialog(event: MouseEvent, contract: Contract) {
@@ -73,12 +85,12 @@ export class ContractsController {
 		this.loading = true;
 		this.contractsService
 			.getAllByYear(this.developer, this.year)
-			.then(response => {
-				this.hasData = response.data.length > 0;
+			.then(data => {
+				this.hasData = data.length > 0;
 				this.contractsByMonth = MONTHS.map(month => (
 					{ month, contracts: [], sum: 0.0, exceeds: false }
 				));
-				response.data.forEach(contract => {
+				data.forEach(contract => {
 					const index = new Date(contract.StartDate).getMonth();
 					const batch = this.contractsByMonth[index];
 					batch.contracts.push(contract);

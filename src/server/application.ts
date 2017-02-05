@@ -278,6 +278,8 @@ const start = (db: any) => {
 					ContractId: joi.number().integer().min(1)
 				},
 				payload: {
+					Id: joi.number().required().integer().min(1),
+					DeveloperId: joi.number().required().integer().min(1),
 					Amount: joi.number().required().min(0),
 					StartDate: joi.number().required().integer().min(0),
 					Deadline: joi.number().required().integer().min(0),

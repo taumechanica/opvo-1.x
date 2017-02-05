@@ -1,17 +1,17 @@
 .developers
 	.list(md-whiteframe="1")
-		.header {{:: 'DEVELOPERS_LIST' | translate }}
+		.header {{ 'DEVELOPERS_LIST' | translate }}
 		.content
 			loading(when="ctrl.loading")
 			md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
 				md-icon(md-svg-icon="content:ic_add_24px")
-				span {{:: 'ADD_RECORD' | translate }}
+				span {{ 'ADD_RECORD' | translate }}
 			.body
-				table
+				table.data-table
 					tr
 						th.id #
-						th {{:: 'DEVELOPERS_NAME' | translate }}
-						th.amount {{:: 'DEVELOPERS_AMOUNT' | translate }}
+						th {{ 'DEVELOPERS_NAME' | translate }}
+						th.amount {{ 'DEVELOPERS_AMOUNT' | translate }}
 						th.func
 					tr(
 						ng-repeat="dev in ctrl.developers track by dev.Id"
@@ -24,13 +24,13 @@
 							div
 								md-button.md-icon-button(
 									ng-click="ctrl.openEditDialog($event, dev)"
-									title="{{:: 'EDIT' | translate }}"
+									title="{{ 'EDIT' | translate }}"
 								)
 									md-icon(md-svg-icon="content:ic_create_24px")
 								md-button.md-icon-button(
 									ng-click="ctrl.openDeleteDialog($event, dev)"
-									title="{{:: 'DELETE' | translate }}"
+									title="{{ 'DELETE' | translate }}"
 								)
 									md-icon(md-svg-icon="action:ic_delete_forever_24px")
 					tr(ng-if="ctrl.developers.length === 0")
-						td.no-data(colspan="4") {{:: 'NO_RECORDS' | translate }}
+						td.no-data(colspan="4") {{ 'NO_RECORDS' | translate }}
