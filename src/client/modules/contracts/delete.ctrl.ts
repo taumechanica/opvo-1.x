@@ -1,4 +1,4 @@
-import * as ng from 'angular';
+import { material } from 'angular';
 
 import { Developer } from '../../domain/Developer';
 import { Contract } from '../../domain/Contract';
@@ -14,7 +14,7 @@ export class DeleteContractController {
 	constructor(
 		private developer: Developer,
 		private contract: Contract,
-		private $mdDialog: ng.material.IDialogService,
+		private $mdDialog: material.IDialogService,
 		private contractsService: ContractsService
 	) {
 		'ngInject';
@@ -24,15 +24,19 @@ export class DeleteContractController {
 		};
 	}
 
-	public delete() {
+	public async delete() {
 		this.error = { };
-
 		this.loading = true;
-		this.contractsService
-			.delete(this.developer, this.contract)
-			.then(() => this.$mdDialog.hide())
-			.catch(() => this.error.remote = true)
-			.finally(() => this.loading = false);
+
+		try {
+			await this.contractsService.delete(this.developer, this.contract);
+
+			this.$mdDialog.hide();
+		} catch (ex) {
+			this.error.remote = true;
+		} finally {
+			this.loading = false;
+		}
 	}
 
 	public cancel() {

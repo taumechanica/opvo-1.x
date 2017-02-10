@@ -1,4 +1,5 @@
-import * as ng from 'angular';
+import { isUndefined } from 'angular';
+import { IScope } from 'angular';
 
 import { Template } from '../Template';
 
@@ -12,11 +13,11 @@ export function LoadingDirectiveFactory() {
 			diameter: '@?'
 		},
 
-		link: (scope: ng.IScope, element: JQuery) => {
+		link: (scope: IScope, element: JQuery) => {
 			element.addClass('hidden');
 			element.parent().addClass('relative');
 
-			if (ng.isUndefined(scope['diameter'])) {
+			if (isUndefined(scope['diameter'])) {
 				scope['diameter'] = '50';
 			}
 

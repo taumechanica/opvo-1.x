@@ -1,3 +1,5 @@
+import { material, ui } from 'angular';
+
 import { Template } from '../Template';
 
 import { Developer } from '../../domain/Developer';
@@ -12,8 +14,8 @@ export class DevelopersController {
 	public developers: Developer[];
 
 	constructor(
-		private $state: ng.ui.IStateService,
-		private $mdDialog: ng.material.IDialogService,
+		private $state: ui.IStateService,
+		private $mdDialog: material.IDialogService,
 		private developersService: DevelopersService
 	) {
 		'ngInject';
@@ -25,39 +27,45 @@ export class DevelopersController {
 		this.$state.go('contracts', { developer });
 	}
 
-	public openEditDialog(event: MouseEvent, developer: Developer) {
+	public async openEditDialog(event: MouseEvent, developer: Developer) {
 		event.stopPropagation();
 
-		this.$mdDialog.show({
-			templateUrl: Template.getUrl('developers/edit'),
-			targetEvent: event,
-			controller: EditDeveloperController,
-			controllerAs: 'ctrl',
-			locals: { developer }
-		})
-		.then(() => this.loadData())
-		.catch(() => { });
+		try {
+			await this.$mdDialog.show({
+				templateUrl: Template.getUrl('developers/edit'),
+				targetEvent: event,
+				controller: EditDeveloperController,
+				controllerAs: 'ctrl',
+				locals: { developer }
+			});
+
+			this.loadData();
+		} catch (ex) { }
 	}
 
-	public openDeleteDialog(event: MouseEvent, developer: Developer) {
+	public async openDeleteDialog(event: MouseEvent, developer: Developer) {
 		event.stopPropagation();
 
-		this.$mdDialog.show({
-			templateUrl: Template.getUrl('developers/delete'),
-			targetEvent: event,
-			controller: DeleteDeveloperController,
-			controllerAs: 'ctrl',
-			locals: { developer }
-		})
-		.then(() => this.loadData())
-		.catch(() => { });
+		try {
+			await this.$mdDialog.show({
+				templateUrl: Template.getUrl('developers/delete'),
+				targetEvent: event,
+				controller: DeleteDeveloperController,
+				controllerAs: 'ctrl',
+				locals: { developer }
+			});
+
+			this.loadData();
+		} catch (ex) { }
 	}
 
-	private loadData() {
+	private async loadData() {
 		this.loading = true;
-		this.developersService
-			.getAll()
-			.then(response => this.developers = response.data)
-			.finally(() => this.loading = false);
+
+		try {
+			this.developers = await this.developersService.getAll();
+		} finally {
+			this.loading = false;
+		}
 	}
 }

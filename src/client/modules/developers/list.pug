@@ -32,5 +32,5 @@
 									title="{{ 'DELETE' | translate }}"
 								)
 									md-icon(md-svg-icon="action:ic_delete_forever_24px")
-					tr(ng-if="ctrl.developers.length === 0")
-						td.no-data(colspan="4") {{ 'NO_RECORDS' | translate }}
+					tr.no-data(ng-if="ctrl.developers.length === 0")
+						td(colspan="4") {{ 'NO_RECORDS' | translate }}

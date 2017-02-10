@@ -1,3 +1,5 @@
+import { IHttpService } from 'angular';
+
 import { Contract } from '../domain/Contract';
 import { Developer } from '../domain/Developer';
 
@@ -11,28 +13,32 @@ interface ContractJson {
 }
 
 export class ContractsService {
-	constructor(private $http: ng.IHttpService) {
+	constructor(private $http: IHttpService) {
 		'ngInject';
 	}
 
-	public getAllByYear(developer: Developer, year: number) {
+	public async getAllByYear(developer: Developer, year: number) {
 		const url = `/rest/developers/${developer.Id}/contracts-${year}`;
-		return this.$http.get<ContractJson[]>(url).then(({ data }) => data.map(json => this.decode(json)));
+		const response = await this.$http.get<ContractJson[]>(url);
+
+		return response.data.map(json => this.decode(json));
 	}
 
-	public create(developer: Developer, contract: Contract) {
+	public async create(developer: Developer, contract: Contract) {
 		const url = `/rest/developers/${developer.Id}/contracts`;
-		return this.$http.post<string>(url, this.encode(contract));
+		const response = await this.$http.post<string>(url, this.encode(contract));
+
+		return response.data;
 	}
 
-	public update(developer: Developer, contract: Contract) {
+	public async update(developer: Developer, contract: Contract) {
 		const url = `/rest/developers/${developer.Id}/contracts/${contract.Id}`;
-		return this.$http.put<string>(url, this.encode(contract));
+		await this.$http.put<void>(url, this.encode(contract));
 	}
 
-	public delete(developer: Developer, contract: Contract) {
+	public async delete(developer: Developer, contract: Contract) {
 		const url = `/rest/developers/${developer.Id}/contracts/${contract.Id}`;
-		return this.$http.delete<string>(url);
+		await this.$http.delete<void>(url);
 	}
 
 	private encode(contract: Contract) {

@@ -1,6 +1,6 @@
-import * as ng from 'angular';
+import { IAttributes, IFilterService, INgModelController, IScope } from 'angular';
 
-export function InputDateDirectiveFactory($filter: ng.IFilterService) {
+export function InputDateDirectiveFactory($filter: IFilterService) {
 	'ngInject';
 
 	const date = $filter('date');
@@ -10,7 +10,7 @@ export function InputDateDirectiveFactory($filter: ng.IFilterService) {
 		restrict: 'A',
 		require: 'ngModel',
 
-		link: (scope: ng.IScope, element: JQuery, attrs: ng.IAttributes, ctrl: ng.INgModelController) => {
+		link: (scope: IScope, element: JQuery, attrs: IAttributes, ctrl: INgModelController) => {
 			ctrl.$formatters.push((value: Date) => date(value, 'dd.MM.yyyy'));
 
 			ctrl.$parsers.push((value: string) => {

@@ -1,23 +1,33 @@
+import { IHttpService } from 'angular';
+
 import { Developer } from '../domain/Developer';
 
 export class DevelopersService {
-	constructor(private $http: ng.IHttpService) {
+	constructor(private $http: IHttpService) {
 		'ngInject';
 	}
 
-	public getAll() {
-		return this.$http.get<Developer[]>('/rest/developers');
+	public async getAll() {
+		const url = '/rest/developers';
+		const response = await this.$http.get<Developer[]>(url);
+
+		return response.data;
 	}
 
-	public create(developer: Developer) {
-		return this.$http.post<string>('/rest/developers', developer);
+	public async create(developer: Developer) {
+		const url = '/rest/developers';
+		const response = await this.$http.post<string>(url, developer);
+
+		return response.data;
 	}
 
-	public update(developer: Developer) {
-		return this.$http.put<string>(`/rest/developers/${developer.Id}`, developer);
+	public async update(developer: Developer) {
+		const url = `/rest/developers/${developer.Id}`;
+		await this.$http.put<void>(url, developer);
 	}
 
-	public delete(developer: Developer) {
-		return this.$http.delete<string>(`/rest/developers/${developer.Id}`);
+	public async delete(developer: Developer) {
+		const url = `/rest/developers/${developer.Id}`;
+		await this.$http.delete<void>(url);
 	}
 }

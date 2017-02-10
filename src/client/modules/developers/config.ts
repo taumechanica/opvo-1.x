@@ -1,24 +1,23 @@
 import '../../assets/styles/developers.less';
 
-import * as ng from 'angular';
+import { module, translate, ui } from 'angular';
 
 import { Template } from '../Template';
 
 import { DevelopersController } from './list.ctrl';
 import { DevelopersService } from '../../data/DevelopersService';
 
-ng
-	.module('opvo.developers', [])
+module('opvo.developers', [])
 	.controller('developersController', DevelopersController)
 	.service('developersService', DevelopersService)
-	.config(($translatePartialLoaderProvider: ng.translate.ITranslatePartialLoaderProvider) => {
+	.config(($translatePartialLoaderProvider: translate.ITranslatePartialLoaderProvider) => {
 		'ngInject';
 
 		$translatePartialLoaderProvider.addPart('developers');
 	})
 	.config((
-		$stateProvider: ng.ui.IStateProvider,
-		$urlRouterProvider: ng.ui.IUrlRouterProvider
+		$stateProvider: ui.IStateProvider,
+		$urlRouterProvider: ui.IUrlRouterProvider
 	) => {
 		'ngInject';
 

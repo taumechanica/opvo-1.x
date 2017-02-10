@@ -1,4 +1,4 @@
-import * as ng from 'angular';
+import { material, module, translate } from 'angular';
 
 import './application.pug';
 
@@ -11,25 +11,24 @@ const getSvgSpriteUrl = (id: string) => {
 	return `/img/svg-sprite-${id}.svg`;
 };
 
-ng
-	.module('opvo', [
-		'ngMaterial',
-		'ngMessages',
-		'ngSanitize',
-		'pascalprecht.translate',
-		'ui.router',
-		'opvo.common',
-		'opvo.contracts',
-		'opvo.developers'
-	])
-	.config(($mdIconProvider: ng.material.IIconProvider) => {
+module('opvo', [
+	'ngMaterial',
+	'ngMessages',
+	'ngSanitize',
+	'pascalprecht.translate',
+	'ui.router',
+	'opvo.common',
+	'opvo.contracts',
+	'opvo.developers'
+])
+	.config(($mdIconProvider: material.IIconProvider) => {
 		'ngInject';
 
 		$mdIconProvider.iconSet('action', getSvgSpriteUrl('action'));
 		$mdIconProvider.iconSet('content', getSvgSpriteUrl('content'));
 		$mdIconProvider.iconSet('navigation', getSvgSpriteUrl('navigation'));
 	})
-	.config(($translateProvider: ng.translate.ITranslateProvider) => {
+	.config(($translateProvider: translate.ITranslateProvider) => {
 		'ngInject';
 
 		$translateProvider.useLoader('$translatePartialLoader', {

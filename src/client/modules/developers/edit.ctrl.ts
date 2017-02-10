@@ -1,4 +1,4 @@
-import * as ng from 'angular';
+import { extend, isUndefined, material, translate } from 'angular';
 
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
@@ -14,36 +14,41 @@ export class EditDeveloperController {
 
 	constructor(
 		private developer: Developer,
-		private $mdDialog: ng.material.IDialogService,
-		private $translate: ng.translate.ITranslateService,
+		private $mdDialog: material.IDialogService,
+		private $translate: translate.ITranslateService,
 		private developersService: DevelopersService
 	) {
 		'ngInject';
 
 		if (developer) {
-			this.developerModel = ng.extend({ }, developer);
+			this.developerModel = extend({ }, developer);
 			$translate('EDIT_RECORD').then(title => this.title = title);
 		} else {
 			$translate('NEW_RECORD').then(title => this.title = title);
 		}
 	}
 
-	public save() {
+	public async save() {
 		this.error = { };
 		this.developerForm.$setSubmitted();
 
-		if (ng.isUndefined(this.developerModel)) return;
+		if (isUndefined(this.developerModel)) return;
 		if (this.developerForm.$invalid) return;
 
 		this.loading = true;
 
-		const promise = this.developer ?
-			this.developersService.update(this.developerModel) :
-			this.developersService.create(this.developerModel);
-		promise
-			.then(() => this.$mdDialog.hide())
-			.catch(() => this.error.remote = true)
-			.finally(() => this.loading = false);
+		try {
+			const method = this.developer ?
+				this.developersService.update :
+				this.developersService.create;
+			await method(this.developerModel);
+
+			this.$mdDialog.hide();
+		} catch (ex) {
+			this.error.remote = true;
+		} finally {
+			this.loading = false;
+		}
 	}
 
 	public cancel() {

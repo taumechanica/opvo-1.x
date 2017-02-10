@@ -1,3 +1,5 @@
+import { material, ui } from 'angular';
+
 import { Template } from '../Template';
 
 import { Contract } from '../../domain/Contract';
@@ -10,8 +12,7 @@ import { DeleteContractController } from './delete.ctrl';
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
-export class ContractsStateParams
-implements ng.ui.IStateParamsService {
+export class ContractsStateParams implements ui.IStateParamsService {
 	public developer: Developer;
 
 	constructor() {
@@ -34,9 +35,9 @@ export class ContractsController {
 	}[];
 
 	constructor(
-		private $state: ng.ui.IStateService,
+		private $state: ui.IStateService,
 		private $stateParams: ContractsStateParams,
-		private $mdDialog: ng.material.IDialogService,
+		private $mdDialog: material.IDialogService,
 		private contractsService: ContractsService
 	) {
 		'ngInject';
@@ -51,58 +52,64 @@ export class ContractsController {
 		this.loadData();
 	}
 
-	public openEditDialog(event: MouseEvent, contract: Contract) {
+	public async openEditDialog(event: MouseEvent, contract: Contract) {
 		event.stopPropagation();
 
-		const { developer } = this;
-		this.$mdDialog.show({
-			templateUrl: Template.getUrl('contracts/edit'),
-			targetEvent: event,
-			controller: EditContractController,
-			controllerAs: 'ctrl',
-			locals: { developer, contract }
-		})
-		.then(() => this.loadData())
-		.catch(() => { });
+		try {
+			const { developer } = this;
+			await this.$mdDialog.show({
+				templateUrl: Template.getUrl('contracts/edit'),
+				targetEvent: event,
+				controller: EditContractController,
+				controllerAs: 'ctrl',
+				locals: { developer, contract }
+			});
+
+			this.loadData();
+		} catch (ex) { }
 	}
 
-	public openDeleteDialog(event: MouseEvent, contract: Contract) {
+	public async openDeleteDialog(event: MouseEvent, contract: Contract) {
 		event.stopPropagation();
 
-		const { developer } = this;
-		this.$mdDialog.show({
-			templateUrl: Template.getUrl('contracts/delete'),
-			targetEvent: event,
-			controller: DeleteContractController,
-			controllerAs: 'ctrl',
-			locals: { developer, contract }
-		})
-		.then(() => this.loadData())
-		.catch(() => { });
+		try {
+			const { developer } = this;
+			await this.$mdDialog.show({
+				templateUrl: Template.getUrl('contracts/delete'),
+				targetEvent: event,
+				controller: DeleteContractController,
+				controllerAs: 'ctrl',
+				locals: { developer, contract }
+			});
+
+			this.loadData();
+		} catch (ex) { }
 	}
 
-	private loadData() {
+	private async loadData() {
 		this.loading = true;
-		this.contractsService
-			.getAllByYear(this.developer, this.year)
-			.then(data => {
-				this.hasData = data.length > 0;
-				this.contractsByMonth = MONTHS.map(month => (
-					{ month, contracts: [], sum: 0.0, exceeds: false }
-				));
-				data.forEach(contract => {
-					const index = new Date(contract.StartDate).getMonth();
-					const batch = this.contractsByMonth[index];
-					batch.contracts.push(contract);
-					if (!contract.AcceptanceDate) {
-						batch.sum += contract.Amount;
-					}
-				});
-				MONTHS.forEach((month, index) => {
-					const batch = this.contractsByMonth[index];
-					batch.exceeds = batch.sum > this.developer.CeilingAmount;
-				});
-			})
-			.finally(() => this.loading = false);
+
+		try {
+			const data = await this.contractsService.getAllByYear(this.developer, this.year);
+
+			this.hasData = data.length > 0;
+			this.contractsByMonth = MONTHS.map(month => (
+				{ month, contracts: [], sum: 0.0, exceeds: false }
+			));
+			data.forEach(contract => {
+				const index = new Date(contract.StartDate).getMonth();
+				const batch = this.contractsByMonth[index];
+				batch.contracts.push(contract);
+				if (!contract.AcceptanceDate) {
+					batch.sum += contract.Amount;
+				}
+			});
+			MONTHS.forEach((month, index) => {
+				const batch = this.contractsByMonth[index];
+				batch.exceeds = batch.sum > this.developer.CeilingAmount;
+			});
+		} finally {
+			this.loading = false;
+		}
 	}
 }

@@ -26,10 +26,10 @@
 					)
 						tr(ng-repeat="contract in batch.contracts track by contract.Id")
 							td.id {{:: contract.Id }}
-							td.amount {{:: contract.Amount }}
-							td.date {{:: contract.StartDate | date : 'dd.MM.yyyy' }}
-							td.date {{:: contract.Deadline | date : 'dd.MM.yyyy' }}
-							td.date {{:: contract.AcceptanceDate | date : 'dd.MM.yyyy' }}
+							td.amount {{ contract.Amount }}
+							td.date {{ contract.StartDate | date : 'dd.MM.yyyy' }}
+							td.date {{ contract.Deadline | date : 'dd.MM.yyyy' }}
+							td.date {{ contract.AcceptanceDate | date : 'dd.MM.yyyy' }}
 							td.func
 								div
 									md-button.md-icon-button(
@@ -50,5 +50,5 @@
 							}") {{ batch.sum }}
 							td(colspan="4")
 					tbody(ng-if="!ctrl.hasData")
-						tr
-							td.no-data(colspan="6") {{ 'NO_RECORDS' | translate }}
+						tr.no-data
+							td(colspan="6") {{ 'NO_RECORDS' | translate }}
