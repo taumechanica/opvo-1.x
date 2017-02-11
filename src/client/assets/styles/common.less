@@ -17,6 +17,12 @@ a:hover {
 	color: @green-900;
 }
 
+ul, li {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
 loading {
 	background-color: @overlay;
 	display: block;
@@ -30,6 +36,82 @@ loading {
 	> div {
 		height: 100%;
 	}
+}
+
+.page-header {
+	background-color: @blue-grey-400;
+	color: @white;
+	font-size: 18px;
+	height: 50px;
+	left: 0;
+	line-height: 50px;
+	position: fixed;
+	text-align: center;
+	top: 0;
+	width: 100%;
+
+	span {
+		background-color: @blue-grey-500;
+		display: block;
+		width: 230px;
+	}
+}
+
+.main-menu {
+	background-color: @grey-900;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	top: 50px;
+	width: 230px;
+
+	ul, li {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.header {
+		background-color: @black;
+		color: @grey-600;
+		font-size: 12px;
+		padding: 12px 25px 12px 15px;
+		text-transform: uppercase;
+	}
+
+	a {
+		border-left: 3px solid transparent;
+		color: @grey-400;
+		display: block;
+		padding: 12px 5px 12px 15px;
+		position: relative;
+		text-decoration: none;
+
+		md-icon {
+			fill: @white;
+			height: 16px;
+			min-height: 16px;
+			min-width: 16px;
+			width: 16px;
+		}
+
+		span {
+			display: inline-block;
+			margin-left: 8px;
+		}
+	}
+
+	.active a, a:hover {
+		background-color: @blue-grey-900;
+		border-left-color: @blue-grey-500;
+		color: @grey-50;
+	}
+}
+
+.page-content {
+	margin-top: 50px;
+	margin-left: 230px;
+	padding: 10px;
 }
 
 .md-button {

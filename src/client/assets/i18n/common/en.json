@@ -1,4 +1,7 @@
 {
+	"NAVIGATION": "Navigation",
+	"DEVELOPERS": "Developers",
+	"SETTINGS": "Settings",
 	"NO_RECORDS": "No records",
 	"ADD_RECORD": "Add record",
 	"NEW_RECORD": "New record",
