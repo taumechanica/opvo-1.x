@@ -1,4 +1,5 @@
 import { material } from 'angular';
+import { IScope } from 'angular';
 
 import { Developer } from '../../domain/Developer';
 import { Contract } from '../../domain/Contract';
@@ -12,9 +13,10 @@ export class DeleteContractController {
 	public error: { remote?: boolean; };
 
 	constructor(
+		private $scope: IScope,
+		private $mdDialog: material.IDialogService,
 		private developer: Developer,
 		private contract: Contract,
-		private $mdDialog: material.IDialogService,
 		private contractsService: ContractsService
 	) {
 		'ngInject';
@@ -36,6 +38,7 @@ export class DeleteContractController {
 			this.error.remote = true;
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
 		}
 	}
 

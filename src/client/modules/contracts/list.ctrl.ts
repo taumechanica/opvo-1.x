@@ -1,4 +1,5 @@
 import { material, ui } from 'angular';
+import { IScope } from 'angular';
 
 import { Template } from '../Template';
 
@@ -35,6 +36,7 @@ export class ContractsController {
 	}[];
 
 	constructor(
+		private $scope: IScope,
 		private $state: ui.IStateService,
 		private $stateParams: ContractsStateParams,
 		private $mdDialog: material.IDialogService,
@@ -110,6 +112,7 @@ export class ContractsController {
 			});
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
 		}
 	}
 }

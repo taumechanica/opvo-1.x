@@ -1,4 +1,5 @@
 import { extend, isUndefined, material, translate } from 'angular';
+import { IScope } from 'angular';
 
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
@@ -13,9 +14,10 @@ export class EditDeveloperController {
 	public developerModel: Developer;
 
 	constructor(
-		private developer: Developer,
+		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private $translate: translate.ITranslateService,
+		private developer: Developer,
 		private developersService: DevelopersService
 	) {
 		'ngInject';
@@ -38,16 +40,18 @@ export class EditDeveloperController {
 		this.loading = true;
 
 		try {
-			const method = this.developer ?
-				this.developersService.update :
-				this.developersService.create;
-			await method(this.developerModel);
+			if (this.developer) {
+				await this.developersService.update(this.developerModel);
+			} else {
+				await this.developersService.create(this.developerModel);
+			}
 
 			this.$mdDialog.hide();
 		} catch (ex) {
 			this.error.remote = true;
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
 		}
 	}
 

@@ -14,6 +14,11 @@ export function InputDateDirectiveFactory($filter: IFilterService) {
 			ctrl.$formatters.push((value: Date) => date(value, 'dd.MM.yyyy'));
 
 			ctrl.$parsers.push((value: string) => {
+				if (!value.length) {
+					ctrl.$setValidity('parse', true);
+					return null;
+				}
+
 				if (!format.test(value)) return undefined;
 
 				const parts = value.split('.');

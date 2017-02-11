@@ -1,5 +1,5 @@
 import { extend, isUndefined, material, translate } from 'angular';
-import { IFormController } from 'angular';
+import { IFormController, IScope } from 'angular';
 
 import { Contract } from '../../domain/Contract';
 import { Developer } from '../../domain/Developer';
@@ -16,10 +16,11 @@ export class EditContractController {
 	public contractModel: Contract;
 
 	constructor(
-		private developer: Developer,
-		private contract: Contract,
+		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private $translate: translate.ITranslateService,
+		private developer: Developer,
+		private contract: Contract,
 		private contractsService: ContractsService
 	) {
 		'ngInject';
@@ -42,16 +43,18 @@ export class EditContractController {
 		this.loading = true;
 
 		try {
-			const method = this.contract ?
-				this.contractsService.update :
-				this.contractsService.create;
-			await method(this.developer, this.contractModel);
+			if (this.contract) {
+				await this.contractsService.update(this.developer, this.contractModel);
+			} else {
+				await this.contractsService.create(this.developer, this.contractModel);
+			}
 
 			this.$mdDialog.hide();
 		} catch (ex) {
 			this.error.remote = true;
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
 		}
 	}
 

@@ -1,4 +1,5 @@
 import { material } from 'angular';
+import { IScope } from 'angular';
 
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
@@ -10,8 +11,9 @@ export class DeleteDeveloperController {
 	public error: { remote?: boolean; };
 
 	constructor(
-		private developer: Developer,
+		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
+		private developer: Developer,
 		private developersService: DevelopersService
 	) {
 		'ngInject';
@@ -33,6 +35,7 @@ export class DeleteDeveloperController {
 			this.error.remote = true;
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
 		}
 	}
 

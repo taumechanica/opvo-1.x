@@ -1,4 +1,5 @@
 import { material, ui } from 'angular';
+import { IScope } from 'angular';
 
 import { Template } from '../Template';
 
@@ -14,6 +15,7 @@ export class DevelopersController {
 	public developers: Developer[];
 
 	constructor(
+		private $scope: IScope,
 		private $state: ui.IStateService,
 		private $mdDialog: material.IDialogService,
 		private developersService: DevelopersService
@@ -66,6 +68,7 @@ export class DevelopersController {
 			this.developers = await this.developersService.getAll();
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
 		}
 	}
 }
