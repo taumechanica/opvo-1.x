@@ -292,6 +292,49 @@ const start = (db: any) => {
 		}
 	});
 
+	server.route({
+		method: 'GET',
+		path: '/rest/settings',
+		handler: async (request, reply) => {
+			let settings = await db.get('SELECT * FROM Settings');
+			if (!settings) {
+				const year = new Date().getFullYear();
+				settings = {
+					Language: 'ru',
+					YearFrom: year,
+					YearTo: year
+				};
+				await db.run(`
+					INSERT INTO Settings (Language, YearFrom, YearTo)
+					VALUES ('${settings.Language}', ${settings.YearFrom}, ${settings.YearTo})
+				`);
+			}
+			return reply(settings);
+		}
+	});
+
+	server.route({
+		method: 'PUT',
+		path: '/rest/settings',
+		handler: async (request, reply) => {
+			await db.run(
+				'UPDATE Settings SET Language = ?, YearFrom = ?, YearTo = ?',
+				request.payload.Language, request.payload.YearFrom, request.payload.YearTo
+			);
+			const changes = await db.get('SELECT changes() AS Count FROM Settings');
+			return reply('').code(!changes || changes.Count ? 204 : 404);
+		},
+		config: {
+			validate: {
+				payload: {
+					Language: string().required().min(2).max(5),
+					YearFrom: number().required().min(2010).max(2030),
+					YearTo: number().required().min(2010).max(2030)
+				}
+			}
+		}
+	});
+
 	server.start(error => {
 		if (error) throw error;
 

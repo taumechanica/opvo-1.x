@@ -1,5 +1,11 @@
 -- Up
 
+CREATE TABLE Settings (
+	Language TEXT NOT NULL,
+	YearFrom INTEGER NOT NULL,
+	YearTo INTEGER NOT NULL
+);
+
 CREATE TABLE Developer (
 	Id INTEGER NOT NULL,
 	Name TEXT NOT NULL,
@@ -23,5 +29,6 @@ CREATE TABLE Contract (
 
 -- Down
 
+DROP TABLE Settings;
 DROP TABLE Developer;
 DROP TABLE Contract;

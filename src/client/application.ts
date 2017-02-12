@@ -5,6 +5,7 @@ import './application.pug';
 import './modules/common/config';
 import './modules/contracts/config';
 import './modules/developers/config';
+import './modules/settings/config';
 
 const getSvgSpriteUrl = (id: string) => {
 	require(`./assets/images/svg-sprite-${id}.svg`);
@@ -19,7 +20,8 @@ module('opvo', [
 	'ui.router',
 	'opvo.common',
 	'opvo.contracts',
-	'opvo.developers'
+	'opvo.developers',
+	'opvo.settings'
 ])
 	.config(($mdIconProvider: material.IIconProvider) => {
 		'ngInject';

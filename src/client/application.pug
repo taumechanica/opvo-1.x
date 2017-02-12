@@ -13,12 +13,12 @@ html(ng-app="opvo" ng-cloak ng-strict-di)
 		.main-menu
 			ul
 				li.header {{ 'NAVIGATION' | translate }}
-				li.active
-					a.developers(href="/")
+				li(ui-sref-active="active")
+					a.developers(ui-sref="developers")
 						md-icon(md-svg-icon="communication:ic_business_24px")
 						span {{ 'DEVELOPERS' | translate }}
-				li
-					a.settings(href="/settings")
+				li(ui-sref-active="active")
+					a.settings(ui-sref="settings")
 						md-icon(md-svg-icon="action:ic_settings_24px")
 						span {{ 'SETTINGS' | translate }}
 		.page-content(ui-view)
