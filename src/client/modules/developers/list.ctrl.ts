@@ -13,6 +13,7 @@ export class DevelopersController {
 	public loading: boolean;
 
 	public developers: Developer[];
+	public filter: string;
 
 	constructor(
 		private $scope: IScope,

@@ -11,6 +11,7 @@
 	"COULD_NOT_DELETE": "Could not delete record",
 	"CONFIRM_DELETE": "Would you like to delete the record #{{ id }}?",
 	"DATE_FORMAT_ERROR": "Format: DD.MM.YYYY",
+	"SEARCH": "Search",
 	"CANCEL": "Cancel",
 	"CLOSE": "Close",
 	"SAVE": "Save",
