@@ -1,1 +1,14 @@
-| Settings...
+.settings
+	.list(md-whiteframe="1")
+		.header {{ 'SETTINGS_LIST' | translate }}
+		.content
+			loading(when="ctrl.loading")
+			.body
+				.title {{ 'SETTINGS_LANGUAGE' | translate }}
+				.options
+					md-radio-group(
+						ng-model="ctrl.settings.Language"
+						ng-change="ctrl.selectLanguage()"
+					)
+						md-radio-button(value="ru") Русский
+						md-radio-button(value="en") English

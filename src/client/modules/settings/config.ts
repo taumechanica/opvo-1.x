@@ -1,6 +1,7 @@
 import '../../assets/styles/settings.less';
 
-import { module, translate, ui } from 'angular';
+import { translate, ui } from 'angular';
+import { module } from 'angular';
 
 import { Template } from '../Template';
 
