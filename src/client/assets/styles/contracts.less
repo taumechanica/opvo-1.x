@@ -16,17 +16,26 @@
 			min-height: 200px;
 		}
 
+		.tools {
+			select {
+				margin: 0 0 0 10px;
+			}
+
+			button {
+				margin-right: 10px;
+			}
+		}
+
 		.body {
 			padding: 10px;
 
 			th, td {
-				border: 1px solid @grey-200;
+				border: 1px solid @grey-300;
 				padding: 4px;
 			}
 
 			tbody tr:not(:last-child):hover td {
-				background-color: @grey-200;
-				cursor: pointer;
+				background-color: @grey-300;
 
 				> div {
 					visibility: visible;
@@ -62,11 +71,11 @@
 			}
 
 			td.not-exceeds {
-				background-color: @green-200;
+				background-color: @green-500;
 			}
 
 			td.exceeds {
-				background-color: @red-200;
+				background-color: @red-500;
 			}
 		}
 	}

@@ -27,7 +27,7 @@ export class DevelopersController {
 	}
 
 	public openContracts(event: MouseEvent, developer: Developer) {
-		this.$state.go('contracts', { developer });
+		this.$state.go('developers.contracts', { developer });
 	}
 
 	public async openEditDialog(event: MouseEvent, developer: Developer) {

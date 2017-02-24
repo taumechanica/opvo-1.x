@@ -1,5 +1,6 @@
-import { extend, isUndefined, material, translate } from 'angular';
-import { IScope } from 'angular';
+import { material, translate } from 'angular';
+import { extend, isUndefined } from 'angular';
+import { IFormController, IScope } from 'angular';
 
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
@@ -10,7 +11,7 @@ export class EditDeveloperController {
 	public title: string;
 	public error: { remote?: boolean; };
 
-	public developerForm: ng.IFormController;
+	public developerForm: IFormController;
 	public developerModel: Developer;
 
 	constructor(

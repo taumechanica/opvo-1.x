@@ -3,7 +3,6 @@ import { material, module, translate } from 'angular';
 import './application.pug';
 
 import './modules/common/config';
-import './modules/contracts/config';
 import './modules/developers/config';
 import './modules/settings/config';
 
@@ -19,7 +18,6 @@ module('opvo', [
 	'pascalprecht.translate',
 	'ui.router',
 	'opvo.common',
-	'opvo.contracts',
 	'opvo.developers',
 	'opvo.settings'
 ])

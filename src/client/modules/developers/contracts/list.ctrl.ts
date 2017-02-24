@@ -1,12 +1,13 @@
 import { material, ui } from 'angular';
 import { IScope } from 'angular';
 
-import { Template } from '../Template';
+import { Template } from '../../Template';
 
-import { Contract } from '../../domain/Contract';
-import { Developer } from '../../domain/Developer';
+import { Contract } from '../../../domain/Contract';
+import { Developer } from '../../../domain/Developer';
 
-import { ContractsService } from '../../data/ContractsService';
+import { ContractsService } from '../../../data/ContractsService';
+import { SettingsService } from '../../../data/SettingsService';
 
 import { EditContractController } from './edit.ctrl';
 import { DeleteContractController } from './delete.ctrl';
@@ -25,7 +26,8 @@ export class ContractsController {
 	public loading: boolean;
 
 	public developer: Developer;
-	public year: number;
+	public selectedYear: number;
+	public yearOptions: number[];
 	public hasData: boolean;
 
 	public contractsByMonth: {
@@ -40,7 +42,8 @@ export class ContractsController {
 		private $state: ui.IStateService,
 		private $stateParams: ContractsStateParams,
 		private $mdDialog: material.IDialogService,
-		private contractsService: ContractsService
+		private contractsService: ContractsService,
+		private settingsService: SettingsService
 	) {
 		'ngInject';
 
@@ -50,8 +53,10 @@ export class ContractsController {
 			return;
 		}
 
-		this.year = new Date().getFullYear();
+		this.selectedYear = new Date().getFullYear();
+
 		this.loadData();
+		this.fillYearOptions();
 	}
 
 	public async openEditDialog(event: MouseEvent, contract: Contract) {
@@ -60,7 +65,7 @@ export class ContractsController {
 		try {
 			const { developer } = this;
 			await this.$mdDialog.show({
-				templateUrl: Template.getUrl('contracts/edit'),
+				templateUrl: Template.getUrl('developers/contracts/edit'),
 				targetEvent: event,
 				controller: EditContractController,
 				controllerAs: 'ctrl',
@@ -77,7 +82,7 @@ export class ContractsController {
 		try {
 			const { developer } = this;
 			await this.$mdDialog.show({
-				templateUrl: Template.getUrl('contracts/delete'),
+				templateUrl: Template.getUrl('developers/contracts/delete'),
 				targetEvent: event,
 				controller: DeleteContractController,
 				controllerAs: 'ctrl',
@@ -88,11 +93,15 @@ export class ContractsController {
 		} catch (ex) { }
 	}
 
+	public selectYear() {
+		this.loadData();
+	}
+
 	private async loadData() {
 		this.loading = true;
 
 		try {
-			const data = await this.contractsService.getAllByYear(this.developer, this.year);
+			const data = await this.contractsService.getAllByYear(this.developer, this.selectedYear);
 
 			this.hasData = data.length > 0;
 			this.contractsByMonth = MONTHS.map(month => (
@@ -112,6 +121,20 @@ export class ContractsController {
 			});
 		} finally {
 			this.loading = false;
+			this.$scope.$apply();
+		}
+	}
+
+	private async fillYearOptions() {
+		this.yearOptions = [];
+
+		try {
+			const settings = await this.settingsService.get();
+			const { YearFrom, YearTo } = settings;
+			for (let year = YearFrom; year <= YearTo; year += 1) {
+				this.yearOptions.push(year);
+			}
+		} finally {
 			this.$scope.$apply();
 		}
 	}

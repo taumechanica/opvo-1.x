@@ -1,10 +1,11 @@
-import { extend, isUndefined, material, translate } from 'angular';
+import { material, translate } from 'angular';
+import { extend, isUndefined } from 'angular';
 import { IFormController, IScope } from 'angular';
 
-import { Contract } from '../../domain/Contract';
-import { Developer } from '../../domain/Developer';
+import { Contract } from '../../../domain/Contract';
+import { Developer } from '../../../domain/Developer';
 
-import { ContractsService } from '../../data/ContractsService';
+import { ContractsService } from '../../../data/ContractsService';
 
 export class EditContractController {
 	public loading: boolean;

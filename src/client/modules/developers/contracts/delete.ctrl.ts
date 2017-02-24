@@ -1,10 +1,10 @@
 import { material } from 'angular';
 import { IScope } from 'angular';
 
-import { Developer } from '../../domain/Developer';
-import { Contract } from '../../domain/Contract';
+import { Developer } from '../../../domain/Developer';
+import { Contract } from '../../../domain/Contract';
 
-import { ContractsService } from '../../data/ContractsService';
+import { ContractsService } from '../../../data/ContractsService';
 
 export class DeleteContractController {
 	public loading: boolean;

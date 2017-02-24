@@ -36,8 +36,8 @@ const clientConfig = {
 				'file-loader?name=[name].html',
 				'pug-html-loader?exports=false'
 			] },
-			{ test: /src\/client\/(.+?)\/.+?\.pug$/, loaders: [
-				'file-loader?regExp=src\/client\/modules\/(.+?)\/&name=modules/[1]/[name].html',
+			{ test: /src\/client\/(.+\/)[^\/]+\.pug$/, loaders: [
+				'file-loader?regExp=src\/client\/modules\/(.+\/)&name=modules/[1][name].html',
 				'pug-html-loader?exports=false'
 			] },
 			{ test: /\.less$/, loader: ExtractTextPlugin.extract(

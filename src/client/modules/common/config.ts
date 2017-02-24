@@ -1,6 +1,7 @@
 import '../../assets/styles/common.less';
 
-import { module, translate } from 'angular';
+import { translate } from 'angular';
+import { module } from 'angular';
 
 import { InputDateDirectiveFactory } from './inputDate.dir';
 import { LoadingDirectiveFactory } from './loading.dir';
