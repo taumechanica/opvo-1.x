@@ -1,5 +1,5 @@
 import { translate } from 'angular';
-import { IScope } from 'angular';
+import { IFormController, INgModelController, IScope } from 'angular';
 
 import { Settings } from '../../domain/Settings';
 import { SettingsService } from '../../data/SettingsService';
@@ -7,7 +7,8 @@ import { SettingsService } from '../../data/SettingsService';
 export class SettingsController {
 	public loading: boolean;
 
-	public settings: Settings;
+	public settingsForm: IFormController;
+	public settingsModel: Settings;
 
 	constructor(
 		private $scope: IScope,
@@ -23,21 +24,37 @@ export class SettingsController {
 		this.loading = true;
 
 		try {
-			const { settings } = this;
+			const { settingsModel } = this;
 
-			await this.settingsService.set(settings);
-			this.$translate.use(settings.Language);
+			await this.settingsService.set(settingsModel);
+			this.$translate.use(settingsModel.Language);
 		} finally {
 			this.loading = false;
 			this.$scope.$apply();
 		}
 	}
 
+	public selectRange(target: INgModelController) {
+		const { settingsForm, settingsModel } = this;
+		settingsForm.$setSubmitted();
+
+		const { YearFrom, YearTo } = settingsModel;
+		target.$setValidity('range', YearFrom <= YearTo);
+
+		const oppositeName = target.$name === 'from' ? 'to' : 'from';
+		const opposite: INgModelController = settingsForm[oppositeName];
+		opposite.$setValidity('range', true);
+
+		if (settingsForm.$invalid) return;
+
+		this.settingsService.set(settingsModel);
+	}
+
 	private async loadData() {
 		this.loading = true;
 
 		try {
-			this.settings = await this.settingsService.get();
+			this.settingsModel = await this.settingsService.get();
 		} finally {
 			this.loading = false;
 			this.$scope.$apply();

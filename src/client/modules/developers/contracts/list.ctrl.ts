@@ -128,11 +128,20 @@ export class ContractsController {
 	private async fillYearOptions() {
 		this.yearOptions = [];
 
+		const { selectedYear, yearOptions } = this;
+
 		try {
 			const settings = await this.settingsService.get();
 			const { YearFrom, YearTo } = settings;
+
+			if (YearFrom > selectedYear) {
+				yearOptions.push(selectedYear);
+			}
 			for (let year = YearFrom; year <= YearTo; year += 1) {
-				this.yearOptions.push(year);
+				yearOptions.push(year);
+			}
+			if (YearTo < selectedYear) {
+				yearOptions.push(selectedYear);
 			}
 		} finally {
 			this.$scope.$apply();
