@@ -1,15 +1,15 @@
 import '../../assets/styles/common.less';
 
-import * as ng from 'angular';
+import { translate } from 'angular';
+import { module } from 'angular';
 
 import { InputDateDirectiveFactory } from './inputDate.dir';
 import { LoadingDirectiveFactory } from './loading.dir';
 
-ng
-	.module('opvo.common', [])
+module('opvo.common', [])
 	.directive('inputDate', InputDateDirectiveFactory)
 	.directive('loading', LoadingDirectiveFactory)
-	.config(($translatePartialLoaderProvider: ng.translate.ITranslatePartialLoaderProvider) => {
+	.config(($translatePartialLoaderProvider: translate.ITranslatePartialLoaderProvider) => {
 		'ngInject';
 
 		$translatePartialLoaderProvider.addPart('common');

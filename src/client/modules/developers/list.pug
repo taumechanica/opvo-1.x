@@ -3,9 +3,17 @@
 		.header {{ 'DEVELOPERS_LIST' | translate }}
 		.content
 			loading(when="ctrl.loading")
-			md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
-				md-icon(md-svg-icon="content:ic_add_24px")
-				span {{ 'ADD_RECORD' | translate }}
+			.tools(layout="row")
+				input.search(
+					type="text"
+					ng-model="ctrl.filter"
+					ng-model-options="{ debounce: 500 }"
+					placeholder="{{ 'SEARCH' | translate }}"
+				)
+				div(flex)
+				md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
+					md-icon(md-svg-icon="content:ic_add_24px")
+					span {{ 'ADD_RECORD' | translate }}
 			.body
 				table.data-table
 					tr
@@ -14,7 +22,7 @@
 						th.amount {{ 'DEVELOPERS_AMOUNT' | translate }}
 						th.func
 					tr(
-						ng-repeat="dev in ctrl.developers track by dev.Id"
+						ng-repeat="dev in ctrl.developers | filter : { Name: ctrl.filter } as filtered track by dev.Id"
 						ng-click="ctrl.openContracts($event, dev)"
 					)
 						td.id {{:: dev.Id }}
@@ -32,5 +40,5 @@
 									title="{{ 'DELETE' | translate }}"
 								)
 									md-icon(md-svg-icon="action:ic_delete_forever_24px")
-					tr(ng-if="ctrl.developers.length === 0")
-						td.no-data(colspan="4") {{ 'NO_RECORDS' | translate }}
+					tr.no-data(ng-if="filtered.length === 0")
+						td(colspan="4") {{ 'NO_RECORDS' | translate }}

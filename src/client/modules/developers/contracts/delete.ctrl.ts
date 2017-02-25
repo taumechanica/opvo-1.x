@@ -1,10 +1,12 @@
 import { material } from 'angular';
 import { IScope } from 'angular';
 
-import { Developer } from '../../domain/Developer';
-import { DevelopersService } from '../../data/DevelopersService';
+import { Developer } from '../../../domain/Developer';
+import { Contract } from '../../../domain/Contract';
 
-export class DeleteDeveloperController {
+import { ContractsService } from '../../../data/ContractsService';
+
+export class DeleteContractController {
 	public loading: boolean;
 
 	public translateData: { id: number; };
@@ -14,12 +16,13 @@ export class DeleteDeveloperController {
 		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private developer: Developer,
-		private developersService: DevelopersService
+		private contract: Contract,
+		private contractsService: ContractsService
 	) {
 		'ngInject';
 
 		this.translateData = {
-			id: developer.Id
+			id: contract.Id
 		};
 	}
 
@@ -28,7 +31,7 @@ export class DeleteDeveloperController {
 		this.loading = true;
 
 		try {
-			await this.developersService.delete(this.developer);
+			await this.contractsService.delete(this.developer, this.contract);
 
 			this.$mdDialog.hide();
 		} catch (ex) {

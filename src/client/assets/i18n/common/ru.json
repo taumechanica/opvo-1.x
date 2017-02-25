@@ -1,4 +1,7 @@
 {
+	"NAVIGATION": "Навигация",
+	"DEVELOPERS": "Исполнители",
+	"SETTINGS": "Настройки",
 	"NO_RECORDS": "Записей нет",
 	"ADD_RECORD": "Добавить запись",
 	"NEW_RECORD": "Новая запись",
@@ -8,6 +11,7 @@
 	"COULD_NOT_DELETE": "Не удалось удалить запись",
 	"CONFIRM_DELETE": "Желаете удалить запись #{{ id }}?",
 	"DATE_FORMAT_ERROR": "Формат: ДД.ММ.ГГГГ",
+	"SEARCH": "Искать",
 	"CANCEL": "Отмена",
 	"CLOSE": "Закрыть",
 	"SAVE": "Сохранить",

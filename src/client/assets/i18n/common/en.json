@@ -1,4 +1,7 @@
 {
+	"NAVIGATION": "Navigation",
+	"DEVELOPERS": "Developers",
+	"SETTINGS": "Settings",
 	"NO_RECORDS": "No records",
 	"ADD_RECORD": "Add record",
 	"NEW_RECORD": "New record",
@@ -8,6 +11,7 @@
 	"COULD_NOT_DELETE": "Could not delete record",
 	"CONFIRM_DELETE": "Would you like to delete the record #{{ id }}?",
 	"DATE_FORMAT_ERROR": "Format: DD.MM.YYYY",
+	"SEARCH": "Search",
 	"CANCEL": "Cancel",
 	"CLOSE": "Close",
 	"SAVE": "Save",

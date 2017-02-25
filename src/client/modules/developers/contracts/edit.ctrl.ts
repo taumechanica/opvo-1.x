@@ -2,29 +2,32 @@ import { material, translate } from 'angular';
 import { extend, isUndefined } from 'angular';
 import { IFormController, IScope } from 'angular';
 
-import { Developer } from '../../domain/Developer';
-import { DevelopersService } from '../../data/DevelopersService';
+import { Contract } from '../../../domain/Contract';
+import { Developer } from '../../../domain/Developer';
 
-export class EditDeveloperController {
+import { ContractsService } from '../../../data/ContractsService';
+
+export class EditContractController {
 	public loading: boolean;
 
 	public title: string;
 	public error: { remote?: boolean; };
 
-	public developerForm: IFormController;
-	public developerModel: Developer;
+	public contractForm: IFormController;
+	public contractModel: Contract;
 
 	constructor(
 		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private $translate: translate.ITranslateService,
 		private developer: Developer,
-		private developersService: DevelopersService
+		private contract: Contract,
+		private contractsService: ContractsService
 	) {
 		'ngInject';
 
-		if (developer) {
-			this.developerModel = extend({ }, developer);
+		if (contract) {
+			this.contractModel = extend({ }, contract);
 			$translate('EDIT_RECORD').then(title => this.title = title);
 		} else {
 			$translate('NEW_RECORD').then(title => this.title = title);
@@ -33,18 +36,18 @@ export class EditDeveloperController {
 
 	public async save() {
 		this.error = { };
-		this.developerForm.$setSubmitted();
+		this.contractForm.$setSubmitted();
 
-		if (isUndefined(this.developerModel)) return;
-		if (this.developerForm.$invalid) return;
+		if (isUndefined(this.contractModel)) return;
+		if (this.contractForm.$invalid) return;
 
 		this.loading = true;
 
 		try {
-			if (this.developer) {
-				await this.developersService.update(this.developerModel);
+			if (this.contract) {
+				await this.contractsService.update(this.developer, this.contractModel);
 			} else {
-				await this.developersService.create(this.developerModel);
+				await this.contractsService.create(this.developer, this.contractModel);
 			}
 
 			this.$mdDialog.hide();

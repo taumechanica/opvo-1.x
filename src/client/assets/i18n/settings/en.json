@@ -1,0 +1,10 @@
+{
+	"SETTINGS_LIST": "Settings",
+	"SETTINGS_LANGUAGE": "Interface language",
+	"SETTINGS_RANGE_OF_YEARS": "Range of years in the dropdown list",
+	"SETTINGS_FROM": "From",
+	"SETTINGS_TO": "To",
+	"SETTINGS_INCORRECT_RANGE": "Incorrect range",
+	"SETTINGS_YEAR_FORMAT": "Format: 20xx",
+	"SETTINGS_YEAR_REQUIRED": "Enter year"
+}

@@ -1,0 +1,150 @@
+import { material, ui } from 'angular';
+import { IScope } from 'angular';
+
+import { Template } from '../../Template';
+
+import { Contract } from '../../../domain/Contract';
+import { Developer } from '../../../domain/Developer';
+
+import { ContractsService } from '../../../data/ContractsService';
+import { SettingsService } from '../../../data/SettingsService';
+
+import { EditContractController } from './edit.ctrl';
+import { DeleteContractController } from './delete.ctrl';
+
+const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+
+export class ContractsStateParams implements ui.IStateParamsService {
+	public developer: Developer;
+
+	constructor() {
+		this.developer = null;
+	}
+}
+
+export class ContractsController {
+	public loading: boolean;
+
+	public developer: Developer;
+	public selectedYear: number;
+	public yearOptions: number[];
+	public hasData: boolean;
+
+	public contractsByMonth: {
+		month: string;
+		contracts: Contract[];
+		sum: number;
+		exceeds: boolean;
+	}[];
+
+	constructor(
+		private $scope: IScope,
+		private $state: ui.IStateService,
+		private $stateParams: ContractsStateParams,
+		private $mdDialog: material.IDialogService,
+		private contractsService: ContractsService,
+		private settingsService: SettingsService
+	) {
+		'ngInject';
+
+		this.developer = $stateParams.developer;
+		if (!this.developer) {
+			$state.go('developers');
+			return;
+		}
+
+		this.selectedYear = new Date().getFullYear();
+
+		this.loadData();
+		this.fillYearOptions();
+	}
+
+	public async openEditDialog(event: MouseEvent, contract: Contract) {
+		event.stopPropagation();
+
+		try {
+			const { developer } = this;
+			await this.$mdDialog.show({
+				templateUrl: Template.getUrl('developers/contracts/edit'),
+				targetEvent: event,
+				controller: EditContractController,
+				controllerAs: 'ctrl',
+				locals: { developer, contract }
+			});
+
+			this.loadData();
+		} catch (ex) { }
+	}
+
+	public async openDeleteDialog(event: MouseEvent, contract: Contract) {
+		event.stopPropagation();
+
+		try {
+			const { developer } = this;
+			await this.$mdDialog.show({
+				templateUrl: Template.getUrl('developers/contracts/delete'),
+				targetEvent: event,
+				controller: DeleteContractController,
+				controllerAs: 'ctrl',
+				locals: { developer, contract }
+			});
+
+			this.loadData();
+		} catch (ex) { }
+	}
+
+	public selectYear() {
+		this.loadData();
+	}
+
+	private async loadData() {
+		this.loading = true;
+
+		try {
+			const data = await this.contractsService.getAllByYear(this.developer, this.selectedYear);
+
+			this.hasData = data.length > 0;
+			this.contractsByMonth = MONTHS.map(month => (
+				{ month, contracts: [], sum: 0.0, exceeds: false }
+			));
+			data.forEach(contract => {
+				const index = new Date(contract.StartDate).getMonth();
+				const batch = this.contractsByMonth[index];
+				batch.contracts.push(contract);
+				if (!contract.AcceptanceDate) {
+					batch.sum += contract.Amount;
+				}
+			});
+			MONTHS.forEach((month, index) => {
+				const batch = this.contractsByMonth[index];
+				batch.exceeds = batch.sum > this.developer.CeilingAmount;
+			});
+		} finally {
+			this.loading = false;
+			this.$scope.$apply();
+		}
+	}
+
+	private async fillYearOptions() {
+		this.yearOptions = [];
+
+		const { selectedYear, yearOptions } = this;
+
+		try {
+			const settings = await this.settingsService.get();
+			const { YearFrom, YearTo } = settings;
+
+			if (YearFrom > selectedYear) {
+				yearOptions.push(selectedYear);
+			}
+			for (let year = YearFrom; year <= YearTo; year += 1) {
+				yearOptions.push(year);
+			}
+			if (YearTo < selectedYear) {
+				yearOptions.push(selectedYear);
+			}
+		} finally {
+			this.$scope.$apply();
+		}
+	}
+}

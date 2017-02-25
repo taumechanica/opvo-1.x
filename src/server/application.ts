@@ -1,10 +1,10 @@
-import * as hapi from 'hapi';
 import * as inert from 'inert';
-import * as joi from 'joi';
-import * as sqlite from 'sqlite';
+import { Server } from 'hapi';
+import { number, string } from 'joi';
+import { open } from 'sqlite';
 
 const start = (db: any) => {
-	const server = new hapi.Server();
+	const server = new Server();
 
 	server.connection({
 		host: 'localhost',
@@ -74,28 +74,28 @@ const start = (db: any) => {
 	server.route({
 		method: 'GET',
 		path: '/rest/developers',
-		handler: (request, reply) => db
-			.all('SELECT * FROM Developer')
-			.then((developers: any) => reply(developers))
+		handler: async (request, reply) => {
+			const developers = await db.all('SELECT * FROM Developer');
+			return reply(developers);
+		}
 	});
 
 	server.route({
 		method: 'POST',
 		path: '/rest/developers',
-		handler: (request, reply) => {
-			db.run(
+		handler: async (request, reply) => {
+			await db.run(
 				'INSERT INTO Developer (Name, CeilingAmount) VALUES (?, ?)',
 				request.payload.Name, request.payload.CeilingAmount
-			).then(() => db
-				.get('SELECT last_insert_rowid() AS Id')
-				.then((developer: any) => reply(`/rest/developers/${developer.Id}`).code(201))
 			);
+			const developer = await db.get('SELECT last_insert_rowid() AS Id');
+			return reply(`/rest/developers/${developer.Id}`).code(201);
 		},
 		config: {
 			validate: {
 				payload: {
-					Name: joi.string().required().min(4).max(128),
-					CeilingAmount: joi.number().required().min(0)
+					Name: string().required().min(4).max(128),
+					CeilingAmount: number().required().min(0)
 				}
 			}
 		}
@@ -104,13 +104,17 @@ const start = (db: any) => {
 	server.route({
 		method: 'GET',
 		path: '/rest/developers/{DeveloperId}',
-		handler: (request, reply) => db
-			.get('SELECT * FROM Developer WHERE Id = ?', request.params['DeveloperId'])
-			.then((developer: any) => reply(developer).code(developer ? 200 : 404)),
+		handler: async (request, reply) => {
+			const developer = await db.get(
+				'SELECT * FROM Developer WHERE Id = ?',
+				request.params['DeveloperId']
+			);
+			return reply(developer).code(developer ? 200 : 404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1)
 				}
 			}
 		}
@@ -119,18 +123,18 @@ const start = (db: any) => {
 	server.route({
 		method: 'DELETE',
 		path: '/rest/developers/{DeveloperId}',
-		handler: (request, reply) => db
-			.run('DELETE FROM Developer WHERE Id = ?', request.params['DeveloperId'])
-			.then(() => db
-				.get('SELECT changes() AS Count FROM Developer')
-				.then((changes: any) => {
-					return reply('').code(!changes || changes.Count ? 204 : 404);
-				})
-			),
+		handler: async (request, reply) => {
+			await db.run(
+				'DELETE FROM Developer WHERE Id = ?',
+				request.params['DeveloperId']
+			);
+			const changes = await db.get('SELECT changes() AS Count FROM Developer');
+			return reply('').code(!changes || changes.Count ? 204 : 404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1)
 				}
 			}
 		}
@@ -139,26 +143,23 @@ const start = (db: any) => {
 	server.route({
 		method: 'PUT',
 		path: '/rest/developers/{DeveloperId}',
-		handler: (request, reply) => db
-			.run(
+		handler: async (request, reply) => {
+			await db.run(
 				'UPDATE Developer SET Name = ?, CeilingAmount = ? WHERE Id = ?',
 				request.payload.Name, request.payload.CeilingAmount, request.params['DeveloperId']
-			)
-			.then(() => db
-				.get('SELECT changes() AS Count FROM Developer')
-				.then((changes: any) => {
-					return reply('').code(!changes || changes.Count ? 204 : 404);
-				})
-			),
+			);
+			const changes = await db.get('SELECT changes() AS Count FROM Developer');
+			return reply('').code(!changes || changes.Count ? 204 : 404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1)
 				},
 				payload: {
-					Id: joi.number().required().integer().min(1),
-					Name: joi.string().required().min(4).max(128),
-					CeilingAmount: joi.number().required().min(0)
+					Id: number().required().integer().min(1),
+					Name: string().required().min(4).max(128),
+					CeilingAmount: number().required().min(0)
 				}
 			}
 		}
@@ -167,20 +168,23 @@ const start = (db: any) => {
 	server.route({
 		method: 'GET',
 		path: '/rest/developers/{DeveloperId}/contracts-{Year}',
-		handler: (request, reply) => Promise.all([
-			db.get('SELECT * FROM Developer WHERE Id = ?', request.params['DeveloperId']),
-			db.all(
-				'SELECT * FROM Contract WHERE DeveloperId = ? AND StartDate BETWEEN ? AND ? ORDER BY StartDate',
-				request.params['DeveloperId'],
-				new Date(parseInt(request.params['Year']), 0, 1, 12, 0, 0, 0),
-				new Date(parseInt(request.params['Year']), 11, 31, 12, 0, 0, 0)
-			)
-		]).then(results => results[0] ? reply(results[1]) : reply('').code(404)),
+		handler: async (request, reply) => {
+			const [developer, contracts] = await Promise.all([
+				db.get('SELECT * FROM Developer WHERE Id = ?', request.params['DeveloperId']),
+				db.all(
+					'SELECT * FROM Contract WHERE DeveloperId = ? AND StartDate BETWEEN ? AND ? ORDER BY StartDate',
+					request.params['DeveloperId'],
+					new Date(parseInt(request.params['Year']), 0, 1, 12, 0, 0, 0),
+					new Date(parseInt(request.params['Year']), 11, 31, 12, 0, 0, 0)
+				)
+			]);
+			return developer ? reply(contracts) : reply('').code(404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1),
-					Year: joi.number().integer().min(2010).max(2030)
+					DeveloperId: number().integer().min(1),
+					Year: number().integer().min(2010).max(2030)
 				}
 			}
 		}
@@ -189,26 +193,29 @@ const start = (db: any) => {
 	server.route({
 		method: 'POST',
 		path: '/rest/developers/{DeveloperId}/contracts',
-		handler: (request, reply) => {
-			db.run(
-				'INSERT INTO Contract (DeveloperId, Amount, StartDate, Deadline, AcceptanceDate) VALUES (?, ?, ?, ?, ?)',
-				request.params['DeveloperId'], request.payload.Amount, request.payload.StartDate,
-				request.payload.Deadline, request.payload.AcceptanceDate
-			).then(() => db
-				.get('SELECT last_insert_rowid() AS Id')
-				.then((contract: any) => reply(`/rest/developers/${request.params['DeveloperId']}/contracts/${contract.Id}`).code(201))
-			).catch((reason: any) => reply('').code(reason.code === 'SQLITE_CONSTRAINT' ? 404 : 500));
+		handler: async (request, reply) => {
+			try {
+				await db.run(
+					'INSERT INTO Contract (DeveloperId, Amount, StartDate, Deadline, AcceptanceDate) VALUES (?, ?, ?, ?, ?)',
+					request.params['DeveloperId'], request.payload.Amount, request.payload.StartDate,
+					request.payload.Deadline, request.payload.AcceptanceDate
+				);
+				const contract = await db.get('SELECT last_insert_rowid() AS Id');
+				return reply(`/rest/developers/${request.params['DeveloperId']}/contracts/${contract.Id}`).code(201);
+			} catch (reason) {
+				return reply('').code(reason.code === 'SQLITE_CONSTRAINT' ? 404 : 500);
+			}
 		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1)
 				},
 				payload: {
-					Amount: joi.number().required().min(0),
-					StartDate: joi.number().required().integer().min(0),
-					Deadline: joi.number().required().integer().min(0),
-					AcceptanceDate: joi.number().optional().integer().min(0)
+					Amount: number().required().min(0),
+					StartDate: number().required().integer().min(0),
+					Deadline: number().required().integer().min(0),
+					AcceptanceDate: number().optional().integer().min(0)
 				}
 			}
 		}
@@ -217,16 +224,18 @@ const start = (db: any) => {
 	server.route({
 		method: 'GET',
 		path: '/rest/developers/{DeveloperId}/contracts/{ContractId}',
-		handler: (request, reply) => db
-			.get(
+		handler: async (request, reply) => {
+			const contract = await db.get(
 				'SELECT * FROM Contract WHERE Id = ? AND DeveloperId = ?',
 				request.params['ContractId'], request.params['DeveloperId']
-			).then((contract: any) => reply(contract).code(contract ? 200 : 404)),
+			);
+			return reply(contract).code(contract ? 200 : 404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1),
-					ContractId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1),
+					ContractId: number().integer().min(1)
 				}
 			}
 		}
@@ -235,22 +244,19 @@ const start = (db: any) => {
 	server.route({
 		method: 'DELETE',
 		path: '/rest/developers/{DeveloperId}/contracts/{ContractId}',
-		handler: (request, reply) => db
-			.run(
+		handler: async (request, reply) => {
+			await db.run(
 				'DELETE FROM Contract WHERE Id = ? AND DeveloperId = ?',
 				request.params['ContractId'], request.params['DeveloperId']
-			)
-			.then(() => db
-				.get('SELECT changes() AS Count FROM Contract')
-				.then((changes: any) => {
-					return reply('').code(!changes || changes.Count ? 204 : 404);
-				})
-			),
+			);
+			const changes = await db.get('SELECT changes() AS Count FROM Contract');
+			return reply('').code(!changes || changes.Count ? 204 : 404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1),
-					ContractId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1),
+					ContractId: number().integer().min(1)
 				}
 			}
 		}
@@ -259,31 +265,71 @@ const start = (db: any) => {
 	server.route({
 		method: 'PUT',
 		path: '/rest/developers/{DeveloperId}/contracts/{ContractId}',
-		handler: (request, reply) => db
-			.run(
+		handler: async (request, reply) => {
+			await db.run(
 				'UPDATE Contract SET Amount = ?, StartDate = ?, Deadline = ?, AcceptanceDate = ? WHERE Id = ? AND DeveloperId = ?',
 				request.payload.Amount, request.payload.StartDate, request.payload.Deadline,
 				request.payload.AcceptanceDate, request.params['ContractId'], request.params['DeveloperId']
-			)
-			.then(() => db
-				.get('SELECT changes() AS Count FROM Contract')
-				.then((changes: any) => {
-					return reply('').code(!changes || changes.Count ? 204 : 404);
-				})
-			),
+			);
+			const changes = await db.get('SELECT changes() AS Count FROM Contract');
+			return reply('').code(!changes || changes.Count ? 204 : 404);
+		},
 		config: {
 			validate: {
 				params: {
-					DeveloperId: joi.number().integer().min(1),
-					ContractId: joi.number().integer().min(1)
+					DeveloperId: number().integer().min(1),
+					ContractId: number().integer().min(1)
 				},
 				payload: {
-					Id: joi.number().required().integer().min(1),
-					DeveloperId: joi.number().required().integer().min(1),
-					Amount: joi.number().required().min(0),
-					StartDate: joi.number().required().integer().min(0),
-					Deadline: joi.number().required().integer().min(0),
-					AcceptanceDate: joi.number().optional().integer().min(0)
+					Id: number().required().integer().min(1),
+					DeveloperId: number().required().integer().min(1),
+					Amount: number().required().min(0),
+					StartDate: number().required().integer().min(0),
+					Deadline: number().required().integer().min(0),
+					AcceptanceDate: number().optional().integer().min(0)
+				}
+			}
+		}
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/rest/settings',
+		handler: async (request, reply) => {
+			let settings = await db.get('SELECT * FROM Settings');
+			if (!settings) {
+				const year = new Date().getFullYear();
+				settings = {
+					Language: 'ru',
+					YearFrom: year,
+					YearTo: year
+				};
+				await db.run(`
+					INSERT INTO Settings (Language, YearFrom, YearTo)
+					VALUES ('${settings.Language}', ${settings.YearFrom}, ${settings.YearTo})
+				`);
+			}
+			return reply(settings);
+		}
+	});
+
+	server.route({
+		method: 'PUT',
+		path: '/rest/settings',
+		handler: async (request, reply) => {
+			await db.run(
+				'UPDATE Settings SET Language = ?, YearFrom = ?, YearTo = ?',
+				request.payload.Language, request.payload.YearFrom, request.payload.YearTo
+			);
+			const changes = await db.get('SELECT changes() AS Count FROM Settings');
+			return reply('').code(!changes || changes.Count ? 204 : 404);
+		},
+		config: {
+			validate: {
+				payload: {
+					Language: string().required().min(2).max(5),
+					YearFrom: number().required().min(2010).max(2030),
+					YearTo: number().required().min(2010).max(2030)
 				}
 			}
 		}
@@ -296,7 +342,7 @@ const start = (db: any) => {
 	});
 };
 
-sqlite.open(`${__dirname}/opvo.sqlite`)
+open(`${__dirname}/opvo.sqlite`)
 	.then(db => (<(options: any) => Promise<any>>db.migrate)({
 		force: 'last',
 		migrationsPath: `${__dirname}/migrations`

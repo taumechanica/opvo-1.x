@@ -20,6 +20,7 @@
 							name="amount"
 							ng-model="ctrl.contractModel.Amount"
 							ng-pattern="/^[1-9]\\d?(\\.\\d{1,2})?$/"
+							md-autofocus="true"
 							required
 						)
 						div(ng-messages="ctrl.contractForm.amount.$error")

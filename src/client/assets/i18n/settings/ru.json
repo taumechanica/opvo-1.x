@@ -1,0 +1,10 @@
+{
+	"SETTINGS_LIST": "Настройки",
+	"SETTINGS_LANGUAGE": "Язык интерфейса",
+	"SETTINGS_RANGE_OF_YEARS": "Диапазон лет в выпадающем списке",
+	"SETTINGS_FROM": "От",
+	"SETTINGS_TO": "До",
+	"SETTINGS_INCORRECT_RANGE": "Некорректный диапазон",
+	"SETTINGS_YEAR_FORMAT": "Формат: 20xx",
+	"SETTINGS_YEAR_REQUIRED": "Введите год"
+}

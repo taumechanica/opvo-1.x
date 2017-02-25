@@ -2,10 +2,23 @@ doctype html
 html(ng-app="opvo" ng-cloak ng-strict-di)
 	head
 		meta(charset="utf-8")
-		title OPVO Demo
+		title OPVO v1.0.0
 		script(src="/scr/vendor.js")
 		script(src="/scr/application.js")
 		link(rel="stylesheet" href="/css/vendor.css")
 		link(rel="stylesheet" href="/css/application.css")
-	body(layout="row" layout-padding)
-		div(flex ui-view)
+	body
+		.page-header
+			span OPVO v1.0.0
+		.main-menu
+			ul
+				li.header {{ 'NAVIGATION' | translate }}
+				li(ui-sref-active="active")
+					a.developers(ui-sref="developers")
+						md-icon(md-svg-icon="communication:ic_business_24px")
+						span {{ 'DEVELOPERS' | translate }}
+				li(ui-sref-active="active")
+					a.settings(ui-sref="settings")
+						md-icon(md-svg-icon="action:ic_settings_24px")
+						span {{ 'SETTINGS' | translate }}
+		.page-content(ui-view)
