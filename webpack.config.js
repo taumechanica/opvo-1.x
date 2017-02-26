@@ -25,7 +25,7 @@ const clientConfig = {
 	},
 
 	resolve: {
-		extensions: ['', '.ts', '.js']
+		extensions: ['.ts', '.js']
 	},
 
 	module: {
@@ -40,12 +40,14 @@ const clientConfig = {
 				'file-loader?regExp=src\/client\/modules\/(.+\/)&name=modules/[1][name].html',
 				'pug-html-loader?exports=false'
 			] },
-			{ test: /\.less$/, loader: ExtractTextPlugin.extract(
-				'style-loader', 'css-loader!postcss-loader!less-loader'
-			) },
-			{ test: /\.css$/, loader: ExtractTextPlugin.extract(
-				'style-loader', 'css-loader'
-			) }
+			{ test: /\.less$/, loader: ExtractTextPlugin.extract({
+				fallback: 'style-loader',
+				use: 'css-loader!postcss-loader!less-loader'
+			}) },
+			{ test: /\.css$/, loader: ExtractTextPlugin.extract({
+				fallback: 'style-loader',
+				use: 'css-loader'
+			}) }
 		]
 	},
 
@@ -57,7 +59,10 @@ const clientConfig = {
 			from: './src/client/assets/i18n',
 			to: 'i18n'
 		}]),
-		new ExtractTextPlugin('[name].css', { allChunks: false })
+		new ExtractTextPlugin({
+			filename: '[name].css',
+			allChunks: false
+		})
 	]
 };
 
@@ -74,7 +79,7 @@ const serverConfig = {
 	},
 
 	resolve: {
-		extensions: ['', '.ts', '.js']
+		extensions: ['.ts', '.js']
 	},
 
 	module: {
