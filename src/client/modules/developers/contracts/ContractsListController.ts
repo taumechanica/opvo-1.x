@@ -9,8 +9,8 @@ import { Developer } from '../../../domain/Developer';
 import { ContractsService } from '../../../data/ContractsService';
 import { SettingsService } from '../../../data/SettingsService';
 
-import { EditContractController } from './edit.ctrl';
-import { DeleteContractController } from './delete.ctrl';
+import { ContractEditController } from './ContractEditController';
+import { ContractDeleteController } from './ContractDeleteController';
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
@@ -22,7 +22,7 @@ export class ContractsStateParams implements ui.IStateParamsService {
 	}
 }
 
-export class ContractsController {
+export class ContractsListController {
 	public loading: boolean;
 
 	public developer: Developer;
@@ -65,9 +65,9 @@ export class ContractsController {
 		try {
 			const { developer } = this;
 			await this.$mdDialog.show({
-				templateUrl: Template.getUrl('developers/contracts/edit'),
+				templateUrl: Template.getUrl('developers/contracts/ContractEdit'),
 				targetEvent: event,
-				controller: EditContractController,
+				controller: ContractEditController,
 				controllerAs: 'ctrl',
 				locals: { developer, contract }
 			});
@@ -82,9 +82,9 @@ export class ContractsController {
 		try {
 			const { developer } = this;
 			await this.$mdDialog.show({
-				templateUrl: Template.getUrl('developers/contracts/delete'),
+				templateUrl: Template.getUrl('developers/contracts/ContractDelete'),
 				targetEvent: event,
-				controller: DeleteContractController,
+				controller: ContractDeleteController,
 				controllerAs: 'ctrl',
 				locals: { developer, contract }
 			});

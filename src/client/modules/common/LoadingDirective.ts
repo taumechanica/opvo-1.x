@@ -6,7 +6,7 @@ import { Template } from '../Template';
 export function LoadingDirectiveFactory() {
 	return {
 		restrict: 'E',
-		templateUrl: Template.getUrl('common/loading'),
+		templateUrl: Template.getUrl('common/Loading'),
 
 		scope: {
 			when: '=',

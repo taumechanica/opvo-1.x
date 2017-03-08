@@ -7,7 +7,7 @@ import { Developer } from '../../../domain/Developer';
 
 import { ContractsService } from '../../../data/ContractsService';
 
-export class EditContractController {
+export class ContractEditController {
 	public loading: boolean;
 
 	public title: string;

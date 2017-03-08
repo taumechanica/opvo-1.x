@@ -4,7 +4,7 @@ import { IScope } from 'angular';
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
 
-export class DeleteDeveloperController {
+export class DeveloperDeleteController {
 	public loading: boolean;
 
 	public translateData: { id: number; };

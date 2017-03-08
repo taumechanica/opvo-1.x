@@ -1,4 +1,5 @@
 const fs = require('fs');
+const glob = require('glob');
 const webpack = require('webpack');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -7,17 +8,18 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nodeModules = { };
 
 fs.readdirSync('./node_modules')
-	.filter(function (directory) {
+	.filter(directory => {
 		return ['.bin'].indexOf(directory) === -1;
 	})
-	.forEach(function (name) {
+	.forEach(name => {
 		nodeModules[name] = `commonjs ${name}`;
 	});
 
 const clientConfig = {
 	entry: {
-		application: './src/client/application.ts',
-		vendor: './src/client/vendor.ts'
+		'application': './src/client/application.ts',
+		'application.spec': glob.sync('./src/client/**/*.spec.ts'),
+		'vendor': './src/client/vendor.ts'
 	},
 	output: {
 		path: `${__dirname}/dist/client`,

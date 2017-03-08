@@ -6,10 +6,10 @@ import { Template } from '../Template';
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
 
-import { EditDeveloperController } from './edit.ctrl';
-import { DeleteDeveloperController } from './delete.ctrl';
+import { DeveloperEditController } from './DeveloperEditController';
+import { DeveloperDeleteController } from './DeveloperDeleteController';
 
-export class DevelopersController {
+export class DevelopersListController {
 	public loading: boolean;
 
 	public developers: Developer[];
@@ -35,9 +35,9 @@ export class DevelopersController {
 
 		try {
 			await this.$mdDialog.show({
-				templateUrl: Template.getUrl('developers/edit'),
+				templateUrl: Template.getUrl('developers/DeveloperEdit'),
 				targetEvent: event,
-				controller: EditDeveloperController,
+				controller: DeveloperEditController,
 				controllerAs: 'ctrl',
 				locals: { developer }
 			});
@@ -51,9 +51,9 @@ export class DevelopersController {
 
 		try {
 			await this.$mdDialog.show({
-				templateUrl: Template.getUrl('developers/delete'),
+				templateUrl: Template.getUrl('developers/DeveloperDelete'),
 				targetEvent: event,
-				controller: DeleteDeveloperController,
+				controller: DeveloperDeleteController,
 				controllerAs: 'ctrl',
 				locals: { developer }
 			});

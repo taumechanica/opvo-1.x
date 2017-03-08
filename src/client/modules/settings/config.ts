@@ -5,7 +5,7 @@ import { module } from 'angular';
 
 import { Template } from '../Template';
 
-import { SettingsController } from './settings.ctrl';
+import { SettingsController } from './SettingsController';
 import { SettingsService } from '../../data/SettingsService';
 
 const setLanguage = async (
@@ -32,7 +32,7 @@ module('opvo.settings', [])
 
 		$stateProvider.state('settings', {
 			url: '/settings',
-			templateUrl: Template.getUrl('settings/settings'),
+			templateUrl: Template.getUrl('settings/Settings'),
 			controller: 'settingsController',
 			controllerAs: 'ctrl'
 		});

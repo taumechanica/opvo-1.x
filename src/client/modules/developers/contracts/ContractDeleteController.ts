@@ -6,7 +6,7 @@ import { Contract } from '../../../domain/Contract';
 
 import { ContractsService } from '../../../data/ContractsService';
 
-export class DeleteContractController {
+export class ContractDeleteController {
 	public loading: boolean;
 
 	public translateData: { id: number; };

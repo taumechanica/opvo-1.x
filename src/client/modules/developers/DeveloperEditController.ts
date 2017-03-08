@@ -5,7 +5,7 @@ import { IFormController, IScope } from 'angular';
 import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
 
-export class EditDeveloperController {
+export class DeveloperEditController {
 	public loading: boolean;
 
 	public title: string;

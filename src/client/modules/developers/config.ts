@@ -6,15 +6,15 @@ import { module } from 'angular';
 
 import { Template } from '../Template';
 
-import { DevelopersController } from './list.ctrl';
+import { DevelopersListController } from './DevelopersListController';
 import { DevelopersService } from '../../data/DevelopersService';
 
-import { ContractsStateParams, ContractsController } from './contracts/list.ctrl';
+import { ContractsStateParams, ContractsListController } from './contracts/ContractsListController';
 import { ContractsService } from '../../data/ContractsService';
 
 module('opvo.developers', [])
-	.controller('developersController', DevelopersController)
-	.controller('contractsController', ContractsController)
+	.controller('developersListController', DevelopersListController)
+	.controller('contractsListController', ContractsListController)
 	.service('developersService', DevelopersService)
 	.service('contractsService', ContractsService)
 	.config(($translatePartialLoaderProvider: translate.ITranslatePartialLoaderProvider) => {
@@ -34,8 +34,8 @@ module('opvo.developers', [])
 		$stateProvider
 			.state('developers', {
 				url: '/developers',
-				templateUrl: Template.getUrl('developers/list'),
-				controller: 'developersController',
+				templateUrl: Template.getUrl('developers/DevelopersList'),
+				controller: 'developersListController',
 				controllerAs: 'ctrl'
 			})
 			.state('developers.contracts', {
@@ -43,8 +43,8 @@ module('opvo.developers', [])
 				params: new ContractsStateParams(),
 				views: {
 					'@': {
-						templateUrl: Template.getUrl('developers/contracts/list'),
-						controller: 'contractsController',
+						templateUrl: Template.getUrl('developers/contracts/ContractsList'),
+						controller: 'contractsListController',
 						controllerAs: 'ctrl'
 					}
 				}
