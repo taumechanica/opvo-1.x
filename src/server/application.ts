@@ -6,6 +6,16 @@ import { open } from './core/Database';
 
 import { Dispatcher } from './api/Dispatcher';
 
+const assets: {
+	[index: string]: string;
+} = {
+	'css': '',
+	'i18n': 'i18n/',
+	'img': 'images/',
+	'scr': '',
+	'tpl': 'modules/'
+};
+
 const start = (db: Database) => {
 	const server = new Server();
 
@@ -26,51 +36,10 @@ const start = (db: Database) => {
 
 	server.route({
 		method: 'GET',
-		path: '/css/{file*}',
-		handler: {
-			directory: {
-				path: `${__dirname}/../client`
-			}
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/i18n/{file*}',
-		handler: {
-			directory: {
-				path: `${__dirname}/../client/i18n`
-			}
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/img/{file*}',
-		handler: {
-			directory: {
-				path: `${__dirname}/../client/images`
-			}
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/scr/{file*}',
-		handler: {
-			directory: {
-				path: `${__dirname}/../client`
-			}
-		}
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/tpl/{file*}',
-		handler: {
-			directory: {
-				path: `${__dirname}/../client/modules`
-			}
+		path: '/{AssetType}/{File*}',
+		handler: (request, reply) => {
+			const directory = assets[request.params['AssetType']];
+			return reply.file(`${__dirname}/../client/${directory}${request.params['File']}`);
 		}
 	});
 
