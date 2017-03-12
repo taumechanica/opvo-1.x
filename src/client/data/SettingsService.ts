@@ -3,7 +3,7 @@ import { IHttpService } from 'angular';
 import { Settings } from '../domain/Settings';
 
 export class SettingsService {
-	constructor(private $http: IHttpService) {
+	public constructor(private $http: IHttpService) {
 		'ngInject';
 	}
 

@@ -37,7 +37,7 @@ export class ContractsListController {
 		exceeds: boolean;
 	}[];
 
-	constructor(
+	public constructor(
 		private $scope: IScope,
 		private $state: ui.IStateService,
 		private $stateParams: ContractsStateParams,

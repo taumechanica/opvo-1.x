@@ -12,7 +12,7 @@ export class ContractDeleteController {
 	public translateData: { id: number; };
 	public error: { remote?: boolean; };
 
-	constructor(
+	public constructor(
 		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private developer: Developer,

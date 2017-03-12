@@ -3,7 +3,7 @@ import { IHttpService } from 'angular';
 import { Developer } from '../domain/Developer';
 
 export class DevelopersService {
-	constructor(private $http: IHttpService) {
+	public constructor(private $http: IHttpService) {
 		'ngInject';
 	}
 

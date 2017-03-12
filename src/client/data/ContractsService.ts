@@ -13,7 +13,7 @@ interface ContractJson {
 }
 
 export class ContractsService {
-	constructor(private $http: IHttpService) {
+	public constructor(private $http: IHttpService) {
 		'ngInject';
 	}
 

@@ -15,7 +15,7 @@ export class DevelopersListController {
 	public developers: Developer[];
 	public filter: string;
 
-	constructor(
+	public constructor(
 		private $scope: IScope,
 		private $state: ui.IStateService,
 		private $mdDialog: material.IDialogService,

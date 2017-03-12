@@ -14,7 +14,7 @@ export class DeveloperEditController {
 	public developerForm: IFormController;
 	public developerModel: Developer;
 
-	constructor(
+	public constructor(
 		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private $translate: translate.ITranslateService,

@@ -16,7 +16,7 @@ export class ContractEditController {
 	public contractForm: IFormController;
 	public contractModel: Contract;
 
-	constructor(
+	public constructor(
 		private $scope: IScope,
 		private $mdDialog: material.IDialogService,
 		private $translate: translate.ITranslateService,

@@ -10,7 +10,7 @@ export class SettingsController {
 	public settingsForm: IFormController;
 	public settingsModel: Settings;
 
-	constructor(
+	public constructor(
 		private $scope: IScope,
 		private $translate: translate.ITranslateProvider,
 		private settingsService: SettingsService
