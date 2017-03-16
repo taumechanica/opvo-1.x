@@ -1,12 +1,16 @@
 module.exports = config => {
 	config.set({
-		basePath: 'dist/client',
 		frameworks: ['jasmine'],
 		files: [
-			'vendor.js',
-			'application.js',
-			'application.spec.js'
+			'dist/client/vendor.js',
+			'node_modules/promise-polyfill/promise.min.js',
+			'dist/client/application.js',
+			'node_modules/angular-mocks/angular-mocks.js',
+			'dist/client/application.spec.js'
 		],
+		browserConsoleLogOptions: {
+			level: ''
+		},
 		port: 8080,
 		browsers: ['PhantomJS'],
 		autoWatch: false,

@@ -11,7 +11,7 @@ const getSvgSpriteUrl = (id: string) => {
 	return `/img/svg-sprite-${id}.svg`;
 };
 
-module('opvo', [
+export default module('opvo', [
 	'ngMaterial',
 	'ngMessages',
 	'ngSanitize',
