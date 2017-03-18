@@ -5,17 +5,17 @@ import { ICompileService, IScope } from 'angular';
 import application from '../../application';
 
 describe('InputDateDirective', () => {
+	beforeEach(mock.module(application.name));
+
 	let $scope: IScope;
 	let $compile: ICompileService;
 
-	beforeEach(mock.module(application.name));
+	const model: { date?: Date; } = { };
 
 	beforeEach(inject(($injector: auto.IInjectorService) => {
 		$scope = extend($injector.get('$rootScope').$new(), { model });
 		$compile = $injector.get('$compile');
 	}));
-
-	const model: { date?: Date; } = { };
 
 	const compile = () => {
 		const template = '<input ng-model="model.date" input-date>';
