@@ -3,9 +3,11 @@ import { extend } from 'angular';
 import { ICompileService, IScope } from 'angular';
 
 import application from '../../application';
+import mocks from '../mocks/config';
 
 describe('LoadingDirective', () => {
 	beforeEach(mock.module(application.name));
+	beforeEach(mock.module(mocks.name));
 	beforeEach(mock.module('opvo.templates'));
 
 	let $scope: IScope;

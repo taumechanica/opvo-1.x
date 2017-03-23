@@ -10,11 +10,13 @@ import { DevelopersListController } from './DevelopersListController';
 import { DevelopersService } from '../../data/DevelopersService';
 
 import { ContractsStateParams, ContractsListController } from './contracts/ContractsListController';
+import { ContractDeleteController } from './contracts/ContractDeleteController';
 import { ContractsService } from '../../data/ContractsService';
 
 module('opvo.developers', [])
 	.controller('developersListController', DevelopersListController)
 	.controller('contractsListController', ContractsListController)
+	.controller('contractDeleteController', ContractDeleteController)
 	.service('developersService', DevelopersService)
 	.service('contractsService', ContractsService)
 	.config(($translatePartialLoaderProvider: translate.ITranslatePartialLoaderProvider) => {
