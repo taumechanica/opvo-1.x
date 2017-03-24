@@ -8,3 +8,17 @@ export default module('opvo.mocks', [])
 		$httpBackend.whenGET(/^\/i18n\/.*?\/\w{2}\.json$/).respond({ });
 		$httpBackend.whenGET(/^\/rest\/settings$/).respond({ });
 	});
+
+export class Deferred<T> {
+	public resolve: (value?: T | PromiseLike<T>) => void;
+	public reject: (value?: T | PromiseLike<T>) => void;
+
+	public promise: Promise<T>;
+
+	public constructor() {
+		this.promise = new Promise<T>((resolve, reject) => {
+			this.resolve = resolve;
+			this.reject = reject;
+		});
+	}
+}

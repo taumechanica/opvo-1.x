@@ -1,8 +1,7 @@
 import * as inert from 'inert';
 import { Server } from 'hapi';
-
-import { Database } from './core/Database';
-import { open } from './core/Database';
+import { Database } from 'sqlite';
+import { open } from 'sqlite';
 
 import { Dispatcher } from './api/Dispatcher';
 

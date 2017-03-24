@@ -1,15 +1,15 @@
 import { auto, material, mock } from 'angular';
 import { IControllerService, IScope } from 'angular';
 
-import application from '../../../application';
-import mocks from '../../mocks/config';
+import application from '../../application';
+import mocks from '../mocks/config';
 
-import { Deferred } from '../../mocks/config';
+import { Deferred } from '../mocks/config';
 
-import { ContractDeleteController } from './ContractDeleteController';
-import { ContractsService } from '../../../data/ContractsService';
+import { DeveloperDeleteController } from './DeveloperDeleteController';
+import { DevelopersService } from '../../data/DevelopersService';
 
-describe('ContractDeleteController', () => {
+describe('DeveloperDeleteController', () => {
 	beforeEach(mock.module(application.name));
 	beforeEach(mock.module(mocks.name));
 
@@ -17,39 +17,37 @@ describe('ContractDeleteController', () => {
 	let $controller: IControllerService;
 	let $mdDialog: material.IDialogService;
 
-	let contractsService: ContractsService;
+	let developersService: DevelopersService;
 
 	beforeEach(inject(($injector: auto.IInjectorService) => {
 		$scope = $injector.get('$rootScope').$new();
 		$controller = $injector.get('$controller');
 		$mdDialog = $injector.get<material.IDialogService>('$mdDialog');
 
-		contractsService = $injector.get<ContractsService>('contractsService');
+		developersService = $injector.get<DevelopersService>('developersService');
 	}));
 
 	const developer = { Id: 1 };
-	const contract = { Id: 2 };
 
 	const instantiate = () => {
 		const ctrl = $controller(
-			ContractDeleteController, {
+			DeveloperDeleteController, {
 				$scope,
-				developer,
-				contract
+				developer
 			}
 		);
 		$scope.$digest();
 		return ctrl;
 	};
 
-	it('should init translate data with contract id', () => {
+	it('should init translate data with developer id', () => {
 		const ctrl = instantiate();
-		expect(ctrl.translateData).toEqual({ id: contract.Id });
+		expect(ctrl.translateData).toEqual({ id: developer.Id });
 	});
 
 	it('should hide the dialog after successful delete', async done => {
 		const deferred = new Deferred();
-		spyOn(contractsService, 'delete').and.callFake(() => deferred.promise);
+		spyOn(developersService, 'delete').and.callFake(() => deferred.promise);
 		spyOn($scope, '$apply').and.callFake(() => { });
 		spyOn($mdDialog, 'hide').and.callFake(() => { });
 
@@ -57,7 +55,7 @@ describe('ContractDeleteController', () => {
 		ctrl.delete();
 		expect(ctrl.error).toEqual({ });
 		expect(ctrl.loading).toBeTruthy();
-		expect(contractsService.delete).toHaveBeenCalledWith(developer, contract);
+		expect(developersService.delete).toHaveBeenCalledWith(developer);
 
 		deferred.resolve();
 		await deferred.promise;
@@ -72,7 +70,7 @@ describe('ContractDeleteController', () => {
 
 	it('should show an error after failing delete', async done => {
 		const deferred = new Deferred();
-		spyOn(contractsService, 'delete').and.callFake(() => deferred.promise);
+		spyOn(developersService, 'delete').and.callFake(() => deferred.promise);
 		spyOn($scope, '$apply').and.callFake(() => { });
 		spyOn($mdDialog, 'hide').and.callFake(() => { });
 
@@ -80,7 +78,7 @@ describe('ContractDeleteController', () => {
 		ctrl.delete();
 		expect(ctrl.error).toEqual({ });
 		expect(ctrl.loading).toBeTruthy();
-		expect(contractsService.delete).toHaveBeenCalledWith(developer, contract);
+		expect(developersService.delete).toHaveBeenCalledWith(developer);
 
 		try {
 			deferred.reject();

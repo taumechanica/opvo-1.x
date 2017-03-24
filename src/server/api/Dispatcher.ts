@@ -1,6 +1,5 @@
 import { IReply, Request, Server } from 'hapi';
-
-import { Database } from '../core/Database';
+import { Database } from 'sqlite';
 
 import { ContractsSchema } from './schema/ContractsSchema';
 import { DevelopersSchema } from './schema/DevelopersSchema';

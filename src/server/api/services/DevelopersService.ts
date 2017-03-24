@@ -1,6 +1,5 @@
 import { IReply, Request } from 'hapi';
-
-import { Database } from '../../core/Database';
+import { Database } from 'sqlite';
 
 import { Developer } from '../../domain/Developer';
 import { Record } from '../../domain/Record';
