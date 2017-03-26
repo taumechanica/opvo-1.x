@@ -67,6 +67,7 @@ export class DevelopersListController {
 
 		try {
 			this.developers = await this.developersService.getAll();
+		} catch (ex) {
 		} finally {
 			this.loading = false;
 			this.$scope.$apply();
