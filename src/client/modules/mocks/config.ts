@@ -9,6 +9,8 @@ export default module('opvo.mocks', [])
 		$httpBackend.whenGET(/^\/rest\/settings$/).respond({ });
 	});
 
+export const Factory = <T>() => <T>{ };
+
 export class Deferred<T> {
 	public resolve: (value?: T | PromiseLike<T>) => void;
 	public reject: (value?: T | PromiseLike<T>) => void;
@@ -16,6 +18,10 @@ export class Deferred<T> {
 	public promise: Promise<T>;
 
 	public constructor() {
+		this.reset();
+	}
+
+	public reset() {
 		this.promise = new Promise<T>((resolve, reject) => {
 			this.resolve = resolve;
 			this.reject = reject;

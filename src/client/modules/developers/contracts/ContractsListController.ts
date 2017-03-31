@@ -15,11 +15,7 @@ import { ContractDeleteController } from './ContractDeleteController';
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
 export class ContractsStateParams implements ui.IStateParamsService {
-	public developer: Developer;
-
-	constructor() {
-		this.developer = null;
-	}
+	constructor(public developer: Developer = null) { }
 }
 
 export class ContractsListController {
