@@ -1,5 +1,5 @@
 import { auto, mock } from 'angular';
-import { extend, isDate } from 'angular';
+import { extend } from 'angular';
 import { ICompileService, IScope } from 'angular';
 
 import application from '../../application';

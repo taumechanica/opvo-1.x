@@ -1,5 +1,5 @@
 import { extend, module } from 'angular';
-import { IHttpBackendService, IFormController, INgModelController } from 'angular';
+import { IHttpBackendService } from 'angular';
 
 export default module('opvo.mocks', [])
 	.run(($httpBackend: IHttpBackendService) => {
