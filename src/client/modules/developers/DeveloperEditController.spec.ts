@@ -1,10 +1,10 @@
 import { auto, material, mock } from 'angular';
-import { IControllerService, IQService, IScope } from 'angular';
+import { IControllerService, IFormController, IQService, IScope } from 'angular';
 
 import application from '../../application';
 import mocks from '../mocks/config';
 
-import { Deferred, FormController } from '../mocks/config';
+import { Deferred, Factory } from '../mocks/config';
 
 import { Developer } from '../../domain/Developer';
 import { DeveloperEditController } from './DeveloperEditController';
@@ -62,29 +62,31 @@ describe('DeveloperEditController', () => {
 	it('should hide the dialog after successful action', async done => {
 		const deferred = new Deferred();
 		spyOn(developersService, 'create').and.callFake(() => deferred.promise);
-		spyOn($scope, '$apply').and.callFake(() => { });
-		spyOn($mdDialog, 'hide').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
+		spyOn($mdDialog, 'hide').and.callThrough();
 
 		const ctrl = instantiate();
-		ctrl.developerForm = new FormController();
-		spyOn(ctrl.developerForm, '$setSubmitted').and.callThrough();
+		ctrl.developerForm = Factory<IFormController>({
+			$invalid: false,
+			$setSubmitted: jasmine.createSpy('$setSubmitted').and.callFake(() => { })
+		});
 
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalledTimes(1);
 		expect($scope.$apply).not.toHaveBeenCalled();
 
 		ctrl.developerModel = developer;
-		ctrl.developerForm.$setValidity(undefined, false, undefined);
+		ctrl.developerForm.$invalid = true;
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalledTimes(2);
 		expect($scope.$apply).not.toHaveBeenCalled();
 
-		ctrl.developerForm.$setValidity(undefined, true, undefined);
+		ctrl.developerForm.$invalid = false;
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalledTimes(3);
 		expect(ctrl.loading).toBeTruthy();
 		expect(developersService.create).toHaveBeenCalledWith(developer);
 
@@ -102,23 +104,24 @@ describe('DeveloperEditController', () => {
 	it('should show an error after failing action', async done => {
 		const deferred = new Deferred();
 		spyOn(developersService, 'update').and.callFake(() => deferred.promise);
-		spyOn($scope, '$apply').and.callFake(() => { });
-		spyOn($mdDialog, 'hide').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
+		spyOn($mdDialog, 'hide').and.callThrough();
 
 		const ctrl = instantiate(developer);
-		ctrl.developerForm = new FormController();
-		ctrl.developerForm.$setValidity(undefined, false, undefined);
-		spyOn(ctrl.developerForm, '$setSubmitted').and.callThrough();
+		ctrl.developerForm = Factory<IFormController>({
+			$invalid: true,
+			$setSubmitted: jasmine.createSpy('$setSubmitted').and.callFake(() => { })
+		});
 
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalledTimes(1);
 		expect($scope.$apply).not.toHaveBeenCalled();
 
-		ctrl.developerForm.$setValidity(undefined, true, undefined);
+		ctrl.developerForm.$invalid = false;
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.developerForm.$setSubmitted).toHaveBeenCalledTimes(2);
 		expect(ctrl.loading).toBeTruthy();
 		expect(developersService.update).toHaveBeenCalledWith(developer);
 
@@ -136,7 +139,7 @@ describe('DeveloperEditController', () => {
 	});
 
 	it('should cancel the dialog when cancelling action', () => {
-		spyOn($mdDialog, 'cancel').and.callFake(() => { });
+		spyOn($mdDialog, 'cancel').and.callThrough();
 
 		const ctrl = instantiate();
 		ctrl.cancel();

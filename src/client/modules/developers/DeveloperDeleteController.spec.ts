@@ -48,8 +48,8 @@ describe('DeveloperDeleteController', () => {
 	it('should hide the dialog after successful delete', async done => {
 		const deferred = new Deferred();
 		spyOn(developersService, 'delete').and.callFake(() => deferred.promise);
-		spyOn($scope, '$apply').and.callFake(() => { });
-		spyOn($mdDialog, 'hide').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
+		spyOn($mdDialog, 'hide').and.callThrough();
 
 		const ctrl = instantiate();
 		ctrl.delete();
@@ -71,8 +71,8 @@ describe('DeveloperDeleteController', () => {
 	it('should show an error after failing delete', async done => {
 		const deferred = new Deferred();
 		spyOn(developersService, 'delete').and.callFake(() => deferred.promise);
-		spyOn($scope, '$apply').and.callFake(() => { });
-		spyOn($mdDialog, 'hide').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
+		spyOn($mdDialog, 'hide').and.callThrough();
 
 		const ctrl = instantiate();
 		ctrl.delete();
@@ -94,7 +94,7 @@ describe('DeveloperDeleteController', () => {
 	});
 
 	it('should cancel the dialog when cancelling deletion', () => {
-		spyOn($mdDialog, 'cancel').and.callFake(() => { });
+		spyOn($mdDialog, 'cancel').and.callThrough();
 
 		const ctrl = instantiate();
 		ctrl.cancel();

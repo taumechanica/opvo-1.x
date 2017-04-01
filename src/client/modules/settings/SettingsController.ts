@@ -25,8 +25,8 @@ export class SettingsController {
 
 		try {
 			const { settingsModel } = this;
-
 			await this.settingsService.set(settingsModel);
+
 			this.$translate.use(settingsModel.Language);
 		} finally {
 			this.loading = false;

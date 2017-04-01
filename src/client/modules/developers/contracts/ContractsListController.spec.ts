@@ -143,7 +143,7 @@ describe('ContractsListController', () => {
 
 	describe('contracts data', () => {
 		beforeEach(() => {
-			spyOn($scope, '$apply').and.callFake(() => { });
+			spyOn($scope, '$apply').and.callThrough();
 		});
 
 		it('should init data on instantiation', async done => {
@@ -276,7 +276,7 @@ describe('ContractsListController', () => {
 		let getSettings: jasmine.Spy;
 
 		beforeEach(() => {
-			spyOn($scope, '$apply').and.callFake(() => { });
+			spyOn($scope, '$apply').and.callThrough();
 			getSettings = spyOn(settingsService, 'get');
 		});
 

@@ -58,7 +58,7 @@ describe('DevelopersListController', () => {
 	];
 
 	it('should init data on instantiation', async done => {
-		spyOn($scope, '$apply').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
 
 		const { ctrl, deferred } = instantiate();
 		expect(ctrl.loading).toBeTruthy();
@@ -82,8 +82,8 @@ describe('DevelopersListController', () => {
 	});
 
 	it('should update data after edition', async done => {
-		spyOn($scope, '$apply').and.callFake(() => { });
 		spyOn($mdDialog, 'show').and.callFake(() => Promise.resolve());
+		spyOn($scope, '$apply').and.callThrough();
 
 		const { ctrl, deferred } = instantiate();
 		const event = createMouseEvent();
@@ -104,8 +104,8 @@ describe('DevelopersListController', () => {
 	});
 
 	it('should update data after deletion', async done => {
-		spyOn($scope, '$apply').and.callFake(() => { });
 		spyOn($mdDialog, 'show').and.callFake(() => Promise.resolve());
+		spyOn($scope, '$apply').and.callThrough();
 
 		const { ctrl, deferred } = instantiate();
 		const event = createMouseEvent();

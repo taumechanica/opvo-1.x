@@ -1,10 +1,10 @@
 import { auto, material, mock } from 'angular';
-import { IControllerService, IQService, IScope } from 'angular';
+import { IControllerService, IFormController, IQService, IScope } from 'angular';
 
 import application from '../../../application';
 import mocks from '../../mocks/config';
 
-import { Deferred, FormController } from '../../mocks/config';
+import { Deferred, Factory } from '../../mocks/config';
 
 import { Contract } from '../../../domain/Contract';
 import { ContractEditController } from './ContractEditController';
@@ -71,29 +71,31 @@ describe('ContractEditController', () => {
 	it('should hide the dialog after successful action', async done => {
 		const deferred = new Deferred();
 		spyOn(contractsService, 'create').and.callFake(() => deferred.promise);
-		spyOn($scope, '$apply').and.callFake(() => { });
-		spyOn($mdDialog, 'hide').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
+		spyOn($mdDialog, 'hide').and.callThrough();
 
 		const ctrl = instantiate();
-		ctrl.contractForm = new FormController();
-		spyOn(ctrl.contractForm, '$setSubmitted').and.callThrough();
+		ctrl.contractForm = Factory<IFormController>({
+			$invalid: false,
+			$setSubmitted: jasmine.createSpy('$setSubmitted').and.callFake(() => { })
+		});
 
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalledTimes(1);
 		expect($scope.$apply).not.toHaveBeenCalled();
 
 		ctrl.contractModel = contract;
-		ctrl.contractForm.$setValidity(undefined, false, undefined);
+		ctrl.contractForm.$invalid = true;
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalledTimes(2);
 		expect($scope.$apply).not.toHaveBeenCalled();
 
-		ctrl.contractForm.$setValidity(undefined, true, undefined);
+		ctrl.contractForm.$invalid = false;
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalledTimes(3);
 		expect(ctrl.loading).toBeTruthy();
 		expect(contractsService.create).toHaveBeenCalledWith(developer, contract);
 
@@ -111,23 +113,24 @@ describe('ContractEditController', () => {
 	it('should show an error after failing action', async done => {
 		const deferred = new Deferred();
 		spyOn(contractsService, 'update').and.callFake(() => deferred.promise);
-		spyOn($scope, '$apply').and.callFake(() => { });
-		spyOn($mdDialog, 'hide').and.callFake(() => { });
+		spyOn($scope, '$apply').and.callThrough();
+		spyOn($mdDialog, 'hide').and.callThrough();
 
 		const ctrl = instantiate(contract);
-		ctrl.contractForm = new FormController();
-		ctrl.contractForm.$setValidity(undefined, false, undefined);
-		spyOn(ctrl.contractForm, '$setSubmitted').and.callThrough();
+		ctrl.contractForm = Factory<IFormController>({
+			$invalid: true,
+			$setSubmitted: jasmine.createSpy('$setSubmitted').and.callFake(() => { })
+		});
 
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalledTimes(1);
 		expect($scope.$apply).not.toHaveBeenCalled();
 
-		ctrl.contractForm.$setValidity(undefined, true, undefined);
+		ctrl.contractForm.$invalid = false;
 		ctrl.save();
 		expect(ctrl.error).toEqual({ });
-		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalled();
+		expect(ctrl.contractForm.$setSubmitted).toHaveBeenCalledTimes(2);
 		expect(ctrl.loading).toBeTruthy();
 		expect(contractsService.update).toHaveBeenCalledWith(developer, contract);
 
@@ -145,7 +148,7 @@ describe('ContractEditController', () => {
 	});
 
 	it('should cancel the dialog when cancelling action', () => {
-		spyOn($mdDialog, 'cancel').and.callFake(() => { });
+		spyOn($mdDialog, 'cancel').and.callThrough();
 
 		const ctrl = instantiate();
 		ctrl.cancel();
