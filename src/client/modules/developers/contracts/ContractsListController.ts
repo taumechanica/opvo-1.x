@@ -1,5 +1,6 @@
-import { material, ui } from 'angular';
+import { material } from 'angular';
 import { IScope } from 'angular';
+import { StateParams, StateService } from '@uirouter/angularjs';
 
 import { Template } from '../../Template';
 
@@ -13,10 +14,6 @@ import { ContractEditController } from './ContractEditController';
 import { ContractDeleteController } from './ContractDeleteController';
 
 const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
-
-export class ContractsStateParams implements ui.IStateParamsService {
-	constructor(public developer: Developer = null) { }
-}
 
 export class ContractsListController {
 	public loading: boolean;
@@ -35,8 +32,8 @@ export class ContractsListController {
 
 	public constructor(
 		private $scope: IScope,
-		private $state: ui.IStateService,
-		private $stateParams: ContractsStateParams,
+		private $state: StateService,
+		private $stateParams: StateParams,
 		private $mdDialog: material.IDialogService,
 		private contractsService: ContractsService,
 		private settingsService: SettingsService

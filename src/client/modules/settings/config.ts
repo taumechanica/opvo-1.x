@@ -1,7 +1,8 @@
 import '../../assets/styles/settings.less';
 
-import { translate, ui } from 'angular';
+import { translate } from 'angular';
 import { module } from 'angular';
+import { StateProvider, UrlRouterProvider } from '@uirouter/angularjs';
 
 import { Template } from '../Template';
 
@@ -25,8 +26,8 @@ module('opvo.settings', [])
 		$translatePartialLoaderProvider.addPart('settings');
 	})
 	.config((
-		$stateProvider: ui.IStateProvider,
-		$urlRouterProvider: ui.IUrlRouterProvider
+		$stateProvider: StateProvider,
+		$urlRouterProvider: UrlRouterProvider
 	) => {
 		'ngInject';
 

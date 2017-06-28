@@ -1,4 +1,4 @@
-import { IReply, Request } from 'hapi';
+import { Base_Reply, Request } from 'hapi';
 import { Database } from 'sqlite';
 
 import { Settings } from '../../domain/Settings';
@@ -6,7 +6,7 @@ import { Settings } from '../../domain/Settings';
 export class SettingsService {
 	public constructor(private db: Database) { }
 
-	public async get(request: Request, reply: IReply) {
+	public async get(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		let settings = await db.get<Settings>('SELECT * FROM Settings');
 
@@ -26,7 +26,7 @@ export class SettingsService {
 		return reply(settings);
 	}
 
-	public async set(request: Request, reply: IReply) {
+	public async set(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		const { Language, YearFrom, YearTo } = request.payload;
 		await db.run(

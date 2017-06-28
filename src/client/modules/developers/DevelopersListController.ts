@@ -1,5 +1,6 @@
-import { material, ui } from 'angular';
+import { material } from 'angular';
 import { IScope } from 'angular';
+import { StateService } from '@uirouter/angularjs';
 
 import { Template } from '../Template';
 
@@ -17,7 +18,7 @@ export class DevelopersListController {
 
 	public constructor(
 		private $scope: IScope,
-		private $state: ui.IStateService,
+		private $state: StateService,
 		private $mdDialog: material.IDialogService,
 		private developersService: DevelopersService
 	) {

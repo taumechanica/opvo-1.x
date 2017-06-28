@@ -1,5 +1,6 @@
 import { auto, material, mock } from 'angular';
 import { IControllerService, IDocumentService, IQService, IScope } from 'angular';
+import { StateParams } from '@uirouter/angularjs';
 
 import application from '../../../application';
 import mocks from '../../mocks/config';
@@ -7,7 +8,7 @@ import mocks from '../../mocks/config';
 import { Deferred, Factory } from '../../mocks/config';
 
 import { Contract } from '../../../domain/Contract';
-import { ContractsListController, ContractsStateParams } from './ContractsListController';
+import { ContractsListController } from './ContractsListController';
 import { ContractsService } from '../../../data/ContractsService';
 import { SettingsService } from '../../../data/SettingsService';
 
@@ -43,11 +44,11 @@ describe('ContractsListController', () => {
 
 	const developer = { Id: 1, Name: '#1', CeilingAmount: 10.0 };
 
-	const instantiate = ($stateParams?: ContractsStateParams) => {
+	const instantiate = ($stateParams?: StateParams) => {
 		const deferred = new Deferred<Contract[]>();
 		spyOn(contractsService, 'getAllByYear').and.callFake(() => deferred.promise);
 
-		$stateParams = $stateParams || new ContractsStateParams(developer);
+		$stateParams = $stateParams || new StateParams(developer);
 		const ctrl = $controller(
 			ContractsListController, {
 				$scope,
@@ -64,8 +65,8 @@ describe('ContractsListController', () => {
 	it('should redirect to developers list if developer was not provided', () => {
 		spyOn($state, 'go').and.callThrough();
 
-		const { ctrl } = instantiate(new ContractsStateParams());
-		expect(ctrl.developer).toBeNull();
+		const { ctrl } = instantiate(new StateParams());
+		expect(ctrl.developer).toBeUndefined();
 		expect($state.go).toHaveBeenCalledWith('developers');
 	});
 

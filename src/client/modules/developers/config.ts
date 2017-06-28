@@ -1,15 +1,16 @@
 import '../../assets/styles/developers.less';
 import '../../assets/styles/contracts.less';
 
-import { translate, ui } from 'angular';
+import { translate } from 'angular';
 import { module } from 'angular';
+import { StateProvider, UrlRouterProvider } from '@uirouter/angularjs';
 
 import { Template } from '../Template';
 
 import { DevelopersListController } from './DevelopersListController';
 import { DevelopersService } from '../../data/DevelopersService';
 
-import { ContractsStateParams, ContractsListController } from './contracts/ContractsListController';
+import { ContractsListController } from './contracts/ContractsListController';
 import { ContractDeleteController } from './contracts/ContractDeleteController';
 import { ContractsService } from '../../data/ContractsService';
 
@@ -26,8 +27,8 @@ module('opvo.developers', [])
 		$translatePartialLoaderProvider.addPart('contracts');
 	})
 	.config((
-		$stateProvider: ui.IStateProvider,
-		$urlRouterProvider: ui.IUrlRouterProvider
+		$stateProvider: StateProvider,
+		$urlRouterProvider: UrlRouterProvider
 	) => {
 		'ngInject';
 
@@ -42,7 +43,6 @@ module('opvo.developers', [])
 			})
 			.state('developers.contracts', {
 				url: '/contracts',
-				params: new ContractsStateParams(),
 				views: {
 					'@': {
 						templateUrl: Template.getUrl('developers/contracts/ContractsList'),

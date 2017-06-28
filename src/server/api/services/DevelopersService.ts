@@ -1,4 +1,4 @@
-import { IReply, Request } from 'hapi';
+import { Base_Reply, Request } from 'hapi';
 import { Database } from 'sqlite';
 
 import { Developer } from '../../domain/Developer';
@@ -7,13 +7,13 @@ import { Record } from '../../domain/Record';
 export class DevelopersService {
 	public constructor(private db: Database) { }
 
-	public async getAll(request: Request, reply: IReply) {
+	public async getAll(request: Request, reply: Base_Reply) {
 		const developers = await this.db.all<Developer>('SELECT * FROM Developer');
 
 		return reply(developers);
 	}
 
-	public async getById(request: Request, reply: IReply) {
+	public async getById(request: Request, reply: Base_Reply) {
 		const developer = await this.db.get<Developer>(
 			'SELECT * FROM Developer WHERE Id = ?',
 			request.params['DeveloperId']
@@ -22,7 +22,7 @@ export class DevelopersService {
 		return reply(developer).code(developer ? 200 : 404);
 	}
 
-	public async create(request: Request, reply: IReply) {
+	public async create(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		const { Name, CeilingAmount } = request.payload;
 		await db.run('INSERT INTO Developer (Name, CeilingAmount) VALUES (?, ?)', Name, CeilingAmount);
@@ -32,7 +32,7 @@ export class DevelopersService {
 		return reply(`/rest/developers/${record.Id}`).code(201);
 	}
 
-	public async update(request: Request, reply: IReply) {
+	public async update(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		const { Id } = request.payload;
 		if (request.params['DeveloperId'] != Id) return reply('').code(400);
@@ -45,7 +45,7 @@ export class DevelopersService {
 		return reply('').code(!changes || changes.Count ? 204 : 404);
 	}
 
-	public async delete(request: Request, reply: IReply) {
+	public async delete(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		await db.run('DELETE FROM Developer WHERE Id = ?', request.params['DeveloperId']);
 

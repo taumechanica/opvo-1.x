@@ -1,4 +1,4 @@
-import { IReply, Request } from 'hapi';
+import { Base_Reply, Request } from 'hapi';
 import { Database } from 'sqlite';
 
 import { Contract } from '../../domain/Contract';
@@ -8,7 +8,7 @@ import { Record } from '../../domain/Record';
 export class ContractsService {
 	public constructor(private db: Database) { }
 
-	public async getAllByYear(request: Request, reply: IReply) {
+	public async getAllByYear(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		const developerId = request.params['DeveloperId'];
 		const year = parseInt(request.params['Year'], 10);
@@ -25,7 +25,7 @@ export class ContractsService {
 		return developer ? reply(contracts).code(200) : reply('').code(404);
 	}
 
-	public async getById(request: Request, reply: IReply) {
+	public async getById(request: Request, reply: Base_Reply) {
 		const contract = await this.db.get<Contract>(
 			'SELECT * FROM Contract WHERE Id = ? AND DeveloperId = ?',
 			request.params['ContractId'], request.params['DeveloperId']
@@ -34,7 +34,7 @@ export class ContractsService {
 		return reply(contract).code(contract ? 200 : 404);
 	}
 
-	public async create(request: Request, reply: IReply) {
+	public async create(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		const developerId = request.params['DeveloperId'];
 		const { Amount, StartDate, Deadline, AcceptanceDate } = request.payload;
@@ -52,7 +52,7 @@ export class ContractsService {
 		}
 	}
 
-	public async update(request: Request, reply: IReply) {
+	public async update(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		const { Id, DeveloperId } = request.payload;
 		if (request.params['ContractId'] != Id ||
@@ -70,7 +70,7 @@ export class ContractsService {
 		return reply('').code(!changes || changes.Count ? 204 : 404);
 	}
 
-	public async delete(request: Request, reply: IReply) {
+	public async delete(request: Request, reply: Base_Reply) {
 		const { db } = this;
 		await db.run(
 			'DELETE FROM Contract WHERE Id = ? AND DeveloperId = ?',
