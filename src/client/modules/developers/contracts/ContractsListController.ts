@@ -18,7 +18,6 @@ const MONTHS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', '
 export class ContractsListController {
 	public loading: boolean;
 
-	public developer: Developer;
 	public selectedYear: number;
 	public yearOptions: number[];
 	public hasData: boolean;
@@ -36,12 +35,12 @@ export class ContractsListController {
 		private $stateParams: StateParams,
 		private $mdDialog: material.IDialogService,
 		private contractsService: ContractsService,
-		private settingsService: SettingsService
+		private settingsService: SettingsService,
+		public developer: Developer
 	) {
 		'ngInject';
 
-		this.developer = $stateParams.developer;
-		if (!this.developer) {
+		if (!developer) {
 			$state.go('developers');
 			return;
 		}

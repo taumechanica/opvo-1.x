@@ -32,7 +32,10 @@ const clientConfig = {
 
 	module: {
 		loaders: [
-			{ test: /\.ts$/, loader: 'awesome-typescript-loader?configFileName=./src/client/tsconfig.json' },
+			{ test: /\.ts$/, loaders: [
+				'ng-annotate-loader',
+				'awesome-typescript-loader?configFileName=./src/client/tsconfig.json'
+			] },
 			{ test: /\.svg$/, loader: 'file-loader?name=images/[name].svg' },
 			{ test: /src\/client\/application\.pug$/, loaders: [
 				'file-loader?name=[name].html',

@@ -78,7 +78,7 @@ describe('DevelopersListController', () => {
 
 		const { ctrl } = instantiate();
 		ctrl.openContracts(createMouseEvent(), developers[0]);
-		expect($state.go).toHaveBeenCalledWith('developers.contracts', { developer: developers[0] });
+		expect($state.go).toHaveBeenCalledWith('developers.contracts', { developerId: developers[0].Id });
 	});
 
 	it('should update data after edition', async done => {

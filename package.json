@@ -1,14 +1,13 @@
 {
   "name": "opvo-1.x",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "OPVO 1.x",
   "scripts": {
     "clear": "find dist -type f ! -name '*.sqlite' -delete 2>/dev/null || true",
     "create": "mkdir -p dist/server/migrations",
     "copy": "cp -R src/server/migrations/ dist/server",
     "prepare": "npm run clear && npm run create && npm run copy",
-    "annotate": "ng-annotate -a dist/client/application.js -o dist/client/application.js",
-    "build": "npm run prepare && webpack && npm run annotate",
+    "build": "npm run prepare && webpack",
     "test": "node_modules/.bin/karma start || true",
     "start": "node dist/server/application.js"
   },
@@ -59,6 +58,7 @@
     "karma-phantomjs-launcher": "^1.0.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
+    "ng-annotate-loader": "^0.6.1",
     "postcss-loader": "^2.0.6",
     "promise-polyfill": "^6.0.2",
     "pug": "^2.0.0-rc.2",

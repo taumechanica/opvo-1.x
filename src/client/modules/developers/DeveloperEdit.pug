@@ -19,6 +19,7 @@
 							type="text"
 							name="name"
 							ng-model="ctrl.developerModel.Name"
+							autocomplete="off"
 							md-autofocus="true"
 							md-maxlength="128"
 							minlength="4"
@@ -35,6 +36,7 @@
 							name="amount"
 							ng-model="ctrl.developerModel.CeilingAmount"
 							ng-pattern="/^[1-9]\\d?(\\.\\d{1,2})?$/"
+							autocomplete="off"
 							required
 						)
 						div(ng-messages="ctrl.developerForm.amount.$error")

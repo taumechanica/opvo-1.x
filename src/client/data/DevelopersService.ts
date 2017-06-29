@@ -14,6 +14,13 @@ export class DevelopersService {
 		return response.data;
 	}
 
+	public async getById(id: number) {
+		const url = `/rest/developers/${id}`;
+		const response = await this.$http.get<Developer>(url);
+
+		return response.data;
+	}
+
 	public async create(developer: Developer) {
 		const url = '/rest/developers';
 		const response = await this.$http.post<string>(url, developer);

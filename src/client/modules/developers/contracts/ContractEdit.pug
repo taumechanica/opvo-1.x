@@ -21,6 +21,7 @@
 							ng-model="ctrl.contractModel.Amount"
 							ng-pattern="/^[1-9]\\d?(\\.\\d{1,2})?$/"
 							md-autofocus="true"
+							autocomplete="off"
 							required
 						)
 						div(ng-messages="ctrl.contractForm.amount.$error")
@@ -32,6 +33,7 @@
 							type="text"
 							name="startDate"
 							ng-model="ctrl.contractModel.StartDate"
+							autocomplete="off"
 							input-date
 							required
 						)
@@ -44,6 +46,7 @@
 							type="text"
 							name="deadline"
 							ng-model="ctrl.contractModel.Deadline"
+							autocomplete="off"
 							input-date
 							required
 						)
@@ -56,6 +59,7 @@
 							type="text"
 							name="acceptanceDate"
 							ng-model="ctrl.contractModel.AcceptanceDate"
+							autocomplete="off"
 							input-date
 						)
 						div(ng-messages="ctrl.contractForm.acceptanceDate.$error")

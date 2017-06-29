@@ -3,7 +3,7 @@ import '../../assets/styles/contracts.less';
 
 import { translate } from 'angular';
 import { module } from 'angular';
-import { StateProvider, UrlRouterProvider } from '@uirouter/angularjs';
+import { StateParams, StateProvider, UrlRouterProvider } from '@uirouter/angularjs';
 
 import { Template } from '../Template';
 
@@ -42,7 +42,18 @@ module('opvo.developers', [])
 				controllerAs: 'ctrl'
 			})
 			.state('developers.contracts', {
-				url: '/contracts',
+				url: '/:developerId/contracts',
+				resolve: {
+					developer: async ($stateParams: StateParams, developersService: DevelopersService) => {
+						'ngInject';
+
+						try {
+							return await developersService.getById($stateParams.developerId);
+						} catch (ex) {
+							return null;
+						}
+					}
+				},
 				views: {
 					'@': {
 						templateUrl: Template.getUrl('developers/contracts/ContractsList'),
