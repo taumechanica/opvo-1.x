@@ -48,7 +48,7 @@ describe('ContractsListController', () => {
 		const deferred = new Deferred<Contract[]>();
 		spyOn(contractsService, 'getAllByYear').and.callFake(() => deferred.promise);
 
-		$stateParams = $stateParams || new StateParams(developer);
+		$stateParams = $stateParams || new StateParams({ developer });
 		const ctrl = $controller(
 			ContractsListController, {
 				$scope,

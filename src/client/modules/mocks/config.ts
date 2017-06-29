@@ -1,7 +1,7 @@
 import { extend, module } from 'angular';
 import { IHttpBackendService } from 'angular';
 
-export default module('opvo.mocks', [])
+export default module('opvo.mocks', ['opvo.templates'])
 	.run(($httpBackend: IHttpBackendService) => {
 		'ngInject';
 
