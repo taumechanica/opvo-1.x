@@ -7,34 +7,34 @@ import './modules/developers/config';
 import './modules/settings/config';
 
 const getSvgSpriteUrl = (id: string) => {
-	require(`./assets/images/svg-sprite-${id}.svg`);
-	return `/img/svg-sprite-${id}.svg`;
+    require(`./assets/images/svg-sprite-${id}.svg`);
+    return `/img/svg-sprite-${id}.svg`;
 };
 
 export default module('opvo', [
-	'ngMaterial',
-	'ngMessages',
-	'ngSanitize',
-	'pascalprecht.translate',
-	'ui.router',
-	'opvo.common',
-	'opvo.developers',
-	'opvo.settings'
+    'ngMaterial',
+    'ngMessages',
+    'ngSanitize',
+    'pascalprecht.translate',
+    'ui.router',
+    'opvo.common',
+    'opvo.developers',
+    'opvo.settings'
 ])
-	.config(($mdIconProvider: material.IIconProvider) => {
-		'ngInject';
+    .config(($mdIconProvider: material.IIconProvider) => {
+        'ngInject';
 
-		$mdIconProvider.iconSet('action', getSvgSpriteUrl('action'));
-		$mdIconProvider.iconSet('communication', getSvgSpriteUrl('communication'));
-		$mdIconProvider.iconSet('content', getSvgSpriteUrl('content'));
-		$mdIconProvider.iconSet('navigation', getSvgSpriteUrl('navigation'));
-	})
-	.config(($translateProvider: translate.ITranslateProvider) => {
-		'ngInject';
+        $mdIconProvider.iconSet('action', getSvgSpriteUrl('action'));
+        $mdIconProvider.iconSet('communication', getSvgSpriteUrl('communication'));
+        $mdIconProvider.iconSet('content', getSvgSpriteUrl('content'));
+        $mdIconProvider.iconSet('navigation', getSvgSpriteUrl('navigation'));
+    })
+    .config(($translateProvider: translate.ITranslateProvider) => {
+        'ngInject';
 
-		$translateProvider.useLoader('$translatePartialLoader', {
-			urlTemplate: '/i18n/{part}/{lang}.json'
-		});
-		$translateProvider.preferredLanguage('ru');
-		$translateProvider.useSanitizeValueStrategy('sanitizeParameters');
-	});
+        $translateProvider.useLoader('$translatePartialLoader', {
+            urlTemplate: '/i18n/{part}/{lang}.json'
+        });
+        $translateProvider.preferredLanguage('ru');
+        $translateProvider.useSanitizeValueStrategy('sanitizeParameters');
+    });

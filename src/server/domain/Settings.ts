@@ -1,5 +1,5 @@
 export interface Settings {
-	Language: string;
-	YearFrom: number;
-	YearTo: number;
+    Language: string;
+    YearFrom: number;
+    YearTo: number;
 }

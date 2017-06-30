@@ -1,61 +1,61 @@
 .contracts
-	.list(md-whiteframe="1")
-		.header
-			a(ui-sref="developers") {{ 'DEVELOPERS_LIST' | translate }}
-			| &nbsp;♦ {{:: ctrl.developer.Name }}
-		.content
-			loading(when="ctrl.loading")
-			.tools(layout="row")
-				select(
-					ng-options="year for year in ctrl.yearOptions"
-					ng-model="ctrl.selectedYear"
-					ng-change="ctrl.selectYear()"
-				)
-				div(flex)
-				md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
-					md-icon(md-svg-icon="content:ic_add_24px")
-					span {{ 'ADD_RECORD' | translate }}
-			.body
-				table.data-table
-					thead
-						tr
-							th.id(rowspan="2") #
-							th.amount(rowspan="2") {{ 'CONTRACT_AMOUNT' | translate }}
-							th(colspan="2") {{ 'CONTRACT_DATES' | translate }}
-							th(rowspan="2") {{ 'CONTRACT_ACCEPTANCE_DATE' | translate }}
-							th.func(rowspan="2")
-						tr
-							th.date {{ 'CONTRACT_START_DATE' | translate }}
-							th.date {{ 'CONTRACT_DEADLINE' | translate }}
-					tbody(
-						ng-repeat="batch in ctrl.contractsByMonth track by $index"
-						ng-if="batch.contracts.length > 0"
-					)
-						tr(ng-repeat="contract in batch.contracts track by contract.Id")
-							td.id {{:: contract.Id }}
-							td.amount {{ contract.Amount }}
-							td.date {{ contract.StartDate | date : 'dd.MM.yyyy' }}
-							td.date {{ contract.Deadline | date : 'dd.MM.yyyy' }}
-							td.date {{ contract.AcceptanceDate | date : 'dd.MM.yyyy' }}
-							td.func
-								div
-									md-button.md-icon-button(
-										ng-click="ctrl.openEditDialog($event, contract)"
-										title="{{ 'EDIT' | translate }}"
-									)
-										md-icon(md-svg-icon="content:ic_create_24px")
-									md-button.md-icon-button(
-										ng-click="ctrl.openDeleteDialog($event, contract)"
-										title="{{ 'DELETE' | translate }}"
-									)
-										md-icon(md-svg-icon="action:ic_delete_forever_24px")
-						tr
-							td.month {{ batch.month | translate }}:
-							td.amount(ng-class="{ \
-								'not-exceeds': !batch.exceeds, \
-								'exceeds': batch.exceeds \
-							}") {{ batch.sum }}
-							td(colspan="4")
-					tbody(ng-if="!ctrl.hasData")
-						tr.no-data
-							td(colspan="6") {{ 'NO_RECORDS' | translate }}
+    .list(md-whiteframe="1")
+        .header
+            a(ui-sref="developers") {{ 'DEVELOPERS_LIST' | translate }}
+            | &nbsp;♦ {{:: ctrl.developer.Name }}
+        .content
+            loading(when="ctrl.loading")
+            .tools(layout="row")
+                select(
+                    ng-options="year for year in ctrl.yearOptions"
+                    ng-model="ctrl.selectedYear"
+                    ng-change="ctrl.selectYear()"
+                )
+                div(flex)
+                md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
+                    md-icon(md-svg-icon="content:ic_add_24px")
+                    span {{ 'ADD_RECORD' | translate }}
+            .body
+                table.data-table
+                    thead
+                        tr
+                            th.id(rowspan="2") #
+                            th.amount(rowspan="2") {{ 'CONTRACT_AMOUNT' | translate }}
+                            th(colspan="2") {{ 'CONTRACT_DATES' | translate }}
+                            th(rowspan="2") {{ 'CONTRACT_ACCEPTANCE_DATE' | translate }}
+                            th.func(rowspan="2")
+                        tr
+                            th.date {{ 'CONTRACT_START_DATE' | translate }}
+                            th.date {{ 'CONTRACT_DEADLINE' | translate }}
+                    tbody(
+                        ng-repeat="batch in ctrl.contractsByMonth track by $index"
+                        ng-if="batch.contracts.length > 0"
+                    )
+                        tr(ng-repeat="contract in batch.contracts track by contract.Id")
+                            td.id {{:: contract.Id }}
+                            td.amount {{ contract.Amount }}
+                            td.date {{ contract.StartDate | date : 'dd.MM.yyyy' }}
+                            td.date {{ contract.Deadline | date : 'dd.MM.yyyy' }}
+                            td.date {{ contract.AcceptanceDate | date : 'dd.MM.yyyy' }}
+                            td.func
+                                div
+                                    md-button.md-icon-button(
+                                        ng-click="ctrl.openEditDialog($event, contract)"
+                                        title="{{ 'EDIT' | translate }}"
+                                    )
+                                        md-icon(md-svg-icon="content:ic_create_24px")
+                                    md-button.md-icon-button(
+                                        ng-click="ctrl.openDeleteDialog($event, contract)"
+                                        title="{{ 'DELETE' | translate }}"
+                                    )
+                                        md-icon(md-svg-icon="action:ic_delete_forever_24px")
+                        tr
+                            td.month {{ batch.month | translate }}:
+                            td.amount(ng-class="{ \
+                                'not-exceeds': !batch.exceeds, \
+                                'exceeds': batch.exceeds \
+                            }") {{ batch.sum }}
+                            td(colspan="4")
+                    tbody(ng-if="!ctrl.hasData")
+                        tr.no-data
+                            td(colspan="6") {{ 'NO_RECORDS' | translate }}

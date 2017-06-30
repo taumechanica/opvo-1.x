@@ -1,3 +1,3 @@
 export interface Record {
-	Id: number;
+    Id: number;
 }

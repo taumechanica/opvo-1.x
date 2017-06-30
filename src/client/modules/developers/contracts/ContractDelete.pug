@@ -1,24 +1,24 @@
 .developers
-	.edit
-		loading(when="ctrl.loading" diameter="25")
-		md-dialog(aria-label="{{ 'DELETE_RECORD' | translate }}")
-			md-toolbar
-				.md-toolbar-tools
-					h2 {{ 'DELETE_RECORD' | translate }}
-					span(flex)
-					md-button.md-icon-button(
-						ng-click="ctrl.cancel()"
-						aria-label="{{ 'CLOSE' | translate }}"
-					)
-						md-icon(md-svg-icon="navigation:ic_close_24px")
-			md-dialog-content.md-dialog-content
-				h2 {{ 'CONFIRM_DELETE' | translate : ctrl.translateData }}
-				.error(ng-messages="ctrl.error")
-					div(ng-message="remote") {{ 'COULD_NOT_DELETE' | translate }}
-			md-dialog-actions
-				md-button(ng-click="ctrl.delete()")
-					md-icon(md-svg-icon="action:ic_done_24px")
-					span {{ 'YES' | translate }}
-				md-button(ng-click="ctrl.cancel()")
-					md-icon(md-svg-icon="content:ic_clear_24px")
-					span {{ 'CANCEL' | translate }}
+    .edit
+        loading(when="ctrl.loading" diameter="25")
+        md-dialog(aria-label="{{ 'DELETE_RECORD' | translate }}")
+            md-toolbar
+                .md-toolbar-tools
+                    h2 {{ 'DELETE_RECORD' | translate }}
+                    span(flex)
+                    md-button.md-icon-button(
+                        ng-click="ctrl.cancel()"
+                        aria-label="{{ 'CLOSE' | translate }}"
+                    )
+                        md-icon(md-svg-icon="navigation:ic_close_24px")
+            md-dialog-content.md-dialog-content
+                h2 {{ 'CONFIRM_DELETE' | translate : ctrl.translateData }}
+                .error(ng-messages="ctrl.error")
+                    div(ng-message="remote") {{ 'COULD_NOT_DELETE' | translate }}
+            md-dialog-actions
+                md-button(ng-click="ctrl.delete()")
+                    md-icon(md-svg-icon="action:ic_done_24px")
+                    span {{ 'YES' | translate }}
+                md-button(ng-click="ctrl.cancel()")
+                    md-icon(md-svg-icon="content:ic_clear_24px")
+                    span {{ 'CANCEL' | translate }}

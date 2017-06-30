@@ -1,84 +1,84 @@
 @import './palette.less';
 
 .developers {
-	.list {
-		background-color: @white;
-		border-radius: 3px;
-		border-top: 3px solid @blue-grey-200;
+    .list {
+        background-color: @white;
+        border-radius: 3px;
+        border-top: 3px solid @blue-grey-200;
 
-		.header {
-			color: @grey-900;
-			font-size: 18px;
-			padding: 10px;
-		}
+        .header {
+            color: @grey-900;
+            font-size: 18px;
+            padding: 10px;
+        }
 
-		.content {
-			min-height: 200px;
-		}
+        .content {
+            min-height: 200px;
+        }
 
-		.tools {
-			.search {
-				border: 1px solid @grey-300;
-				border-radius: 2px;
-				font-family: Arial;
-				margin: 6px 10px;
-				padding: 5px;
-				width: 300px;
+        .tools {
+            .search {
+                border: 1px solid @grey-300;
+                border-radius: 2px;
+                font-family: Arial;
+                margin: 6px 10px;
+                padding: 5px;
+                width: 300px;
 
-				&:focus {
-					border-color: @grey-400;
-				}
-			}
+                &:focus {
+                    border-color: @grey-400;
+                }
+            }
 
-			button {
-				margin-right: 10px;
-			}
-		}
+            button {
+                margin-right: 10px;
+            }
+        }
 
-		.body {
-			padding: 10px;
+        .body {
+            padding: 10px;
 
-			th, td {
-				border: 1px solid @grey-300;
-				padding: 4px;
-			}
+            th, td {
+                border: 1px solid @grey-300;
+                padding: 4px;
+            }
 
-			tr:not(.no-data):hover td {
-				background-color: @grey-300;
-				cursor: pointer;
+            tr:not(.no-data):hover td {
+                background-color: @grey-300;
+                cursor: pointer;
 
-				> div {
-					visibility: visible;
-				}
-			}
+                > div {
+                    visibility: visible;
+                }
+            }
 
-			th.id {
-				width: 100px;
-			}
+            th.id {
+                width: 100px;
+            }
 
-			th.amount {
-				width: 200px;
-			}
+            th.amount {
+                width: 200px;
+            }
 
-			th.func {
-				width: 120px;
-			}
+            th.func {
+                width: 120px;
+            }
 
-			td.id, td.amount {
-				text-align: center;
-			}
+            td.id, td.amount {
+                text-align: center;
+            }
 
-			td.func > div {
-				margin: 0 auto;
-				visibility: hidden;
-				width: 104px;
-			}
-		}
-	}
+            td.func > div {
+                margin: 0 auto;
+                visibility: hidden;
+                width: 104px;
+            }
+        }
+    }
 
-	.edit {
-		md-dialog {
-			min-width: 450px;
-		}
-	}
+    .edit {
+        md-dialog {
+            min-width: 450px;
+        }
+    }
 }

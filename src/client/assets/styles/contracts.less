@@ -1,88 +1,88 @@
 @import './palette.less';
 
 .contracts {
-	.list {
-		background-color: @white;
-		border-radius: 3px;
-		border-top: 3px solid @blue-grey-200;
+    .list {
+        background-color: @white;
+        border-radius: 3px;
+        border-top: 3px solid @blue-grey-200;
 
-		.header {
-			color: @grey-900;
-			font-size: 18px;
-			padding: 10px;
-		}
+        .header {
+            color: @grey-900;
+            font-size: 18px;
+            padding: 10px;
+        }
 
-		.content {
-			min-height: 200px;
-		}
+        .content {
+            min-height: 200px;
+        }
 
-		.tools {
-			select {
-				margin: 0 0 0 10px;
-			}
+        .tools {
+            select {
+                margin: 0 0 0 10px;
+            }
 
-			button {
-				margin-right: 10px;
-			}
-		}
+            button {
+                margin-right: 10px;
+            }
+        }
 
-		.body {
-			padding: 10px;
+        .body {
+            padding: 10px;
 
-			th, td {
-				border: 1px solid @grey-300;
-				padding: 4px;
-			}
+            th, td {
+                border: 1px solid @grey-300;
+                padding: 4px;
+            }
 
-			tbody tr:not(:last-child):hover td {
-				background-color: @grey-300;
+            tbody tr:not(:last-child):hover td {
+                background-color: @grey-300;
 
-				> div {
-					visibility: visible;
-				}
-			}
+                > div {
+                    visibility: visible;
+                }
+            }
 
-			th.id {
-				width: 100px;
-			}
+            th.id {
+                width: 100px;
+            }
 
-			th.amount, th.date {
-				width: 300px;
-			}
+            th.amount, th.date {
+                width: 300px;
+            }
 
-			th.func {
-				width: 120px;
-			}
+            th.func {
+                width: 120px;
+            }
 
-			td.id, td.month,
-			td.amount, td.date {
-				text-align: center;
-			}
+            td.id, td.month,
+            td.amount, td.date {
+                text-align: center;
+            }
 
-			td.func > div {
-				margin: 0 auto;
-				visibility: hidden;
-				width: 104px;
-			}
+            td.func > div {
+                margin: 0 auto;
+                visibility: hidden;
+                width: 104px;
+            }
 
-			td.month {
-				font-weight: bold;
-				line-height: 40px;
-			}
+            td.month {
+                font-weight: bold;
+                line-height: 40px;
+            }
 
-			td.not-exceeds {
-				background-color: @green-500;
-			}
+            td.not-exceeds {
+                background-color: @green-500;
+            }
 
-			td.exceeds {
-				background-color: @red-500;
-			}
-		}
-	}
+            td.exceeds {
+                background-color: @red-500;
+            }
+        }
+    }
 
-	.edit {
-		md-dialog {
-			min-width: 450px;
-		}
-	}
+    .edit {
+        md-dialog {
+            min-width: 450px;
+        }
+    }
 }

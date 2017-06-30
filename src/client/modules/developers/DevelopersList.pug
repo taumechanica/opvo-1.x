@@ -1,44 +1,44 @@
 .developers
-	.list(md-whiteframe="1")
-		.header {{ 'DEVELOPERS_LIST' | translate }}
-		.content
-			loading(when="ctrl.loading")
-			.tools(layout="row")
-				input.search(
-					type="text"
-					ng-model="ctrl.filter"
-					ng-model-options="{ debounce: 500 }"
-					placeholder="{{ 'SEARCH' | translate }}"
-				)
-				div(flex)
-				md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
-					md-icon(md-svg-icon="content:ic_add_24px")
-					span {{ 'ADD_RECORD' | translate }}
-			.body
-				table.data-table
-					tr
-						th.id #
-						th {{ 'DEVELOPERS_NAME' | translate }}
-						th.amount {{ 'DEVELOPERS_AMOUNT' | translate }}
-						th.func
-					tr(
-						ng-repeat="dev in ctrl.developers | filter : { Name: ctrl.filter } as filtered track by dev.Id"
-						ng-click="ctrl.openContracts($event, dev)"
-					)
-						td.id {{:: dev.Id }}
-						td {{ dev.Name }}
-						td.amount {{ dev.CeilingAmount }}
-						td.func
-							div
-								md-button.md-icon-button(
-									ng-click="ctrl.openEditDialog($event, dev)"
-									title="{{ 'EDIT' | translate }}"
-								)
-									md-icon(md-svg-icon="content:ic_create_24px")
-								md-button.md-icon-button(
-									ng-click="ctrl.openDeleteDialog($event, dev)"
-									title="{{ 'DELETE' | translate }}"
-								)
-									md-icon(md-svg-icon="action:ic_delete_forever_24px")
-					tr.no-data(ng-if="filtered.length === 0")
-						td(colspan="4") {{ 'NO_RECORDS' | translate }}
+    .list(md-whiteframe="1")
+        .header {{ 'DEVELOPERS_LIST' | translate }}
+        .content
+            loading(when="ctrl.loading")
+            .tools(layout="row")
+                input.search(
+                    type="text"
+                    ng-model="ctrl.filter"
+                    ng-model-options="{ debounce: 500 }"
+                    placeholder="{{ 'SEARCH' | translate }}"
+                )
+                div(flex)
+                md-button.md-raised.md-primary(ng-click="ctrl.openEditDialog($event, null)")
+                    md-icon(md-svg-icon="content:ic_add_24px")
+                    span {{ 'ADD_RECORD' | translate }}
+            .body
+                table.data-table
+                    tr
+                        th.id #
+                        th {{ 'DEVELOPERS_NAME' | translate }}
+                        th.amount {{ 'DEVELOPERS_AMOUNT' | translate }}
+                        th.func
+                    tr(
+                        ng-repeat="dev in ctrl.developers | filter : { Name: ctrl.filter } as filtered track by dev.Id"
+                        ng-click="ctrl.openContracts($event, dev)"
+                    )
+                        td.id {{:: dev.Id }}
+                        td {{ dev.Name }}
+                        td.amount {{ dev.CeilingAmount }}
+                        td.func
+                            div
+                                md-button.md-icon-button(
+                                    ng-click="ctrl.openEditDialog($event, dev)"
+                                    title="{{ 'EDIT' | translate }}"
+                                )
+                                    md-icon(md-svg-icon="content:ic_create_24px")
+                                md-button.md-icon-button(
+                                    ng-click="ctrl.openDeleteDialog($event, dev)"
+                                    title="{{ 'DELETE' | translate }}"
+                                )
+                                    md-icon(md-svg-icon="action:ic_delete_forever_24px")
+                    tr.no-data(ng-if="filtered.length === 0")
+                        td(colspan="4") {{ 'NO_RECORDS' | translate }}

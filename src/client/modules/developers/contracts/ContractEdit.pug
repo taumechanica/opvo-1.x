@@ -1,75 +1,75 @@
 .contracts
-	.edit
-		loading(when="ctrl.loading" diameter="25")
-		md-dialog(aria-label="{{:: ctrl.title }}")
-			form(name="ctrl.contractForm")
-				md-toolbar
-					.md-toolbar-tools
-						h2 {{:: ctrl.title }}
-						span(flex)
-						md-button.md-icon-button(
-							ng-click="ctrl.cancel()"
-							aria-label="{{ 'CLOSE' | translate }}"
-						)
-							md-icon(md-svg-icon="navigation:ic_close_24px")
-				md-dialog-content.md-dialog-content
-					md-input-container.md-block
-						label {{ 'CONTRACT_AMOUNT' | translate }}
-						input(
-							type="text"
-							name="amount"
-							ng-model="ctrl.contractModel.Amount"
-							ng-pattern="/^[1-9]\\d?(\\.\\d{1,2})?$/"
-							md-autofocus="true"
-							autocomplete="off"
-							required
-						)
-						div(ng-messages="ctrl.contractForm.amount.$error")
-							div(ng-message="pattern") {{ 'CONTRACT_AMOUNT_PATTERN' | translate }}
-							div(ng-message="required") {{ 'CONTRACT_AMOUNT_REQUIRED' | translate }}
-					md-input-container.md-block
-						label {{ 'CONTRACT_START_DATE' | translate }}
-						input(
-							type="text"
-							name="startDate"
-							ng-model="ctrl.contractModel.StartDate"
-							autocomplete="off"
-							input-date
-							required
-						)
-						div(ng-messages="ctrl.contractForm.startDate.$error")
-							div(ng-message="parse") {{ 'DATE_FORMAT_ERROR' | translate }}
-							div(ng-message="required") {{ 'CONTRACT_START_DATE_REQUIRED' | translate }}
-					md-input-container.md-block
-						label {{ 'CONTRACT_DEADLINE' | translate }}
-						input(
-							type="text"
-							name="deadline"
-							ng-model="ctrl.contractModel.Deadline"
-							autocomplete="off"
-							input-date
-							required
-						)
-						div(ng-messages="ctrl.contractForm.deadline.$error")
-							div(ng-message="parse") {{ 'DATE_FORMAT_ERROR' | translate }}
-							div(ng-message="required") {{ 'CONTRACT_DEADLINE_REQUIRED' | translate }}
-					md-input-container.md-block
-						label {{ 'CONTRACT_ACCEPTANCE_DATE' | translate }}
-						input(
-							type="text"
-							name="acceptanceDate"
-							ng-model="ctrl.contractModel.AcceptanceDate"
-							autocomplete="off"
-							input-date
-						)
-						div(ng-messages="ctrl.contractForm.acceptanceDate.$error")
-							div(ng-message="parse") {{ 'DATE_FORMAT_ERROR' | translate }}
-					.error(ng-messages="ctrl.error")
-						div(ng-message="remote") {{ 'COULD_NOT_SAVE' | translate }}
-				md-dialog-actions
-					md-button(ng-click="ctrl.save()")
-						md-icon(md-svg-icon="content:ic_save_24px")
-						span {{ 'SAVE' | translate }}
-					md-button(ng-click="ctrl.cancel()")
-						md-icon(md-svg-icon="content:ic_clear_24px")
-						span {{ 'CANCEL' | translate }}
+    .edit
+        loading(when="ctrl.loading" diameter="25")
+        md-dialog(aria-label="{{:: ctrl.title }}")
+            form(name="ctrl.contractForm")
+                md-toolbar
+                    .md-toolbar-tools
+                        h2 {{:: ctrl.title }}
+                        span(flex)
+                        md-button.md-icon-button(
+                            ng-click="ctrl.cancel()"
+                            aria-label="{{ 'CLOSE' | translate }}"
+                        )
+                            md-icon(md-svg-icon="navigation:ic_close_24px")
+                md-dialog-content.md-dialog-content
+                    md-input-container.md-block
+                        label {{ 'CONTRACT_AMOUNT' | translate }}
+                        input(
+                            type="text"
+                            name="amount"
+                            ng-model="ctrl.contractModel.Amount"
+                            ng-pattern="/^[1-9]\\d?(\\.\\d{1,2})?$/"
+                            md-autofocus="true"
+                            autocomplete="off"
+                            required
+                        )
+                        div(ng-messages="ctrl.contractForm.amount.$error")
+                            div(ng-message="pattern") {{ 'CONTRACT_AMOUNT_PATTERN' | translate }}
+                            div(ng-message="required") {{ 'CONTRACT_AMOUNT_REQUIRED' | translate }}
+                    md-input-container.md-block
+                        label {{ 'CONTRACT_START_DATE' | translate }}
+                        input(
+                            type="text"
+                            name="startDate"
+                            ng-model="ctrl.contractModel.StartDate"
+                            autocomplete="off"
+                            input-date
+                            required
+                        )
+                        div(ng-messages="ctrl.contractForm.startDate.$error")
+                            div(ng-message="parse") {{ 'DATE_FORMAT_ERROR' | translate }}
+                            div(ng-message="required") {{ 'CONTRACT_START_DATE_REQUIRED' | translate }}
+                    md-input-container.md-block
+                        label {{ 'CONTRACT_DEADLINE' | translate }}
+                        input(
+                            type="text"
+                            name="deadline"
+                            ng-model="ctrl.contractModel.Deadline"
+                            autocomplete="off"
+                            input-date
+                            required
+                        )
+                        div(ng-messages="ctrl.contractForm.deadline.$error")
+                            div(ng-message="parse") {{ 'DATE_FORMAT_ERROR' | translate }}
+                            div(ng-message="required") {{ 'CONTRACT_DEADLINE_REQUIRED' | translate }}
+                    md-input-container.md-block
+                        label {{ 'CONTRACT_ACCEPTANCE_DATE' | translate }}
+                        input(
+                            type="text"
+                            name="acceptanceDate"
+                            ng-model="ctrl.contractModel.AcceptanceDate"
+                            autocomplete="off"
+                            input-date
+                        )
+                        div(ng-messages="ctrl.contractForm.acceptanceDate.$error")
+                            div(ng-message="parse") {{ 'DATE_FORMAT_ERROR' | translate }}
+                    .error(ng-messages="ctrl.error")
+                        div(ng-message="remote") {{ 'COULD_NOT_SAVE' | translate }}
+                md-dialog-actions
+                    md-button(ng-click="ctrl.save()")
+                        md-icon(md-svg-icon="content:ic_save_24px")
+                        span {{ 'SAVE' | translate }}
+                    md-button(ng-click="ctrl.cancel()")
+                        md-icon(md-svg-icon="content:ic_clear_24px")
+                        span {{ 'CANCEL' | translate }}

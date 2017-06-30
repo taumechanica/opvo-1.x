@@ -11,117 +11,117 @@ import { DevelopersListController } from './DevelopersListController';
 import { DevelopersService } from '../../data/DevelopersService';
 
 describe('DevelopersListController', () => {
-	beforeEach(mock.module(application.name));
-	beforeEach(mock.module(mocks.name));
+    beforeEach(mock.module(application.name));
+    beforeEach(mock.module(mocks.name));
 
-	let $q: IQService;
-	let $scope: IScope;
-	let $document: IDocumentService;
-	let $controller: IControllerService;
-	let $mdDialog: material.IDialogService;
+    let $q: IQService;
+    let $scope: IScope;
+    let $document: IDocumentService;
+    let $controller: IControllerService;
+    let $mdDialog: material.IDialogService;
 
-	let developersService: DevelopersService;
+    let developersService: DevelopersService;
 
-	beforeEach(inject(($injector: auto.IInjectorService) => {
-		$q = $injector.get('$q');
-		$scope = $injector.get('$rootScope').$new();
-		$document = $injector.get('$document');
-		$controller = $injector.get('$controller');
-		$mdDialog = $injector.get<material.IDialogService>('$mdDialog');
+    beforeEach(inject(($injector: auto.IInjectorService) => {
+        $q = $injector.get('$q');
+        $scope = $injector.get('$rootScope').$new();
+        $document = $injector.get('$document');
+        $controller = $injector.get('$controller');
+        $mdDialog = $injector.get<material.IDialogService>('$mdDialog');
 
-		developersService = $injector.get<DevelopersService>('developersService');
-	}));
+        developersService = $injector.get<DevelopersService>('developersService');
+    }));
 
-	const $state = {
-		go: (to: string, params?: { }) => $q.resolve()
-	};
+    const $state = {
+        go: (to: string, params?: { }) => $q.resolve()
+    };
 
-	const instantiate = () => {
-		const deferred = new Deferred<Developer[]>();
-		spyOn(developersService, 'getAll').and.callFake(() => deferred.promise);
+    const instantiate = () => {
+        const deferred = new Deferred<Developer[]>();
+        spyOn(developersService, 'getAll').and.callFake(() => deferred.promise);
 
-		const ctrl = $controller(
-			DevelopersListController, {
-				$scope,
-				$state
-			}
-		);
-		$scope.$digest();
-		return { ctrl, deferred };
-	};
+        const ctrl = $controller(
+            DevelopersListController, {
+                $scope,
+                $state
+            }
+        );
+        $scope.$digest();
+        return { ctrl, deferred };
+    };
 
-	const createMouseEvent = () => $document[0].createEvent('MouseEvent');
+    const createMouseEvent = () => $document[0].createEvent('MouseEvent');
 
-	const developers = [
-		{ Id: 1, Name: '#1', CeilingAmount: 25.0 },
-		{ Id: 2, Name: '#2', CeilingAmount: 50.0 }
-	];
+    const developers = [
+        { Id: 1, Name: '#1', CeilingAmount: 25.0 },
+        { Id: 2, Name: '#2', CeilingAmount: 50.0 }
+    ];
 
-	it('should init data on instantiation', async done => {
-		spyOn($scope, '$apply').and.callThrough();
+    it('should init data on instantiation', async done => {
+        spyOn($scope, '$apply').and.callThrough();
 
-		const { ctrl, deferred } = instantiate();
-		expect(ctrl.loading).toBeTruthy();
+        const { ctrl, deferred } = instantiate();
+        expect(ctrl.loading).toBeTruthy();
 
-		deferred.resolve(developers);
-		await deferred.promise;
+        deferred.resolve(developers);
+        await deferred.promise;
 
-		expect(ctrl.developers).toEqual(developers);
-		expect(ctrl.loading).toBeFalsy();
-		expect($scope.$apply).toHaveBeenCalled();
+        expect(ctrl.developers).toEqual(developers);
+        expect(ctrl.loading).toBeFalsy();
+        expect($scope.$apply).toHaveBeenCalled();
 
-		done();
-	});
+        done();
+    });
 
-	it('should redirect to contracts list', () => {
-		spyOn($state, 'go').and.callThrough();
+    it('should redirect to contracts list', () => {
+        spyOn($state, 'go').and.callThrough();
 
-		const { ctrl } = instantiate();
-		ctrl.openContracts(createMouseEvent(), developers[0]);
-		expect($state.go).toHaveBeenCalledWith('developers.contracts', { developerId: developers[0].Id });
-	});
+        const { ctrl } = instantiate();
+        ctrl.openContracts(createMouseEvent(), developers[0]);
+        expect($state.go).toHaveBeenCalledWith('developers.contracts', { developerId: developers[0].Id });
+    });
 
-	it('should update data after edition', async done => {
-		spyOn($mdDialog, 'show').and.callFake(() => Promise.resolve());
-		spyOn($scope, '$apply').and.callThrough();
+    it('should update data after edition', async done => {
+        spyOn($mdDialog, 'show').and.callFake(() => Promise.resolve());
+        spyOn($scope, '$apply').and.callThrough();
 
-		const { ctrl, deferred } = instantiate();
-		const event = createMouseEvent();
-		spyOn(event, 'stopPropagation').and.callThrough();
+        const { ctrl, deferred } = instantiate();
+        const event = createMouseEvent();
+        spyOn(event, 'stopPropagation').and.callThrough();
 
-		ctrl.openEditDialog(event, developers[0]);
-		expect(event.stopPropagation).toHaveBeenCalled();
-		expect($mdDialog.show).toHaveBeenCalled();
-		expect(ctrl.loading).toBeTruthy();
+        ctrl.openEditDialog(event, developers[0]);
+        expect(event.stopPropagation).toHaveBeenCalled();
+        expect($mdDialog.show).toHaveBeenCalled();
+        expect(ctrl.loading).toBeTruthy();
 
-		deferred.resolve(developers);
-		await deferred.promise;
+        deferred.resolve(developers);
+        await deferred.promise;
 
-		expect(ctrl.loading).toBeFalsy();
-		expect($scope.$apply).toHaveBeenCalled();
+        expect(ctrl.loading).toBeFalsy();
+        expect($scope.$apply).toHaveBeenCalled();
 
-		done();
-	});
+        done();
+    });
 
-	it('should update data after deletion', async done => {
-		spyOn($mdDialog, 'show').and.callFake(() => Promise.resolve());
-		spyOn($scope, '$apply').and.callThrough();
+    it('should update data after deletion', async done => {
+        spyOn($mdDialog, 'show').and.callFake(() => Promise.resolve());
+        spyOn($scope, '$apply').and.callThrough();
 
-		const { ctrl, deferred } = instantiate();
-		const event = createMouseEvent();
-		spyOn(event, 'stopPropagation').and.callThrough();
+        const { ctrl, deferred } = instantiate();
+        const event = createMouseEvent();
+        spyOn(event, 'stopPropagation').and.callThrough();
 
-		ctrl.openDeleteDialog(event, developers[0]);
-		expect(event.stopPropagation).toHaveBeenCalled();
-		expect($mdDialog.show).toHaveBeenCalled();
-		expect(ctrl.loading).toBeTruthy();
+        ctrl.openDeleteDialog(event, developers[0]);
+        expect(event.stopPropagation).toHaveBeenCalled();
+        expect($mdDialog.show).toHaveBeenCalled();
+        expect(ctrl.loading).toBeTruthy();
 
-		deferred.resolve(developers);
-		await deferred.promise;
+        deferred.resolve(developers);
+        await deferred.promise;
 
-		expect(ctrl.loading).toBeFalsy();
-		expect($scope.$apply).toHaveBeenCalled();
+        expect(ctrl.loading).toBeFalsy();
+        expect($scope.$apply).toHaveBeenCalled();
 
-		done();
-	});
+        done();
+    });
 });

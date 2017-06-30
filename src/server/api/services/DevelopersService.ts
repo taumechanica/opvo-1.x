@@ -5,52 +5,52 @@ import { Developer } from '../../domain/Developer';
 import { Record } from '../../domain/Record';
 
 export class DevelopersService {
-	public constructor(private db: Database) { }
+    public constructor(private db: Database) { }
 
-	public async getAll(request: Request, reply: Base_Reply) {
-		const developers = await this.db.all<Developer>('SELECT * FROM Developer');
+    public async getAll(request: Request, reply: Base_Reply) {
+        const developers = await this.db.all<Developer>('SELECT * FROM Developer');
 
-		return reply(developers);
-	}
+        return reply(developers);
+    }
 
-	public async getById(request: Request, reply: Base_Reply) {
-		const developer = await this.db.get<Developer>(
-			'SELECT * FROM Developer WHERE Id = ?',
-			request.params['DeveloperId']
-		);
+    public async getById(request: Request, reply: Base_Reply) {
+        const developer = await this.db.get<Developer>(
+            'SELECT * FROM Developer WHERE Id = ?',
+            request.params['DeveloperId']
+        );
 
-		return reply(developer).code(developer ? 200 : 404);
-	}
+        return reply(developer).code(developer ? 200 : 404);
+    }
 
-	public async create(request: Request, reply: Base_Reply) {
-		const { db } = this;
-		const { Name, CeilingAmount } = request.payload;
-		await db.run('INSERT INTO Developer (Name, CeilingAmount) VALUES (?, ?)', Name, CeilingAmount);
+    public async create(request: Request, reply: Base_Reply) {
+        const { db } = this;
+        const { Name, CeilingAmount } = request.payload;
+        await db.run('INSERT INTO Developer (Name, CeilingAmount) VALUES (?, ?)', Name, CeilingAmount);
 
-		const record = await db.get<Record>('SELECT last_insert_rowid() AS Id');
+        const record = await db.get<Record>('SELECT last_insert_rowid() AS Id');
 
-		return reply(`/rest/developers/${record.Id}`).code(201);
-	}
+        return reply(`/rest/developers/${record.Id}`).code(201);
+    }
 
-	public async update(request: Request, reply: Base_Reply) {
-		const { db } = this;
-		const { Id } = request.payload;
-		if (request.params['DeveloperId'] != Id) return reply('').code(400);
+    public async update(request: Request, reply: Base_Reply) {
+        const { db } = this;
+        const { Id } = request.payload;
+        if (request.params['DeveloperId'] != Id) return reply('').code(400);
 
-		const { Name, CeilingAmount } = request.payload;
-		await db.run('UPDATE Developer SET Name = ?, CeilingAmount = ? WHERE Id = ?', Name, CeilingAmount, Id);
+        const { Name, CeilingAmount } = request.payload;
+        await db.run('UPDATE Developer SET Name = ?, CeilingAmount = ? WHERE Id = ?', Name, CeilingAmount, Id);
 
-		const changes = await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Developer');
+        const changes = await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Developer');
 
-		return reply('').code(!changes || changes.Count ? 204 : 404);
-	}
+        return reply('').code(!changes || changes.Count ? 204 : 404);
+    }
 
-	public async delete(request: Request, reply: Base_Reply) {
-		const { db } = this;
-		await db.run('DELETE FROM Developer WHERE Id = ?', request.params['DeveloperId']);
+    public async delete(request: Request, reply: Base_Reply) {
+        const { db } = this;
+        await db.run('DELETE FROM Developer WHERE Id = ?', request.params['DeveloperId']);
 
-		const changes = await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Developer');
+        const changes = await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Developer');
 
-		return reply('').code(!changes || changes.Count ? 204 : 404);
-	}
+        return reply('').code(!changes || changes.Count ? 204 : 404);
+    }
 }

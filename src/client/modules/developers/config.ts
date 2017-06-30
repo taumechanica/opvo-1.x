@@ -15,51 +15,51 @@ import { ContractDeleteController } from './contracts/ContractDeleteController';
 import { ContractsService } from '../../data/ContractsService';
 
 module('opvo.developers', [])
-	.controller('developersListController', DevelopersListController)
-	.controller('contractsListController', ContractsListController)
-	.controller('contractDeleteController', ContractDeleteController)
-	.service('developersService', DevelopersService)
-	.service('contractsService', ContractsService)
-	.config(($translatePartialLoaderProvider: translate.ITranslatePartialLoaderProvider) => {
-		'ngInject';
+    .controller('developersListController', DevelopersListController)
+    .controller('contractsListController', ContractsListController)
+    .controller('contractDeleteController', ContractDeleteController)
+    .service('developersService', DevelopersService)
+    .service('contractsService', ContractsService)
+    .config(($translatePartialLoaderProvider: translate.ITranslatePartialLoaderProvider) => {
+        'ngInject';
 
-		$translatePartialLoaderProvider.addPart('developers');
-		$translatePartialLoaderProvider.addPart('contracts');
-	})
-	.config((
-		$stateProvider: StateProvider,
-		$urlRouterProvider: UrlRouterProvider
-	) => {
-		'ngInject';
+        $translatePartialLoaderProvider.addPart('developers');
+        $translatePartialLoaderProvider.addPart('contracts');
+    })
+    .config((
+        $stateProvider: StateProvider,
+        $urlRouterProvider: UrlRouterProvider
+    ) => {
+        'ngInject';
 
-		$urlRouterProvider.otherwise('/developers');
+        $urlRouterProvider.otherwise('/developers');
 
-		$stateProvider
-			.state('developers', {
-				url: '/developers',
-				templateUrl: Template.getUrl('developers/DevelopersList'),
-				controller: 'developersListController',
-				controllerAs: 'ctrl'
-			})
-			.state('developers.contracts', {
-				url: '/:developerId/contracts',
-				resolve: {
-					developer: async ($stateParams: StateParams, developersService: DevelopersService) => {
-						'ngInject';
+        $stateProvider
+            .state('developers', {
+                url: '/developers',
+                templateUrl: Template.getUrl('developers/DevelopersList'),
+                controller: 'developersListController',
+                controllerAs: 'ctrl'
+            })
+            .state('developers.contracts', {
+                url: '/:developerId/contracts',
+                resolve: {
+                    developer: async ($stateParams: StateParams, developersService: DevelopersService) => {
+                        'ngInject';
 
-						try {
-							return await developersService.getById($stateParams.developerId);
-						} catch (ex) {
-							return null;
-						}
-					}
-				},
-				views: {
-					'@': {
-						templateUrl: Template.getUrl('developers/contracts/ContractsList'),
-						controller: 'contractsListController',
-						controllerAs: 'ctrl'
-					}
-				}
-			});
-	});
+                        try {
+                            return await developersService.getById($stateParams.developerId);
+                        } catch (ex) {
+                            return null;
+                        }
+                    }
+                },
+                views: {
+                    '@': {
+                        templateUrl: Template.getUrl('developers/contracts/ContractsList'),
+                        controller: 'contractsListController',
+                        controllerAs: 'ctrl'
+                    }
+                }
+            });
+    });

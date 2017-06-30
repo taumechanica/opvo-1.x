@@ -1,11 +1,11 @@
 {
-	"CONTRACT_AMOUNT": "Cost of work, million rubles",
-	"CONTRACT_DATES": "Contract dates",
-	"CONTRACT_ACCEPTANCE_DATE": "Acceptance date",
-	"CONTRACT_START_DATE": "Start date",
-	"CONTRACT_DEADLINE": "Deadline",
-	"CONTRACT_AMOUNT_PATTERN": "Type the number from 1.00 to 99.99",
-	"CONTRACT_AMOUNT_REQUIRED": "Type the amount",
-	"CONTRACT_START_DATE_REQUIRED": "Enter start date",
-	"CONTRACT_DEADLINE_REQUIRED": "Enter deadline"
+    "CONTRACT_AMOUNT": "Cost of work, million rubles",
+    "CONTRACT_DATES": "Contract dates",
+    "CONTRACT_ACCEPTANCE_DATE": "Acceptance date",
+    "CONTRACT_START_DATE": "Start date",
+    "CONTRACT_DEADLINE": "Deadline",
+    "CONTRACT_AMOUNT_PATTERN": "Type the number from 1.00 to 99.99",
+    "CONTRACT_AMOUNT_REQUIRED": "Type the amount",
+    "CONTRACT_START_DATE_REQUIRED": "Enter start date",
+    "CONTRACT_DEADLINE_REQUIRED": "Enter deadline"
 }

@@ -1,157 +1,157 @@
 @import './palette.less';
 
 body {
-	background-color: @blue-grey-100;
-	font-family: Arial;
-	font-size: 14px;
-	overflow-x: hidden;
+    background-color: @blue-grey-100;
+    font-family: Arial;
+    font-size: 14px;
+    overflow-x: hidden;
 }
 
 a, a:active, a:link, a:visited {
-	color: @blue-900;
-	text-decoration: none;
-	outline: none;
+    color: @blue-900;
+    text-decoration: none;
+    outline: none;
 }
 
 a:hover {
-	color: @green-900;
+    color: @green-900;
 }
 
 ul, li {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
 select, option {
-	font-family: Arial;
+    font-family: Arial;
 }
 
 loading {
-	background-color: @overlay;
-	display: block;
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-	z-index: 1;
+    background-color: @overlay;
+    display: block;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 
-	> div {
-		height: 100%;
-	}
+    > div {
+        height: 100%;
+    }
 }
 
 .page-header {
-	background-color: @blue-grey-400;
-	color: @white;
-	font-size: 18px;
-	height: 50px;
-	left: 0;
-	line-height: 50px;
-	position: fixed;
-	text-align: center;
-	top: 0;
-	width: 100%;
-	z-index: 1;
+    background-color: @blue-grey-400;
+    color: @white;
+    font-size: 18px;
+    height: 50px;
+    left: 0;
+    line-height: 50px;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 
-	span {
-		background-color: @blue-grey-500;
-		display: block;
-		width: 230px;
-	}
+    span {
+        background-color: @blue-grey-500;
+        display: block;
+        width: 230px;
+    }
 }
 
 .main-menu {
-	background-color: @grey-900;
-	height: 100%;
-	left: 0;
-	position: fixed;
-	top: 50px;
-	width: 230px;
+    background-color: @grey-900;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 50px;
+    width: 230px;
 
-	ul, li {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
-	}
+    ul, li {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 
-	.header {
-		background-color: @black;
-		color: @grey-600;
-		font-size: 12px;
-		padding: 12px 25px 12px 15px;
-		text-transform: uppercase;
-	}
+    .header {
+        background-color: @black;
+        color: @grey-600;
+        font-size: 12px;
+        padding: 12px 25px 12px 15px;
+        text-transform: uppercase;
+    }
 
-	a {
-		border-left: 3px solid transparent;
-		color: @grey-400;
-		display: block;
-		padding: 12px 5px 12px 15px;
-		position: relative;
-		text-decoration: none;
+    a {
+        border-left: 3px solid transparent;
+        color: @grey-400;
+        display: block;
+        padding: 12px 5px 12px 15px;
+        position: relative;
+        text-decoration: none;
 
-		md-icon {
-			fill: @white;
-			height: 16px;
-			min-height: 16px;
-			min-width: 16px;
-			width: 16px;
-		}
+        md-icon {
+            fill: @white;
+            height: 16px;
+            min-height: 16px;
+            min-width: 16px;
+            width: 16px;
+        }
 
-		span {
-			display: inline-block;
-			margin-left: 8px;
-		}
-	}
+        span {
+            display: inline-block;
+            margin-left: 8px;
+        }
+    }
 
-	.active a, a:hover {
-		background-color: @blue-grey-900;
-		border-left-color: @blue-grey-500;
-		color: @grey-50;
-	}
+    .active a, a:hover {
+        background-color: @blue-grey-900;
+        border-left-color: @blue-grey-500;
+        color: @grey-50;
+    }
 }
 
 .page-content {
-	margin-top: 50px;
-	margin-left: 230px;
-	padding: 10px;
+    margin-top: 50px;
+    margin-left: 230px;
+    padding: 10px;
 }
 
 .md-button {
-	line-height: normal;
-	text-transform: none;
+    line-height: normal;
+    text-transform: none;
 
-	span {
-		padding-left: 5px;
-	}
+    span {
+        padding-left: 5px;
+    }
 }
 
 .data-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-	width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
 
-	tr {
-		outline: none;
-	}
+    tr {
+        outline: none;
+    }
 }
 
 tr.no-data td {
-	line-height: 40px;
-	text-align: center;
+    line-height: 40px;
+    text-align: center;
 }
 
 .error {
-	color: @red-A700;
-	text-align: center;
+    color: @red-A700;
+    text-align: center;
 }
 
 .relative {
-	position: relative;
+    position: relative;
 }
 
 .hidden {
-	display: none;
+    display: none;
 }

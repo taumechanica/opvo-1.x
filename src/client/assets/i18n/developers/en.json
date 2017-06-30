@@ -1,11 +1,11 @@
 {
-	"DEVELOPERS_LIST": "Developers",
-	"DEVELOPERS_NAME": "Name",
-	"DEVELOPERS_AMOUNT": "The ceiling amount of liability, million rubles",
-	"DEVELOPERS_NAME_TOO_LONG": "The name is too long",
-	"DEVELOPERS_NAME_TOO_SHORT": "The name is too short",
-	"DEVELOPERS_NAME_REQUIRED": "Type the name",
-	"DEVELOPERS_AMOUNT_PATTERN": "Type the number from 1.00 to 99.99",
-	"DEVELOPERS_AMOUNT_REQUIRED": "Type the amount",
-	"DEVELOPERS_DELETE_NOTE": "All of the contracts will also be deleted"
+    "DEVELOPERS_LIST": "Developers",
+    "DEVELOPERS_NAME": "Name",
+    "DEVELOPERS_AMOUNT": "The ceiling amount of liability, million rubles",
+    "DEVELOPERS_NAME_TOO_LONG": "The name is too long",
+    "DEVELOPERS_NAME_TOO_SHORT": "The name is too short",
+    "DEVELOPERS_NAME_REQUIRED": "Type the name",
+    "DEVELOPERS_AMOUNT_PATTERN": "Type the number from 1.00 to 99.99",
+    "DEVELOPERS_AMOUNT_REQUIRED": "Type the amount",
+    "DEVELOPERS_DELETE_NOTE": "All of the contracts will also be deleted"
 }

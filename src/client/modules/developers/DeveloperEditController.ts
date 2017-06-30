@@ -6,57 +6,57 @@ import { Developer } from '../../domain/Developer';
 import { DevelopersService } from '../../data/DevelopersService';
 
 export class DeveloperEditController {
-	public loading: boolean;
+    public loading: boolean;
 
-	public title: string;
-	public error: { remote?: boolean; };
+    public title: string;
+    public error: { remote?: boolean; };
 
-	public developerForm: IFormController;
-	public developerModel: Developer;
+    public developerForm: IFormController;
+    public developerModel: Developer;
 
-	public constructor(
-		private $scope: IScope,
-		private $mdDialog: material.IDialogService,
-		private $translate: translate.ITranslateService,
-		private developer: Developer,
-		private developersService: DevelopersService
-	) {
-		'ngInject';
+    public constructor(
+        private $scope: IScope,
+        private $mdDialog: material.IDialogService,
+        private $translate: translate.ITranslateService,
+        private developer: Developer,
+        private developersService: DevelopersService
+    ) {
+        'ngInject';
 
-		if (developer) {
-			this.developerModel = extend({ }, developer);
-			$translate('EDIT_RECORD').then(title => this.title = title);
-		} else {
-			$translate('NEW_RECORD').then(title => this.title = title);
-		}
-	}
+        if (developer) {
+            this.developerModel = extend({ }, developer);
+            $translate('EDIT_RECORD').then(title => this.title = title);
+        } else {
+            $translate('NEW_RECORD').then(title => this.title = title);
+        }
+    }
 
-	public async save() {
-		this.error = { };
-		this.developerForm.$setSubmitted();
+    public async save() {
+        this.error = { };
+        this.developerForm.$setSubmitted();
 
-		if (isUndefined(this.developerModel)) return;
-		if (this.developerForm.$invalid) return;
+        if (isUndefined(this.developerModel)) return;
+        if (this.developerForm.$invalid) return;
 
-		this.loading = true;
+        this.loading = true;
 
-		try {
-			if (this.developer) {
-				await this.developersService.update(this.developerModel);
-			} else {
-				await this.developersService.create(this.developerModel);
-			}
+        try {
+            if (this.developer) {
+                await this.developersService.update(this.developerModel);
+            } else {
+                await this.developersService.create(this.developerModel);
+            }
 
-			this.$mdDialog.hide();
-		} catch (ex) {
-			this.error.remote = true;
-		} finally {
-			this.loading = false;
-			this.$scope.$apply();
-		}
-	}
+            this.$mdDialog.hide();
+        } catch (ex) {
+            this.error.remote = true;
+        } finally {
+            this.loading = false;
+            this.$scope.$apply();
+        }
+    }
 
-	public cancel() {
-		this.$mdDialog.cancel();
-	}
+    public cancel() {
+        this.$mdDialog.cancel();
+    }
 }

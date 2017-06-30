@@ -1,48 +1,48 @@
 .settings
-	.list(md-whiteframe="1")
-		.header {{ 'SETTINGS_LIST' | translate }}
-		.content
-			loading(when="ctrl.loading")
-			.body
-				.title {{ 'SETTINGS_LANGUAGE' | translate }}
-				.options
-					md-radio-group(
-						ng-model="ctrl.settingsModel.Language"
-						ng-change="ctrl.selectLanguage()"
-					)
-						md-radio-button(value="ru") Русский
-						md-radio-button(value="en") English
-				md-divider
-				.title {{ 'SETTINGS_RANGE_OF_YEARS' | translate }}
-				.options
-					form(name="ctrl.settingsForm")
-						md-input-container
-							label {{ 'SETTINGS_FROM' | translate }}
-							input(
-								type="number"
-								name="from"
-								ng-model="ctrl.settingsModel.YearFrom"
-								ng-model-options="{ debounce: 500 }"
-								ng-change="ctrl.selectRange(ctrl.settingsForm.from)"
-								ng-pattern="/^20\\d{2}?$/"
-								required
-							)
-							div(ng-messages="ctrl.settingsForm.from.$error")
-								div(ng-message="pattern") {{ 'SETTINGS_YEAR_FORMAT' | translate }}
-								div(ng-message="required") {{ 'SETTINGS_YEAR_REQUIRED' | translate }}
-								div(ng-message="range") {{ 'SETTINGS_INCORRECT_RANGE' | translate }}
-						md-input-container
-							label {{ 'SETTINGS_TO' | translate }}
-							input(
-								type="number"
-								name="to"
-								ng-model="ctrl.settingsModel.YearTo"
-								ng-model-options="{ debounce: 500 }"
-								ng-change="ctrl.selectRange(ctrl.settingsForm.to)"
-								ng-pattern="/^20\\d{2}?$/"
-								required
-							)
-							div(ng-messages="ctrl.settingsForm.to.$error")
-								div(ng-message="pattern") {{ 'SETTINGS_YEAR_FORMAT' | translate }}
-								div(ng-message="required") {{ 'SETTINGS_YEAR_REQUIRED' | translate }}
-								div(ng-message="range") {{ 'SETTINGS_INCORRECT_RANGE' | translate }}
+    .list(md-whiteframe="1")
+        .header {{ 'SETTINGS_LIST' | translate }}
+        .content
+            loading(when="ctrl.loading")
+            .body
+                .title {{ 'SETTINGS_LANGUAGE' | translate }}
+                .options
+                    md-radio-group(
+                        ng-model="ctrl.settingsModel.Language"
+                        ng-change="ctrl.selectLanguage()"
+                    )
+                        md-radio-button(value="ru") Русский
+                        md-radio-button(value="en") English
+                md-divider
+                .title {{ 'SETTINGS_RANGE_OF_YEARS' | translate }}
+                .options
+                    form(name="ctrl.settingsForm")
+                        md-input-container
+                            label {{ 'SETTINGS_FROM' | translate }}
+                            input(
+                                type="number"
+                                name="from"
+                                ng-model="ctrl.settingsModel.YearFrom"
+                                ng-model-options="{ debounce: 500 }"
+                                ng-change="ctrl.selectRange(ctrl.settingsForm.from)"
+                                ng-pattern="/^20\\d{2}?$/"
+                                required
+                            )
+                            div(ng-messages="ctrl.settingsForm.from.$error")
+                                div(ng-message="pattern") {{ 'SETTINGS_YEAR_FORMAT' | translate }}
+                                div(ng-message="required") {{ 'SETTINGS_YEAR_REQUIRED' | translate }}
+                                div(ng-message="range") {{ 'SETTINGS_INCORRECT_RANGE' | translate }}
+                        md-input-container
+                            label {{ 'SETTINGS_TO' | translate }}
+                            input(
+                                type="number"
+                                name="to"
+                                ng-model="ctrl.settingsModel.YearTo"
+                                ng-model-options="{ debounce: 500 }"
+                                ng-change="ctrl.selectRange(ctrl.settingsForm.to)"
+                                ng-pattern="/^20\\d{2}?$/"
+                                required
+                            )
+                            div(ng-messages="ctrl.settingsForm.to.$error")
+                                div(ng-message="pattern") {{ 'SETTINGS_YEAR_FORMAT' | translate }}
+                                div(ng-message="required") {{ 'SETTINGS_YEAR_REQUIRED' | translate }}
+                                div(ng-message="range") {{ 'SETTINGS_INCORRECT_RANGE' | translate }}
