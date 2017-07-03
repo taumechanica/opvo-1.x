@@ -3,7 +3,7 @@ import { HttpMethod, ReplyFn, Request, Route } from '../../abstract/Interface';
 
 import { DevelopersGateway } from '../../../data/developers/Gateway';
 
-export class GetAllDevelopersRoute implements Route {
+export class GetDeveloperByIdRoute implements Route {
     public method: HttpMethod;
     public path: string;
 
@@ -11,14 +11,15 @@ export class GetAllDevelopersRoute implements Route {
 
     public constructor(private db: Database) {
         this.method = 'GET';
-        this.path = '/rest/developers';
+        this.path = '/rest/developers/{DeveloperId}';
 
         this.gateway = new DevelopersGateway(db);
     }
 
     public async handler(request: Request, reply: ReplyFn) {
-        const developers = await this.gateway.getAll();
+        const id = parseInt(request.params.DeveloperId);
+        const developer = await this.gateway.getById(id);
 
-        return reply(developers);
+        return reply(developer).code(developer ? 200 : 404);
     }
 }

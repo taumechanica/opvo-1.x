@@ -2,70 +2,43 @@ import { Base_Reply, Request, Server } from 'hapi';
 import { Database } from 'sqlite';
 
 import { ContractsSchema } from './schema/ContractsSchema';
-import { DevelopersSchema } from './schema/DevelopersSchema';
 import { SettingsSchema } from './schema/SettingsSchema';
 
 import { ContractsService } from './services/ContractsService';
-import { DevelopersService } from './services/DevelopersService';
 import { SettingsService } from './services/SettingsService';
 
+import { Route } from './abstract/Interface';
+import { RouteFactory } from './abstract/RouteFactory';
+
+import { GetAllDevelopersRouteFactory } from './developers/getall/Factory';
+import { GetDeveloperByIdRouteFactory } from './developers/getbyid/Factory';
+import { CreateDeveloperRouteFactory } from './developers/create/Factory';
+import { UpdateDeveloperRouteFactory } from './developers/update/Factory';
+import { DeleteDeveloperRouteFactory } from './developers/delete/Factory';
+
 export class Dispatcher {
+    private static buildRoute<T extends Route>(factory: RouteFactory<T>) {
+        const route = factory.createRoute();
+        const { method, path, handler } = route;
+        const result: Route = {
+            method, path, handler: handler.bind(route)
+        };
+
+        const validate = factory.createSchema();
+        if (validate) result.config = { validate };
+
+        return result;
+    }
+
     public static registerRoutes(server: Server, db: Database) {
         const contractsService = new ContractsService(db);
-        const developersService = new DevelopersService(db);
         const settingsService = new SettingsService(db);
 
-        server.route({
-            method: 'GET',
-            path: '/rest/developers',
-            handler: (request: Request, reply: Base_Reply) => {
-                return developersService.getAll(request, reply);
-            }
-        });
-
-        server.route({
-            method: 'GET',
-            path: '/rest/developers/{DeveloperId}',
-            handler: (request: Request, reply: Base_Reply) => {
-                return developersService.getById(request, reply);
-            },
-            config: {
-                validate: DevelopersSchema.getById
-            }
-        });
-
-        server.route({
-            method: 'POST',
-            path: '/rest/developers',
-            handler: (request: Request, reply: Base_Reply) => {
-                return developersService.create(request, reply);
-            },
-            config: {
-                validate: DevelopersSchema.create
-            }
-        });
-
-        server.route({
-            method: 'PUT',
-            path: '/rest/developers/{DeveloperId}',
-            handler: (request: Request, reply: Base_Reply) => {
-                return developersService.update(request, reply);
-            },
-            config: {
-                validate: DevelopersSchema.update
-            }
-        });
-
-        server.route({
-            method: 'DELETE',
-            path: '/rest/developers/{DeveloperId}',
-            handler: (request: Request, reply: Base_Reply) => {
-                return developersService.delete(request, reply);
-            },
-            config: {
-                validate: DevelopersSchema.delete
-            }
-        });
+        server.route(this.buildRoute(new GetAllDevelopersRouteFactory(db)));
+        server.route(this.buildRoute(new GetDeveloperByIdRouteFactory(db)));
+        server.route(this.buildRoute(new CreateDeveloperRouteFactory(db)));
+        server.route(this.buildRoute(new UpdateDeveloperRouteFactory(db)));
+        server.route(this.buildRoute(new DeleteDeveloperRouteFactory(db)));
 
         server.route({
             method: 'GET',

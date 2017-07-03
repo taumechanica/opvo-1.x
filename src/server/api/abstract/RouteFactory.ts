@@ -1,5 +1,6 @@
-import { ApiSchema } from './Interface';
+import { Route, Schema } from './Interface';
 
-export interface RouteFactory {
-    createSchema(): ApiSchema;
+export interface RouteFactory<T extends Route> {
+    createRoute(): T;
+    createSchema(): Schema;
 }

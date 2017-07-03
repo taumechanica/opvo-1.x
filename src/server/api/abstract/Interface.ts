@@ -1,21 +1,32 @@
-export type ApiMethod = 'GET';
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-export interface ApiReply {
-    (result?: any): ApiResponse;
+export interface ReplyFn {
+    (result?: any): Response;
 }
 
-export interface ApiSchema {
-    params: Object;
-    payload: Object;
+export interface Schema {
+    params?: any;
+    payload?: any;
 }
 
-export interface ApiRequest {
-    params: Object;
-    payload: Object;
+export interface Request {
+    params: {
+        [name: string]: string;
+    };
+    payload: any;
 }
 
-export interface ApiResponse { }
+export interface Response {
+    code(statusCode: number): Response;
+}
 
-export interface ApiRoute {
-    method: ApiMethod;
+export interface Route {
+    method: HttpMethod;
+    path: string;
+
+    handler: (request: Request, reply: ReplyFn) => Response | Promise<Response>;
+
+    config?: {
+        validate: Schema;
+    };
 }
