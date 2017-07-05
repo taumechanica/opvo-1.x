@@ -1,6 +1,6 @@
 import { Base_Reply, Request } from 'hapi';
 
-import { SqlDatabase } from '../../data/abstract/SqlDatabase';
+import { SqlDatabase } from '../../data/SqlDatabase';
 import { Settings } from '../../domain/Settings';
 
 export class SettingsService {

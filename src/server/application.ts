@@ -6,7 +6,7 @@ import { open } from 'sqlite';
 import { ReflectiveInjector } from 'injection-js';
 
 import { Router } from './api/Router';
-import { SqlDatabase } from './data/abstract/SqlDatabase';
+import { SqlDatabase } from './data/SqlDatabase';
 import { DevelopersGateway } from './data/developers/Gateway';
 
 const assets: {

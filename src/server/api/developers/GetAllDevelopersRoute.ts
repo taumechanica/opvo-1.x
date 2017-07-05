@@ -1,19 +1,16 @@
-import { Injector } from 'injection-js';
+import { Inject, Injectable } from 'injection-js';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../../abstract/Interface';
-import { DevelopersGateway } from '../../../data/developers/Gateway';
+import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { DevelopersGateway } from '../../data/developers/Gateway';
 
+@Injectable()
 export class GetAllDevelopersRoute implements Route {
     public method: HttpMethod;
     public path: string;
 
-    private gateway: DevelopersGateway;
-
-    public constructor(private injector: Injector) {
+    public constructor(@Inject(DevelopersGateway) private gateway: DevelopersGateway) {
         this.method = 'GET';
         this.path = '/rest/developers';
-
-        this.gateway = injector.get(DevelopersGateway);
     }
 
     public async handler(request: Request, reply: ReplyFn) {

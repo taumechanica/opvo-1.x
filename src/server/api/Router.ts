@@ -1,3 +1,4 @@
+import { Provider, ReflectiveInjector } from 'injection-js';
 import { Base_Reply, Request, Server } from 'hapi';
 
 import { ContractsSchema } from './schema/ContractsSchema';
@@ -6,43 +7,26 @@ import { SettingsSchema } from './schema/SettingsSchema';
 import { ContractsService } from './services/ContractsService';
 import { SettingsService } from './services/SettingsService';
 
-import { Route } from './abstract/Interface';
-import { RouteFactory } from './abstract/RouteFactory';
+import { SqlDatabase } from '../data/SqlDatabase';
 
-import { GetAllDevelopersRouteFactory } from './developers/getall/Factory';
-import { GetDeveloperByIdRouteFactory } from './developers/getbyid/Factory';
-import { CreateDeveloperRouteFactory } from './developers/create/Factory';
-import { UpdateDeveloperRouteFactory } from './developers/update/Factory';
-import { DeleteDeveloperRouteFactory } from './developers/delete/Factory';
-
-import { Injector } from 'injection-js';
-import { SqlDatabase } from '../data/abstract/SqlDatabase';
+import { GetAllDevelopersRoute } from './developers/GetAllDevelopersRoute';
+import { GetDeveloperByIdRoute } from './developers/GetDeveloperByIdRoute';
+import { CreateDeveloperRoute } from './developers/CreateDeveloperRoute';
+import { UpdateDeveloperRoute } from './developers/UpdateDeveloperRoute';
+import { DeleteDeveloperRoute } from './developers/DeleteDeveloperRoute';
 
 export class Router {
-    private static buildRoute<T extends Route>(factory: RouteFactory<T>) {
-        const route = factory.createRoute();
-        const { method, path, handler } = route;
-        const result: Route = {
-            method, path, handler: handler.bind(route)
-        };
-
-        const validate = factory.createSchema();
-        if (validate) result.config = { validate };
-
-        return result;
-    }
-
-    public static init(server: Server, injector: Injector) {
+    public static init(server: Server, injector: ReflectiveInjector) {
         const db: SqlDatabase = injector.get(SqlDatabase);
 
         const contractsService = new ContractsService(db);
         const settingsService = new SettingsService(db);
 
-        server.route(this.buildRoute(new GetAllDevelopersRouteFactory(injector)));
-        server.route(this.buildRoute(new GetDeveloperByIdRouteFactory(injector)));
-        server.route(this.buildRoute(new CreateDeveloperRouteFactory(injector)));
-        server.route(this.buildRoute(new UpdateDeveloperRouteFactory(injector)));
-        server.route(this.buildRoute(new DeleteDeveloperRouteFactory(injector)));
+        server.route(this.resolveRoute(injector, GetAllDevelopersRoute));
+        server.route(this.resolveRoute(injector, GetDeveloperByIdRoute));
+        server.route(this.resolveRoute(injector, CreateDeveloperRoute));
+        server.route(this.resolveRoute(injector, UpdateDeveloperRoute));
+        server.route(this.resolveRoute(injector, DeleteDeveloperRoute));
 
         server.route({
             method: 'GET',
@@ -117,5 +101,11 @@ export class Router {
                 validate: SettingsSchema.set
             }
         });
+    }
+
+    private static resolveRoute(injector: ReflectiveInjector, token: Provider) {
+        const route = injector.resolveAndInstantiate(token);
+        const { method, path, config, handler } = route;
+        return { method, path, config, handler: handler.bind(route) };
     }
 }

@@ -1,6 +1,6 @@
 import { Base_Reply, Request } from 'hapi';
 
-import { SqlDatabase } from '../../data/abstract/SqlDatabase';
+import { SqlDatabase } from '../../data/SqlDatabase';
 import { Contract } from '../../domain/Contract';
 import { Developer } from '../../domain/Developer';
 import { Record } from '../../domain/Record';
