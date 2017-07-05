@@ -2,7 +2,7 @@ import { Inject, Injectable } from 'injection-js';
 import { number, string } from 'joi';
 
 import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
-import { DevelopersGateway } from '../../data/developers/Gateway';
+import { DevelopersGateway } from '../../data/DevelopersGateway';
 import { Developer } from '../../domain/Developer';
 
 @Injectable()

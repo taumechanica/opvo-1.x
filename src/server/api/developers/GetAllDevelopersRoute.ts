@@ -1,7 +1,7 @@
 import { Inject, Injectable } from 'injection-js';
 
 import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
-import { DevelopersGateway } from '../../data/developers/Gateway';
+import { DevelopersGateway } from '../../data/DevelopersGateway';
 
 @Injectable()
 export class GetAllDevelopersRoute implements Route {

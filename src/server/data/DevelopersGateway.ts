@@ -1,8 +1,8 @@
 import { Inject, Injectable } from 'injection-js';
 
-import { SqlDatabase } from '../SqlDatabase';
-import { Developer } from '../../domain/Developer';
-import { Record } from '../../domain/Record';
+import { SqlDatabase } from './SqlDatabase';
+import { Developer } from '../domain/Developer';
+import { Record } from '../domain/Record';
 
 @Injectable()
 export class DevelopersGateway {

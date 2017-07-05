@@ -2,10 +2,8 @@ import { Provider, ReflectiveInjector } from 'injection-js';
 import { Base_Reply, Request, Server } from 'hapi';
 
 import { ContractsSchema } from './schema/ContractsSchema';
-import { SettingsSchema } from './schema/SettingsSchema';
 
 import { ContractsService } from './services/ContractsService';
-import { SettingsService } from './services/SettingsService';
 
 import { SqlDatabase } from '../data/SqlDatabase';
 
@@ -15,18 +13,22 @@ import { CreateDeveloperRoute } from './developers/CreateDeveloperRoute';
 import { UpdateDeveloperRoute } from './developers/UpdateDeveloperRoute';
 import { DeleteDeveloperRoute } from './developers/DeleteDeveloperRoute';
 
+import { GetSettingsRoute } from './settings/GetSettingsRoute';
+import { SetSettingsRoute } from './settings/SetSettingsRoute';
+
 export class Router {
     public static init(server: Server, injector: ReflectiveInjector) {
         const db: SqlDatabase = injector.get(SqlDatabase);
-
         const contractsService = new ContractsService(db);
-        const settingsService = new SettingsService(db);
 
         server.route(this.resolveRoute(injector, GetAllDevelopersRoute));
         server.route(this.resolveRoute(injector, GetDeveloperByIdRoute));
         server.route(this.resolveRoute(injector, CreateDeveloperRoute));
         server.route(this.resolveRoute(injector, UpdateDeveloperRoute));
         server.route(this.resolveRoute(injector, DeleteDeveloperRoute));
+
+        server.route(this.resolveRoute(injector, GetSettingsRoute));
+        server.route(this.resolveRoute(injector, SetSettingsRoute));
 
         server.route({
             method: 'GET',
@@ -80,25 +82,6 @@ export class Router {
             },
             config: {
                 validate: ContractsSchema.delete
-            }
-        });
-
-        server.route({
-            method: 'GET',
-            path: '/rest/settings',
-            handler: (request: Request, reply: Base_Reply) => {
-                return settingsService.get(request, reply);
-            }
-        });
-
-        server.route({
-            method: 'PUT',
-            path: '/rest/settings',
-            handler: (request: Request, reply: Base_Reply) => {
-                return settingsService.set(request, reply);
-            },
-            config: {
-                validate: SettingsSchema.set
             }
         });
     }

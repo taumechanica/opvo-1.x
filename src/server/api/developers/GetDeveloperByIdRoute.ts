@@ -2,7 +2,7 @@ import { Inject, Injectable } from 'injection-js';
 import { number } from 'joi';
 
 import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
-import { DevelopersGateway } from '../../data/developers/Gateway';
+import { DevelopersGateway } from '../../data/DevelopersGateway';
 
 @Injectable()
 export class GetDeveloperByIdRoute implements Route {
