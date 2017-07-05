@@ -1,12 +1,12 @@
 import { Base_Reply, Request } from 'hapi';
-import { Database } from 'sqlite';
 
+import { SqlDatabase } from '../../data/abstract/SqlDatabase';
 import { Contract } from '../../domain/Contract';
 import { Developer } from '../../domain/Developer';
 import { Record } from '../../domain/Record';
 
 export class ContractsService {
-    public constructor(private db: Database) { }
+    public constructor(private db: SqlDatabase) { }
 
     public async getAllByYear(request: Request, reply: Base_Reply) {
         const { db } = this;

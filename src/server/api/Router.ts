@@ -1,5 +1,4 @@
 import { Base_Reply, Request, Server } from 'hapi';
-import { Database } from 'sqlite';
 
 import { ContractsSchema } from './schema/ContractsSchema';
 import { SettingsSchema } from './schema/SettingsSchema';
@@ -16,7 +15,10 @@ import { CreateDeveloperRouteFactory } from './developers/create/Factory';
 import { UpdateDeveloperRouteFactory } from './developers/update/Factory';
 import { DeleteDeveloperRouteFactory } from './developers/delete/Factory';
 
-export class Dispatcher {
+import { Injector } from 'injection-js';
+import { SqlDatabase } from '../data/abstract/SqlDatabase';
+
+export class Router {
     private static buildRoute<T extends Route>(factory: RouteFactory<T>) {
         const route = factory.createRoute();
         const { method, path, handler } = route;
@@ -30,15 +32,17 @@ export class Dispatcher {
         return result;
     }
 
-    public static registerRoutes(server: Server, db: Database) {
+    public static init(server: Server, injector: Injector) {
+        const db: SqlDatabase = injector.get(SqlDatabase);
+
         const contractsService = new ContractsService(db);
         const settingsService = new SettingsService(db);
 
-        server.route(this.buildRoute(new GetAllDevelopersRouteFactory(db)));
-        server.route(this.buildRoute(new GetDeveloperByIdRouteFactory(db)));
-        server.route(this.buildRoute(new CreateDeveloperRouteFactory(db)));
-        server.route(this.buildRoute(new UpdateDeveloperRouteFactory(db)));
-        server.route(this.buildRoute(new DeleteDeveloperRouteFactory(db)));
+        server.route(this.buildRoute(new GetAllDevelopersRouteFactory(injector)));
+        server.route(this.buildRoute(new GetDeveloperByIdRouteFactory(injector)));
+        server.route(this.buildRoute(new CreateDeveloperRouteFactory(injector)));
+        server.route(this.buildRoute(new UpdateDeveloperRouteFactory(injector)));
+        server.route(this.buildRoute(new DeleteDeveloperRouteFactory(injector)));
 
         server.route({
             method: 'GET',

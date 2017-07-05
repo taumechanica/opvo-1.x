@@ -1,4 +1,5 @@
-import { Database } from '../../../data/abstract/Database';
+import { Injector } from 'injection-js';
+
 import { Schema } from '../../abstract/Interface';
 import { RouteFactory } from '../../abstract/RouteFactory';
 
@@ -6,10 +7,10 @@ import { GetAllDevelopersRoute } from './Route';
 
 export class GetAllDevelopersRouteFactory
 implements RouteFactory<GetAllDevelopersRoute> {
-    public constructor(private db: Database) { }
+    public constructor(private injector: Injector) { }
 
     public createRoute() {
-        return new GetAllDevelopersRoute(this.db);
+        return new GetAllDevelopersRoute(this.injector);
     }
 
     public createSchema(): Schema {

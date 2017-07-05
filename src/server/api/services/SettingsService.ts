@@ -1,10 +1,10 @@
 import { Base_Reply, Request } from 'hapi';
-import { Database } from 'sqlite';
 
+import { SqlDatabase } from '../../data/abstract/SqlDatabase';
 import { Settings } from '../../domain/Settings';
 
 export class SettingsService {
-    public constructor(private db: Database) { }
+    public constructor(private db: SqlDatabase) { }
 
     public async get(request: Request, reply: Base_Reply) {
         const { db } = this;

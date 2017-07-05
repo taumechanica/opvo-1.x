@@ -1,6 +1,6 @@
-import { Database } from '../../../data/abstract/Database';
-import { HttpMethod, ReplyFn, Request, Route } from '../../abstract/Interface';
+import { Injector } from 'injection-js';
 
+import { HttpMethod, ReplyFn, Request, Route } from '../../abstract/Interface';
 import { DevelopersGateway } from '../../../data/developers/Gateway';
 
 export class GetAllDevelopersRoute implements Route {
@@ -9,11 +9,11 @@ export class GetAllDevelopersRoute implements Route {
 
     private gateway: DevelopersGateway;
 
-    public constructor(private db: Database) {
+    public constructor(private injector: Injector) {
         this.method = 'GET';
         this.path = '/rest/developers';
 
-        this.gateway = new DevelopersGateway(db);
+        this.gateway = injector.get(DevelopersGateway);
     }
 
     public async handler(request: Request, reply: ReplyFn) {

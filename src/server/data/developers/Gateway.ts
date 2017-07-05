@@ -1,9 +1,12 @@
-import { Database } from '../abstract/Database';
+import { Inject, Injectable } from 'injection-js';
+
+import { SqlDatabase } from '../abstract/SqlDatabase';
 import { Developer } from '../../domain/Developer';
 import { Record } from '../../domain/Record';
 
+@Injectable()
 export class DevelopersGateway {
-    public constructor(private db: Database) { }
+    public constructor(@Inject(SqlDatabase) private db: SqlDatabase) { }
 
     public async getAll() {
         return await this.db.all<Developer>('SELECT * FROM Developer');

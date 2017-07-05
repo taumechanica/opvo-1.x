@@ -1,4 +1,5 @@
-import { Database } from '../../../data/abstract/Database';
+import { Injector } from 'injection-js';
+
 import { RouteFactory } from '../../abstract/RouteFactory';
 
 import { GetDeveloperByIdRoute } from './Route';
@@ -6,10 +7,10 @@ import { GetDeveloperByIdSchema } from './Schema';
 
 export class GetDeveloperByIdRouteFactory
 implements RouteFactory<GetDeveloperByIdRoute> {
-    public constructor(private db: Database) { }
+    public constructor(private injector: Injector) { }
 
     public createRoute() {
-        return new GetDeveloperByIdRoute(this.db);
+        return new GetDeveloperByIdRoute(this.injector);
     }
 
     public createSchema() {
