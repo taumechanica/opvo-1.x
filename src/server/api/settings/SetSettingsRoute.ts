@@ -27,8 +27,8 @@ export class SetSettingsRoute implements Route {
 
     public async handler(request: Request, reply: ReplyFn) {
         const settings = request.payload as Settings;
-        const changes = await this.gateway.set(settings);
+        await this.gateway.set(settings);
 
-        return reply('').code(!changes || changes.Count ? 204 : 404);
+        return reply('').code(204);
     }
 }

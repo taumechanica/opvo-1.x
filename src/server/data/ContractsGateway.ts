@@ -45,22 +45,14 @@ export class ContractsGateway {
     }
 
     public async update(developer: Developer, contract: Contract) {
-        const { db } = this;
         const { Id, Amount, StartDate, Deadline, AcceptanceDate } = contract;
-        await db.run(
+        return await this.db.run(
             'UPDATE Contract SET Amount = ?, StartDate = ?, Deadline = ?, AcceptanceDate = ? WHERE Id = ? AND DeveloperId = ?',
             Amount, StartDate, Deadline, AcceptanceDate, Id, developer.Id
         );
-
-        return await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Contract');
     }
 
-    public async delete(developer: Developer, id: number) {
-        const { db } = this;
-        await db.run(
-            'DELETE FROM Contract WHERE Id = ? AND DeveloperId = ?', id, developer.Id
-        );
-
-        return await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Contract');
+    public async delete(developer: Developer, contract: Contract) {
+        return await this.db.run('DELETE FROM Contract WHERE Id = ? AND DeveloperId = ?', contract.Id, developer.Id);
     }
 }

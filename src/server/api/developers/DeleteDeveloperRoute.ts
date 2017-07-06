@@ -25,8 +25,11 @@ export class DeleteDeveloperRoute implements Route {
 
     public async handler(request: Request, reply: ReplyFn) {
         const id = parseInt(request.params.DeveloperId);
-        const changes = await this.gateway.delete(id);
+        const developer = await this.gateway.getById(id);
+        if (!developer) return reply('').code(404);
 
-        return reply('').code(!changes || changes.Count ? 204 : 404);
+        await this.gateway.delete(developer);
+
+        return reply('').code(204);
     }
 }

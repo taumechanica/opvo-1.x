@@ -52,8 +52,8 @@ export class UpdateContractRoute implements Route {
             developerId != contract.DeveloperId
         ) return reply('').code(400);
 
-        const changes = await this.contractsGateway.update(developer, contract);
+        await this.contractsGateway.update(developer, contract);
 
-        return reply('').code(!changes || changes.Count ? 204 : 404);
+        return reply('').code(204);
     }
 }

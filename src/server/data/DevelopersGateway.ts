@@ -25,17 +25,13 @@ export class DevelopersGateway {
     }
 
     public async update(developer: Developer) {
-        const { db } = this;
         const { Id, Name, CeilingAmount } = developer;
-        await db.run('UPDATE Developer SET Name = ?, CeilingAmount = ? WHERE Id = ?', Name, CeilingAmount, Id);
-
-        return await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Developer');
+        return await this.db.run(
+            'UPDATE Developer SET Name = ?, CeilingAmount = ? WHERE Id = ?', Name, CeilingAmount, Id
+        );
     }
 
-    public async delete(id: number) {
-        const { db } = this;
-        await db.run('DELETE FROM Developer WHERE Id = ?', id);
-
-        return await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Developer');
+    public async delete(developer: Developer) {
+        return await this.db.run('DELETE FROM Developer WHERE Id = ?', developer.Id);
     }
 }

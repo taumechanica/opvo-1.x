@@ -34,8 +34,11 @@ export class DeleteContractRoute implements Route {
         if (!developer) return reply('').code(404);
 
         const contractId = parseInt(request.params.ContractId);
-        const changes = await this.contractsGateway.delete(developer, contractId);
+        const contract = await this.contractsGateway.getById(developer, contractId);
+        if (!contract) return reply('').code(404);
 
-        return reply('').code(!changes || changes.Count ? 204 : 404);
+        await this.contractsGateway.delete(developer, contract);
+
+        return reply('').code(204);
     }
 }

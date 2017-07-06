@@ -30,11 +30,14 @@ export class UpdateDeveloperRoute implements Route {
 
     public async handler(request: Request, reply: ReplyFn) {
         const id = parseInt(request.params.DeveloperId);
-        const developer = request.payload as Developer;
+        let developer = await this.gateway.getById(id);
+        if (!developer) return reply('').code(404);
+
+        developer = request.payload as Developer;
         if (id != developer.Id) return reply('').code(400);
 
-        const changes = await this.gateway.update(developer);
+        await this.gateway.update(developer);
 
-        return reply('').code(!changes || changes.Count ? 204 : 404);
+        return reply('').code(204);
     }
 }

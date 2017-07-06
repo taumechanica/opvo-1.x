@@ -28,13 +28,10 @@ export class SettingsGateway {
     }
 
     public async set(settings: Settings) {
-        const { db } = this;
         const { Language, YearFrom, YearTo } = settings;
-        await db.run(
+        return await this.db.run(
             'UPDATE Settings SET Language = ?, YearFrom = ?, YearTo = ?',
             Language, YearFrom, YearTo
         );
-
-        return await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Settings');
     }
 }
