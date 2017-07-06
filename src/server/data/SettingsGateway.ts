@@ -1,12 +1,13 @@
-import { Base_Reply, Request } from 'hapi';
-import { Database } from 'sqlite';
+import { Inject, Injectable } from 'injection-js';
 
-import { Settings } from '../../domain/Settings';
+import { SqlDatabase } from './abstract/SqlDatabase';
+import { Settings } from '../domain/Settings';
 
-export class SettingsService {
-    public constructor(private db: Database) { }
+@Injectable()
+export class SettingsGateway {
+    public constructor(@Inject(SqlDatabase) private db: SqlDatabase) { }
 
-    public async get(request: Request, reply: Base_Reply) {
+    public async get() {
         const { db } = this;
         let settings = await db.get<Settings>('SELECT * FROM Settings');
 
@@ -23,19 +24,17 @@ export class SettingsService {
             );
         }
 
-        return reply(settings);
+        return settings;
     }
 
-    public async set(request: Request, reply: Base_Reply) {
+    public async set(settings: Settings) {
         const { db } = this;
-        const { Language, YearFrom, YearTo } = request.payload;
+        const { Language, YearFrom, YearTo } = settings;
         await db.run(
             'UPDATE Settings SET Language = ?, YearFrom = ?, YearTo = ?',
             Language, YearFrom, YearTo
         );
 
-        const changes = await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Settings');
-
-        return reply('').code(!changes || changes.Count ? 204 : 404);
+        return await db.get<{ Count: number; }>('SELECT changes() AS Count FROM Settings');
     }
 }

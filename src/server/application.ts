@@ -1,9 +1,16 @@
+import 'reflect-metadata';
+
 import * as inert from 'inert';
 import { Server } from 'hapi';
-import { Database } from 'sqlite';
 import { open } from 'sqlite';
+import { ReflectiveInjector } from 'injection-js';
 
-import { Dispatcher } from './api/Dispatcher';
+import { Router } from './api/Router';
+import { SqlDatabase } from './data/abstract/SqlDatabase';
+
+import { DevelopersGateway } from './data/DevelopersGateway';
+import { ContractsGateway } from './data/ContractsGateway';
+import { SettingsGateway } from './data/SettingsGateway';
 
 const assets: {
     [index: string]: string;
@@ -15,47 +22,56 @@ const assets: {
     'tpl': 'modules/'
 };
 
-const start = (db: Database) => {
-    const server = new Server();
+(async function () {
+    try {
+        const db = await open(`${__dirname}/opvo.sqlite`);
 
-    server.connection({
-        host: 'localhost',
-        port: 8000
-    });
+        db.migrate({
+            force: 'last',
+            migrationsPath: `${__dirname}/migrations`
+        });
+        db.exec('PRAGMA foreign_keys = ON');
 
-    server.register(inert);
+        const server = new Server();
 
-    server.route({
-        method: 'GET',
-        path: '/',
-        handler: (request, reply) => {
-            return reply.file(`${__dirname}/../client/application.html`);
-        }
-    });
+        server.connection({
+            host: 'localhost',
+            port: 8000
+        });
 
-    server.route({
-        method: 'GET',
-        path: '/{AssetType}/{File*}',
-        handler: (request, reply) => {
-            const directory = assets[request.params['AssetType']];
-            return reply.file(`${__dirname}/../client/${directory}${request.params['File']}`);
-        }
-    });
+        server.register(inert);
 
-    Dispatcher.registerRoutes(server, db);
+        server.route({
+            method: 'GET',
+            path: '/',
+            handler: (request, reply) => {
+                return reply.file(`${__dirname}/../client/application.html`);
+            }
+        });
 
-    server.start(error => {
-        if (error) throw error;
+        server.route({
+            method: 'GET',
+            path: '/{AssetType}/{File*}',
+            handler: (request, reply) => {
+                const directory = assets[request.params['AssetType']];
+                return reply.file(`${__dirname}/../client/${directory}${request.params['File']}`);
+            }
+        });
 
-        console.log(`Server running at ${server.info.uri}`);
-    });
-};
+        const injector = ReflectiveInjector.resolveAndCreate([
+            { provide: SqlDatabase, useValue: db },
+            DevelopersGateway,
+            ContractsGateway,
+            SettingsGateway
+        ]);
+        Router.init(server, injector);
 
-open(`${__dirname}/opvo.sqlite`)
-    .then(db => db.migrate({
-        force: 'last',
-        migrationsPath: `${__dirname}/migrations`
-    }))
-    .then(db => db.exec('PRAGMA foreign_keys = ON'))
-    .then(db => start(db))
-    .catch(reason => console.error(reason));
+        server.start(error => {
+            if (error) throw error;
+
+            console.info(`Server running at ${server.info.uri}`);
+        });
+    } catch (ex) {
+        console.error(ex);
+    }
+})();
