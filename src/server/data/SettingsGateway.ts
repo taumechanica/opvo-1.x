@@ -1,6 +1,6 @@
 import { Inject, Injectable } from 'injection-js';
 
-import { SqlDatabase } from './SqlDatabase';
+import { SqlDatabase } from './abstract/SqlDatabase';
 import { Settings } from '../domain/Settings';
 
 @Injectable()

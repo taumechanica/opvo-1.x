@@ -6,9 +6,10 @@ import { open } from 'sqlite';
 import { ReflectiveInjector } from 'injection-js';
 
 import { Router } from './api/Router';
-import { SqlDatabase } from './data/SqlDatabase';
+import { SqlDatabase } from './data/abstract/SqlDatabase';
 
 import { DevelopersGateway } from './data/DevelopersGateway';
+import { ContractsGateway } from './data/ContractsGateway';
 import { SettingsGateway } from './data/SettingsGateway';
 
 const assets: {
@@ -60,6 +61,7 @@ const assets: {
         const injector = ReflectiveInjector.resolveAndCreate([
             { provide: SqlDatabase, useValue: db },
             DevelopersGateway,
+            ContractsGateway,
             SettingsGateway
         ]);
         Router.init(server, injector);
