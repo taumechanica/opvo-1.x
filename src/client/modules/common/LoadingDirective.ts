@@ -3,6 +3,11 @@ import { IScope } from 'angular';
 
 import { Template } from '../Template';
 
+interface LoadingScope extends IScope {
+    when: string;
+    diameter?: string;
+}
+
 export function LoadingDirectiveFactory() {
     return {
         restrict: 'E',
@@ -13,12 +18,12 @@ export function LoadingDirectiveFactory() {
             diameter: '@?'
         },
 
-        link: (scope: IScope, element: JQuery) => {
+        link: (scope: LoadingScope, element: JQuery) => {
             element.addClass('hidden');
             element.parent().addClass('relative');
 
-            if (isUndefined(scope['diameter'])) {
-                scope['diameter'] = '50';
+            if (isUndefined(scope.diameter)) {
+                scope.diameter = '50';
             }
 
             scope.$watch('when', (value: boolean) => {
