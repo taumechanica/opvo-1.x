@@ -1,7 +1,7 @@
 import { Inject, Injectable } from 'injection-js';
 import { number } from 'joi';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { HttpMethod, ResponseTk, Request, Route } from '../Interface';
 import { DevelopersGateway } from '../../data/DevelopersGateway';
 import { ContractsGateway } from '../../data/ContractsGateway';
 
@@ -27,15 +27,15 @@ export class GetAllContractsByYearRoute implements Route {
         }
     };
 
-    public async handler(request: Request, reply: ReplyFn) {
+    public async handler(request: Request, tk: ResponseTk) {
         const developerId = parseInt(request.params.DeveloperId);
         const developer = await this.developersGateway.getById(developerId);
 
-        if (!developer) return reply('').code(404);
+        if (!developer) return tk.response('').code(404);
 
         const year = parseInt(request.params.Year);
         const contracts = await this.contractsGateway.getAllByYear(developer, year);
 
-        return reply(contracts);
+        return tk.response(contracts);
     }
 }

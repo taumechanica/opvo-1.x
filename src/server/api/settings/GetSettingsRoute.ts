@@ -1,6 +1,6 @@
 import { Inject, Injectable } from 'injection-js';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { HttpMethod, ResponseTk, Request, Route } from '../Interface';
 import { SettingsGateway } from '../../data/SettingsGateway';
 
 @Injectable()
@@ -13,9 +13,9 @@ export class GetSettingsRoute implements Route {
         this.path = '/rest/settings';
     }
 
-    public async handler(request: Request, reply: ReplyFn) {
+    public async handler(request: Request, tk: ResponseTk) {
         const settings = await this.gateway.get();
 
-        return reply(settings);
+        return tk.response(settings);
     }
 }

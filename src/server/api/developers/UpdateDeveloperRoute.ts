@@ -1,7 +1,7 @@
 import { Inject, Injectable } from 'injection-js';
 import { number, string } from 'joi';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { HttpMethod, ResponseTk, Request, Route } from '../Interface';
 import { DevelopersGateway } from '../../data/DevelopersGateway';
 import { Developer } from '../../domain/Developer';
 
@@ -28,16 +28,16 @@ export class UpdateDeveloperRoute implements Route {
         }
     };
 
-    public async handler(request: Request, reply: ReplyFn) {
+    public async handler(request: Request, tk: ResponseTk) {
         const id = parseInt(request.params.DeveloperId);
         let developer = await this.gateway.getById(id);
-        if (!developer) return reply('').code(404);
+        if (!developer) return tk.response('').code(404);
 
         developer = request.payload as Developer;
-        if (id != developer.Id) return reply('').code(400);
+        if (id != developer.Id) return tk.response('').code(400);
 
         await this.gateway.update(developer);
 
-        return reply('').code(204);
+        return tk.response('').code(204);
     }
 }

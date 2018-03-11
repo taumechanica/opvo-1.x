@@ -1,7 +1,7 @@
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-export interface ReplyFn {
-    (result?: any): Response;
+export interface ResponseTk {
+    response(result?: string | object): Response;
 }
 
 export interface Schema {
@@ -24,7 +24,7 @@ export interface Route {
     method: HttpMethod;
     path: string;
 
-    handler: (request: Request, reply: ReplyFn) => Response | Promise<Response>;
+    handler: (request: Request, tk: ResponseTk) => Response | Promise<Response>;
 
     config?: {
         validate: Schema;

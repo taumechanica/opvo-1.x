@@ -1,6 +1,6 @@
 import { Inject, Injectable } from 'injection-js';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { HttpMethod, ResponseTk, Request, Route } from '../Interface';
 import { DevelopersGateway } from '../../data/DevelopersGateway';
 
 @Injectable()
@@ -13,9 +13,9 @@ export class GetAllDevelopersRoute implements Route {
         this.path = '/rest/developers';
     }
 
-    public async handler(request: Request, reply: ReplyFn) {
+    public async handler(request: Request, tk: ResponseTk) {
         const developers = await this.gateway.getAll();
 
-        return reply(developers);
+        return tk.response(developers);
     }
 }

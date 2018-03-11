@@ -1,7 +1,7 @@
 import { Inject, Injectable } from 'injection-js';
 import { number, string } from 'joi';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { HttpMethod, ResponseTk, Request, Route } from '../Interface';
 import { SettingsGateway } from '../../data/SettingsGateway';
 import { Settings } from '../../domain/Settings';
 
@@ -25,10 +25,10 @@ export class SetSettingsRoute implements Route {
         }
     };
 
-    public async handler(request: Request, reply: ReplyFn) {
+    public async handler(request: Request, tk: ResponseTk) {
         const settings = request.payload as Settings;
         await this.gateway.set(settings);
 
-        return reply('').code(204);
+        return tk.response('').code(204);
     }
 }

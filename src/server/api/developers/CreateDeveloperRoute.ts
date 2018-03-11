@@ -1,7 +1,7 @@
 import { Inject, Injectable } from 'injection-js';
 import { number, string } from 'joi';
 
-import { HttpMethod, ReplyFn, Request, Route } from '../Interface';
+import { HttpMethod, ResponseTk, Request, Route } from '../Interface';
 import { DevelopersGateway } from '../../data/DevelopersGateway';
 import { Developer } from '../../domain/Developer';
 
@@ -24,9 +24,9 @@ export class CreateDeveloperRoute implements Route {
         }
     };
 
-    public async handler(request: Request, reply: ReplyFn) {
+    public async handler(request: Request, tk: ResponseTk) {
         const record = await this.gateway.create(request.payload as Developer);
 
-        return reply(`/rest/developers/${record.Id}`).code(201);
+        return tk.response(`/rest/developers/${record.Id}`).code(201);
     }
 }

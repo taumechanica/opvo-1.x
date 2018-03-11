@@ -32,14 +32,12 @@ const assets: {
         });
         db.exec('PRAGMA foreign_keys = ON');
 
-        const server = new Server();
-
-        server.connection({
+        const server = new Server({
             host: 'localhost',
             port: 8000
         });
 
-        server.register(inert);
+        await server.register(inert);
 
         server.route({
             method: 'GET',
@@ -66,11 +64,9 @@ const assets: {
         ]);
         Router.init(server, injector);
 
-        server.start(error => {
-            if (error) throw error;
+        server.start();
 
-            console.info(`Server running at ${server.info.uri}`);
-        });
+        console.info(`Server running at ${server.info.uri}`);
     } catch (ex) {
         console.error(ex);
     }
