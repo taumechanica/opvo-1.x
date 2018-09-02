@@ -2,10 +2,7 @@ module.exports = config => {
     config.set({
         frameworks: ['jasmine'],
         files: [
-            'dist/client/vendor.js',
-            'node_modules/promise-polyfill/dist/promise.min.js',
-            'dist/client/application.js',
-            'node_modules/angular-mocks/angular-mocks.js',
+            'node_modules/promise-polyfill/dist/polyfill.min.js',
             'dist/client/application.spec.js',
             'dist/client/modules/**/*.html'
         ],

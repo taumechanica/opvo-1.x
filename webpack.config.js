@@ -1,9 +1,8 @@
 const fs = require('fs');
 const glob = require('glob');
-const webpack = require('webpack');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const nodeModules = { };
 
@@ -16,10 +15,11 @@ fs.readdirSync('./node_modules')
     });
 
 const clientConfig = {
+    mode: 'none',
+
     entry: {
         'application': './src/client/application.ts',
-        'application.spec': glob.sync('./src/client/**/*.spec.ts'),
-        'vendor': './src/client/vendor.ts'
+        'application.spec': glob.sync('./src/client/**/*.spec.ts')
     },
     output: {
         path: `${__dirname}/dist/client`,
@@ -31,7 +31,7 @@ const clientConfig = {
     },
 
     module: {
-        loaders: [
+        rules: [
             { test: /\.ts$/, loaders: [
                 'ng-annotate-loader',
                 'awesome-typescript-loader?configFileName=./src/client/tsconfig.json'
@@ -45,33 +45,25 @@ const clientConfig = {
                 'file-loader?regExp=src\/client\/modules\/(.+\/)&name=modules/[1][name].html',
                 'pug-html-loader?exports=false'
             ] },
-            { test: /\.less$/, loader: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: 'css-loader!postcss-loader!less-loader'
-            }) },
-            { test: /\.css$/, loader: ExtractTextPlugin.extract({
-                fallback: 'style-loader',
-                use: 'css-loader'
-            }) }
+            { test: /\.less$/, loaders: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'] },
+            { test: /\.css$/, loaders: [MiniCssExtractPlugin.loader, 'css-loader'] }
         ]
     },
 
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: ['application', 'vendor']
-        }),
         new CopyWebpackPlugin([{
             from: './src/client/assets/i18n',
             to: 'i18n'
         }]),
-        new ExtractTextPlugin({
-            filename: '[name].css',
-            allChunks: false
+        new MiniCssExtractPlugin({
+            filename: '[name].css'
         })
     ]
 };
 
 const serverConfig = {
+    mode: 'none',
+
     target: 'node',
     node: {
         __dirname: false
@@ -88,7 +80,7 @@ const serverConfig = {
     },
 
     module: {
-        loaders: [
+        rules: [
             { test: /\.ts$/, loader: 'awesome-typescript-loader?configFileName=./src/server/tsconfig.json' }
         ]
     },
